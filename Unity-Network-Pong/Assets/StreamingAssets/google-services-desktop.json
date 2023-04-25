@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "54835597904",
+    "project_id": "unity-demo-37090",
+    "storage_bucket": "unity-demo-37090.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54835597904:android:231f91fe4e9bf033e7b755",
+        "android_client_info": {
+          "package_name": "com.retr0.firebasedemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54835597904-ashim8ufhvqft9mk0nuacav64ktg3l95.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRcjLfi2y88DOGdb4ptW6mvw4TrWnI88M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54835597904-ashim8ufhvqft9mk0nuacav64ktg3l95.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

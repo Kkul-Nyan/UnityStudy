@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9a04d9716fb4b6ab53eee51efa4d4f, type: 3}
+  m_Name: CraftingTable
+  m_EditorClassIdentifier: 
+  displayName: CraftingTable
+  icon: {fileID: 21300000, guid: cd2a7181504d449a188adf69c7091f41, type: 3}
+  spawnPrefab: {fileID: 2144726899434924065, guid: e1b545e08d9044ab0a6b8ce57b162e48, type: 3}
+  previewPrefab: {fileID: 7162024062228122808, guid: 8a6e18881cd4c40a887e403184958a73, type: 3}
+  cost:
+  - item: {fileID: 11400000, guid: a057813523ead43c78fd2e62d03e527d, type: 2}
+    quantitiy: 2
+  - item: {fileID: 11400000, guid: 20fba86b5263e4e80b67a118c50eb8ff, type: 2}
+    quantitiy: 2

@@ -1,10 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnManagerX : MonoBehaviour
 {
-    
+    public GameObject dogPrefab;
     public GameObject[] ballPrefabs;
     private float spawnLimitXLeft = -35;
     private float spawnLimitXRight = 7;
@@ -24,7 +24,7 @@ public class SpawnManagerX : MonoBehaviour
     {
         // Generate random ball index and random spawn position
         Vector3 spawnPos = new Vector3(spawnLimitXLeft, spawnPosY, 0);
-
+        int randomBall = Random.Range(0 ,3);
         // instantiate ball at random spawn location
         Instantiate(dogPrefab, spawnPos, dogPrefab.transform.rotation);
         Instantiate(ballPrefabs[randomBall], spawnPos, ballPrefabs[randomBall].transform.rotation);

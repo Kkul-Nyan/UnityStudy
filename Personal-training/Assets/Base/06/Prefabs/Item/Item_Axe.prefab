@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 6966957605119649031}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1123850970008116078
 Rigidbody:
@@ -151,10 +151,6 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 60c82df36183b44deba0cda69f03c585, type: 3}
       propertyPath: m_Name
       value: Axe
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 60c82df36183b44deba0cda69f03c585, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

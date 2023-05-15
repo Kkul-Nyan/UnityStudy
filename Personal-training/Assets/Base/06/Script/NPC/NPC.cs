@@ -59,6 +59,7 @@ public class NPC : MonoBehaviour, IDamagable
 
     private float playerDistance;
 
+
     
     //components
     [HideInInspector]public NavMeshAgent agent;
@@ -68,12 +69,15 @@ public class NPC : MonoBehaviour, IDamagable
 
     void Awake(){
         agent = GetComponent<NavMeshAgent>();
-        anim = GetComponentInChildren<Animator>();
+        anim = GetComponentInChildren<Animator>();        
 
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        agent.enabled = false;
     }
     private void Start() {
         SetState(AIState.Wandering);
+        agent.enabled = true;
     }
 
     private void Update() {

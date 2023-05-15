@@ -13,7 +13,7 @@ public class Resource : MonoBehaviour
     public GameObject hitParticle;
 
     public void Gather(Vector3 hitPoint, Vector3 hitNormal){
-        for(int i = 0; i<quantitiyPerHit; i++){
+        for(int i = 0; i< quantitiyPerHit; i++){
             if(capacity <= 0){
                 break;
             }

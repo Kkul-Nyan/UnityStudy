@@ -529,7 +529,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Suvival Island
+  m_text: Survival Island
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 92a46aed8f3774fe29326e38419e13f0, type: 2}
   m_sharedMaterial: {fileID: 9016529877909961085, guid: 92a46aed8f3774fe29326e38419e13f0, type: 2}

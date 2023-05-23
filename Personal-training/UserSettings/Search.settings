@@ -7,7 +7,7 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.310DEAF1" = "mesh baker"
+	"last_search.310DEAF1" = "avatar"
 	"OpenInspectorPreview.310DEAF1" = "0"
 	"currentGroup.310DEAF1" = "all"
 }
@@ -76,6 +76,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"ㅁ"
 	"e"
 ]
 searchItemFavorites = [

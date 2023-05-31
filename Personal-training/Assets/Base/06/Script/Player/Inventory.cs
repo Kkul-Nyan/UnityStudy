@@ -9,7 +9,7 @@ using Sirenix.OdinInspector;
 
 public class Inventory : MonoBehaviour
 {
-    public ItemSlotUI[] uiSlots;
+    public ItemSlotUi[] uiSlots;
     public ItemSlot[] slots;
 
     [Title("Info", titleAlignment: TitleAlignments.Centered)]

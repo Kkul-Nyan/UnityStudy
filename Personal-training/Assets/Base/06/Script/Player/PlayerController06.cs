@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Sirenix.OdinInspector;
+using UnityEngine.Audio;
 
 public class PlayerController06 : MonoBehaviour
 {
@@ -18,6 +19,12 @@ public class PlayerController06 : MonoBehaviour
     [BoxGroup("Look")]public float maxXLook;
     [BoxGroup("Look")]private float camCurXRot;
     [BoxGroup("Look")]public float lookSensitivity;
+
+    [BoxGroup("Sound")] public AudioSource audio;
+    [BoxGroup("Sound")] public AudioClip[] walkSound;
+    [BoxGroup("Sound")] public float soundInterval;
+    private float checkTime;
+
 
     [HideInInspector]
     public bool canLook = true;
@@ -50,6 +57,7 @@ public class PlayerController06 : MonoBehaviour
     }
 
     void Move(){
+        FootSound();
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
         dir *= moveSpeed;
         dir.y = rig.velocity.y;
@@ -65,8 +73,25 @@ public class PlayerController06 : MonoBehaviour
             curMovementInput = context.ReadValue<Vector2>();
         }
         else if(context.phase == InputActionPhase.Canceled){
+            audio.clip = null;
             curMovementInput = Vector2.zero;
         }
+    }
+
+    public void FootSound(){
+        if(soundInterval > checkTime){
+            checkTime += Mathf.Abs((curMovementInput.x+ curMovementInput.y)/20);
+        }
+        else{
+            int n = Random.Range(1, walkSound.Length);
+            audio.clip = walkSound[n];
+            audio.PlayOneShot(audio.clip);
+        
+            walkSound[n] = walkSound[0];
+            walkSound[0] = audio.clip;
+            checkTime = 0;
+        }
+        
     }
 
     public void OnJumpInput (InputAction.CallbackContext context) {

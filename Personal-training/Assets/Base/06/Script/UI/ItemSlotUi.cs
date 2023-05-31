@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
-public class ItemSlotUI : MonoBehaviour
+public class ItemSlotUi : MonoBehaviour
 {
+
     public Button button;
     public Image icon;
     public TextMeshProUGUI quantitiyText;

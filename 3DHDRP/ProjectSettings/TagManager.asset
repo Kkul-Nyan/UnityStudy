@@ -3,12 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Conductor
-  - Tornado
-  - Grass
-  - PPaint
-  - Freezable
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -18,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
-  - Terrain
-  - CloudDome
-  - Background
-  - Conductor
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

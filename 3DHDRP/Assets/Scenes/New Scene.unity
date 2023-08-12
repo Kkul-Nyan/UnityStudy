@@ -893,6 +893,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 930819493}
   m_CullTransparentMesh: 1
+--- !u!1 &977516978
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 977516980}
+  - component: {fileID: 977516979}
+  m_Layer: 0
+  m_Name: RainbowHierarchyRuleset
+  m_TagString: EditorOnly
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &977516979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977516978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1774853514, guid: ebe26e22332665d4c8332b2a624e5e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rules:
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 2125722886}
+    Ordinal: 0
+    Priority: 0
+    IconType: 18000
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 19000
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+--- !u!4 &977516980
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977516978}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1140654759
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,7 +2112,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   decoyStamina: 10
   playerSpeed: 3
-  jumpPower: 5
+  jumpPower: 4.5
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
   player: {fileID: 2125722891}
   cameraContainer: {fileID: 756310967}
   minXLook: -60
@@ -2136,6 +2196,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1745e1d1-66dc-4af0-9afb-78ac64b03d4d
     m_ActionName: Player/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1688dd08-1db8-41ec-8415-308622145e72
+    m_ActionName: Player/Interactive[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 114867cf-8fe1-4f9e-b10e-b3863cfb273e
+    m_ActionName: Player/SitDown[/Keyboard/ctrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

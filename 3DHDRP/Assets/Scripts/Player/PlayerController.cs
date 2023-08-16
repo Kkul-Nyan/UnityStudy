@@ -31,10 +31,13 @@ public class PlayerController : MonoBehaviour
      float immobilizeEndTime = 0f;
      public float immobilizeDuration = 3f;
 
+     public Camera cam;
+
      private void Awake(){
           rig = GetComponent<Rigidbody>();
           anim = GetComponentInChildren<Animator>();
           playerStatus = GetComponent<PlayerStatus>();
+          cam = Camera.main;
      }
 
      private void Start(){
@@ -79,7 +82,7 @@ public class PlayerController : MonoBehaviour
           }
           
      }
-
+     
      void PlayerMove()
      {
           if (inputVec != Vector2.zero)

@@ -61,14 +61,11 @@ crashlytics-build.properties
 
 **/default-2021.dwlt
 **/default-2022.dwlt
-Assets/.DS_Store
 **/.DS_Store
 UserSettings/Layouts/default-2021.dwlt
-.DS_Store
-Assets/.DS_Store
-**/.DS_Store
 UserSettings/Layouts/default-2022.dwlt
 UserSettings/Layouts/default-2022.dwlt
+
 # Ignore the auto-generated AOT compatibility dll.
 /Assets/Plugins/Sirenix/Assemblies/AOT/*
 

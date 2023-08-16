@@ -2122,6 +2122,7 @@ MonoBehaviour:
   maxXLook: 60
   lookSensitivity: 0.3
   immobilizeDuration: 3
+  cam: {fileID: 689790459}
 --- !u!114 &2125722888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2197,7 +2198,19 @@ MonoBehaviour:
     m_ActionId: 1745e1d1-66dc-4af0-9afb-78ac64b03d4d
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2125722886}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 1688dd08-1db8-41ec-8415-308622145e72
     m_ActionName: Player/Interactive[/Keyboard/e]
   - m_PersistentCalls:

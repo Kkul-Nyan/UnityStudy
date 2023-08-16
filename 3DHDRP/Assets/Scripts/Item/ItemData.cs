@@ -28,7 +28,10 @@ public class ItemData : ScriptableObject
     [BoxGroup("Info")]public string description;
     [BoxGroup("Info")]public ItemType type;
 
-    [BoxGroup("Info")][PreviewField(100, ObjectFieldAlignment.Center)]public Sprite icon;
+    [BoxGroup("Info")][PreviewField(100, ObjectFieldAlignment.Center)]public Sprite itemIcon;
+    [BoxGroup("Info")]public int width = 1;
+    [BoxGroup("Info")]public int height = 1;
+
     [BoxGroup("Info")]public GameObject dropPrefab;
 
     

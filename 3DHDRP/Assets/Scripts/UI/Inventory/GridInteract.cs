@@ -15,7 +15,7 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         itemGrid = GetComponent<ItemGrid>();
     }
 
-    
+    //마우스가 UI위에 있을때만, 그리드 체크
     public void OnPointerEnter(PointerEventData eventData)
     {
         inventoryController.selectedItemGrid = itemGrid;

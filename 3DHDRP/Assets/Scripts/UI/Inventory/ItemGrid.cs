@@ -32,7 +32,7 @@ public class ItemGrid : MonoBehaviour
         rectTransform.sizeDelta = size;
     }
 
-    //인벤토리 각 그리드 좌표 생성 Anchor를 기준으로생성 현재는 0,1기준
+    //인벤토리 마우스포인터위치의 그리드 좌표 계산 Anchor를 기준으로생성 현재는 0,1기준
     public Vector2Int GetTileGridPosition(Vector2 mousePosition){
         positionTheGrid.x = mousePosition.x - rectTransform.position.x;
         positionTheGrid.y = rectTransform.position.y - mousePosition.y;
@@ -47,12 +47,12 @@ public class ItemGrid : MonoBehaviour
     //클릭한 위치에 다른 아이탬이 존재할 경우, 그위치에 선택된아이탬을 나두고, 오버랩된 아이탬을 선택아이탬으로 교체합니다.
     public bool PlaceItem(InventoryItem inventoryItem, int posX, int posY, ref InventoryItem overlapItem)
     {
-        if (BoundaryCheck(posX, posY, inventoryItem.itemData.width, inventoryItem.itemData.height) == false)
+        if (BoundaryCheck(posX, posY, inventoryItem.WIDTH, inventoryItem.HEIGHT) == false)
         {
             return false;
         }
 
-        if (OverlapCheck(posX, posY, inventoryItem.itemData.width, inventoryItem.itemData.height, ref overlapItem) == false)
+        if (OverlapCheck(posX, posY, inventoryItem.WIDTH, inventoryItem.HEIGHT, ref overlapItem) == false)
         {
             overlapItem = null;
             return false;
@@ -63,12 +63,19 @@ public class ItemGrid : MonoBehaviour
             CleanGridReference(overlapItem);
         }
 
+        PlaceItem(inventoryItem, posX, posY);
+
+        return true;
+    }
+
+    public void PlaceItem(InventoryItem inventoryItem, int posX, int posY)
+    {
         RectTransform rectTransform = inventoryItem.GetComponent<RectTransform>();
         rectTransform.SetParent(this.rectTransform);
 
-        for (int x = 0; x < inventoryItem.itemData.width; x++)
+        for (int x = 0; x < inventoryItem.WIDTH; x++)
         {
-            for (int y = 0; y < inventoryItem.itemData.height; y++)
+            for (int y = 0; y < inventoryItem.HEIGHT; y++)
             {
                 inventoryItemSlot[posX + x, posY + y] = inventoryItem;
             }
@@ -79,15 +86,13 @@ public class ItemGrid : MonoBehaviour
         Vector2 position = CalulatePositionOnGrid(inventoryItem, posX, posY);
 
         rectTransform.localPosition = position;
-
-        return true;
     }
 
     public Vector2 CalulatePositionOnGrid(InventoryItem inventoryItem, int posX, int posY)
     {
         Vector2 position = new Vector2();
-        position.x = posX * tileSizeWidth + tileSizeWidth * inventoryItem.itemData.width / 2;
-        position.y = -(posY * tileSizeHeight + tileSizeHeight * inventoryItem.itemData.height / 2);
+        position.x = posX * tileSizeWidth + tileSizeWidth * inventoryItem.WIDTH / 2;
+        position.y = -(posY * tileSizeHeight + tileSizeHeight * inventoryItem.HEIGHT / 2);
         return position;
     }
 
@@ -124,9 +129,9 @@ public class ItemGrid : MonoBehaviour
 
     private void CleanGridReference(InventoryItem item)
     {
-        for (int ix = 0; ix < item.itemData.width; ix++)
+        for (int ix = 0; ix < item.WIDTH; ix++)
         {
-            for (int iy = 0; iy < item.itemData.height; iy++)
+            for (int iy = 0; iy < item.HEIGHT; iy++)
             {
                 inventoryItemSlot[item.onGridPositionX + ix, item.onGridPositionY + iy] = null;
             }
@@ -144,7 +149,7 @@ public class ItemGrid : MonoBehaviour
         return true;
     }
     // 아이탬의 기준점에 대칭되는 가장먼 좌표를 기준으로 인벤토리 바운더리 이내인지 이외인지 체크합니다.
-    bool BoundaryCheck(int posX, int posY, int width, int height){
+    public bool BoundaryCheck(int posX, int posY, int width, int height){
         if(PositionCheck(posX, posY) == false){ return false; }
 
         posX += width - 1;
@@ -158,5 +163,36 @@ public class ItemGrid : MonoBehaviour
     internal InventoryItem GetItem(int x, int y)
     {
         return inventoryItemSlot[x, y];
+    }
+
+    public Vector2Int? FindSpaceForObject(InventoryItem itemToInsert)
+    {
+        
+        int height = gridHeightCount - itemToInsert.HEIGHT + 1;
+        int width = gridWidthCount - itemToInsert.WIDTH + 1;
+
+        for(int y = 0; y < height; y++){
+            for(int x = 0; x < width; x++){
+               if(CheckAvailableSpace(x, y, itemToInsert.WIDTH, itemToInsert.HEIGHT) == true){
+                return new Vector2Int(x, y);
+               }
+            }
+        }
+        return null;
+    }
+
+    private bool CheckAvailableSpace(int posX, int posY, int width, int height)
+    {
+        for(int x = 0; x < width; x++){
+            for(int y = 0; y < height; y++){
+                if(inventoryItemSlot[posX + x, posY + y] != null){
+                    
+                    return false;
+                        
+                }
+            }
+        }
+
+        return true;
     }
 }

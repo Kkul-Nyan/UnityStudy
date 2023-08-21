@@ -18,11 +18,11 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     //마우스가 UI위에 있을때만, 그리드 체크
     public void OnPointerEnter(PointerEventData eventData)
     {
-        inventoryController.selectedItemGrid = itemGrid;
+        inventoryController.SelectedItemGrid = itemGrid;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        inventoryController.selectedItemGrid = null;
+        inventoryController.SelectedItemGrid = null;
     }
 }

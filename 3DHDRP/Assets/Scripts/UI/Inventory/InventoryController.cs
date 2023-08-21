@@ -16,12 +16,37 @@ public class InventoryController : MonoBehaviour
     [SerializeField] List<ItemData> items;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] Transform gridTransform;
+
+    InventoryHighLight inventoryHighLight;
+
+    private void Awake() {
+        inventoryHighLight = GetComponent<InventoryHighLight>();
+    }
     void Update()
     {
+        ItemIconDrag();
         if(Input.GetKeyDown(KeyCode.Q)){
             CreateRandomItem();
         }
-        ItemIconDrag();
+        HandleHighlight();
+    }
+
+
+    InventoryItem itemToHighlight;
+    private void HandleHighlight()
+    {
+        Vector2Int positionOnGrid = GetTileGridPosition();
+        if(selectedItem == null){
+            itemToHighlight = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
+
+            if(itemToHighlight != null){
+                inventoryHighLight.SetSize(itemToHighlight);
+                inventoryHighLight.SetPosition(selectedItemGrid, itemToHighlight);
+            }
+        }
+        else{
+
+        }
     }
 
     private void CreateRandomItem()
@@ -55,15 +80,7 @@ public class InventoryController : MonoBehaviour
 
     private void LeftMouseButtonPress()
     {
-        Vector2 position = Input.mousePosition;
-
-        //아이탬을 놓을 위치를 아이탬의 중심을 기준으로 놓게됨(없을시, 좌상단이 기준)
-        if(selectedItem != null){
-            position.x -= (selectedItem.itemData.width - 1) * ItemGrid.tileSizeWidth / 2;
-            position.y += (selectedItem.itemData.height - 1) * ItemGrid.tileSizeHeight / 2;
-        }
-
-        Vector2Int tileGridPosition = selectedItemGrid.GetTileGridPosition(position);
+        Vector2Int tileGridPosition = GetTileGridPosition();
 
         if (selectedItem == null)
         {
@@ -73,6 +90,20 @@ public class InventoryController : MonoBehaviour
         {
             PlaceItem(tileGridPosition);
         }
+    }
+
+    private Vector2Int GetTileGridPosition()
+    {
+        Vector2 position = Input.mousePosition;
+
+        //아이탬을 놓을 위치를 아이탬의 중심을 기준으로 놓게됨(없을시, 좌상단이 기준)
+        if (selectedItem != null)
+        {
+            position.x -= (selectedItem.itemData.width - 1) * ItemGrid.tileSizeWidth / 2;
+            position.y += (selectedItem.itemData.height - 1) * ItemGrid.tileSizeHeight / 2;
+        }
+
+        return selectedItemGrid.GetTileGridPosition(position);
     }
 
     private void PlaceItem(Vector2Int tileGridPosition)

@@ -47,38 +47,48 @@ public class ItemGrid : MonoBehaviour
     //클릭한 위치에 다른 아이탬이 존재할 경우, 그위치에 선택된아이탬을 나두고, 오버랩된 아이탬을 선택아이탬으로 교체합니다.
     public bool PlaceItem(InventoryItem inventoryItem, int posX, int posY, ref InventoryItem overlapItem)
     {
-        if(BoundaryCheck(posX, posY, inventoryItem.itemData.width, inventoryItem.itemData.height) == false){
+        if (BoundaryCheck(posX, posY, inventoryItem.itemData.width, inventoryItem.itemData.height) == false)
+        {
             return false;
         }
 
-        if(OverlapCheck(posX, posY, inventoryItem.itemData.width, inventoryItem.itemData.height, ref overlapItem) == false){
+        if (OverlapCheck(posX, posY, inventoryItem.itemData.width, inventoryItem.itemData.height, ref overlapItem) == false)
+        {
             overlapItem = null;
             return false;
         }
 
-        if(overlapItem != null){
+        if (overlapItem != null)
+        {
             CleanGridReference(overlapItem);
         }
 
         RectTransform rectTransform = inventoryItem.GetComponent<RectTransform>();
         rectTransform.SetParent(this.rectTransform);
 
-        for(int x = 0; x < inventoryItem.itemData.width; x++){
-            for(int y = 0; y < inventoryItem.itemData.height; y++){
+        for (int x = 0; x < inventoryItem.itemData.width; x++)
+        {
+            for (int y = 0; y < inventoryItem.itemData.height; y++)
+            {
                 inventoryItemSlot[posX + x, posY + y] = inventoryItem;
             }
         }
 
         inventoryItem.onGridPositionX = posX;
         inventoryItem.onGridPositionY = posY;
-
-        Vector2 position = new Vector2();
-        position.x = posX * tileSizeWidth + tileSizeWidth * inventoryItem.itemData.width / 2;
-        position.y =  -(posY * tileSizeHeight + tileSizeHeight * inventoryItem.itemData.height / 2);
+        Vector2 position = CalulatePositionOnGrid(inventoryItem, posX, posY);
 
         rectTransform.localPosition = position;
 
         return true;
+    }
+
+    public Vector2 CalulatePositionOnGrid(InventoryItem inventoryItem, int posX, int posY)
+    {
+        Vector2 position = new Vector2();
+        position.x = posX * tileSizeWidth + tileSizeWidth * inventoryItem.itemData.width / 2;
+        position.y = -(posY * tileSizeHeight + tileSizeHeight * inventoryItem.itemData.height / 2);
+        return position;
     }
 
     // 오버랩되는 아이탬이 있는지를 확인합니다.
@@ -143,5 +153,10 @@ public class ItemGrid : MonoBehaviour
         if(PositionCheck(posX, posY) == false){ return false; }
 
         return true;
-    }    
+    }
+
+    internal InventoryItem GetItem(int x, int y)
+    {
+        return inventoryItemSlot[x, y];
+    }
 }

@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -89,5 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e2d3a50e692a0489b73f6cad17f77a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeWitdh: 1
-  sizeHeight: 1
+  itemData: {fileID: 0}
+  onGridPositionX: 0
+  onGridPositionY: 0
+  rotated: 0

@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 4
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -730,7 +730,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 86a6f6c09be60fe4a9fcc2b7b775e522, type: 2}
   itemPrefab: {fileID: 6700837634025323381, guid: 3617beee474522c498c808e544e80458,
     type: 3}
-  gridTransform: {fileID: 386937186}
+  gridTransform: {fileID: 529789878}
 --- !u!114 &1527672569
 MonoBehaviour:
   m_ObjectHideFlags: 0

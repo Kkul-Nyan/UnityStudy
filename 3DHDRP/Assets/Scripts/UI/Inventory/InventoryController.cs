@@ -131,6 +131,8 @@ public class InventoryController : MonoBehaviour
     {
         if (selectedItem != null)
         {
+            //rectTransform.SetParent(gridTransform.GetComponent<RectTransform>());
+            rectTransform.SetAsLastSibling();
             rectTransform.position = Input.mousePosition;
         }
     }
@@ -185,7 +187,7 @@ public class InventoryController : MonoBehaviour
                 selectedItem = overlapItem;
                 overlapItem = null;
                 rectTransform = selectedItem.GetComponent<RectTransform>();
-                rectTransform.SetAsLastSibling();
+                
             }
         }
     }

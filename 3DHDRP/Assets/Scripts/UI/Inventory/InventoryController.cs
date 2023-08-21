@@ -121,7 +121,7 @@ public class InventoryController : MonoBehaviour
 
         rectTransform = inventoryItem.GetComponent<RectTransform>();
         rectTransform.SetParent(gridTransform);
-        rectTransform.SetAsFirstSibling();
+        rectTransform.SetAsLastSibling();
 
         int selectedItemId = UnityEngine.Random.Range(0, items.Count);
         inventoryItem.Set(items[selectedItemId]);
@@ -185,7 +185,7 @@ public class InventoryController : MonoBehaviour
                 selectedItem = overlapItem;
                 overlapItem = null;
                 rectTransform = selectedItem.GetComponent<RectTransform>();
-                rectTransform.SetAsFirstSibling();
+                rectTransform.SetAsLastSibling();
             }
         }
     }

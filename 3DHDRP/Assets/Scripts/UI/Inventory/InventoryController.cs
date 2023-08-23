@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class InventoryController : MonoBehaviour
@@ -19,7 +19,8 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-  
+    public GameObject inventoryWindow;
+    PlayerController controller;
 
     InventoryItem selectedItem;
     InventoryItem overlapItem;
@@ -32,8 +33,16 @@ public class InventoryController : MonoBehaviour
     Vector2Int oldPosition;
     InventoryHighLight inventoryHighLight;
 
+    
+    public UnityEvent onOpenInventory;
+    public UnityEvent onCloseInventory;
+
     private void Awake() {
         inventoryHighLight = GetComponent<InventoryHighLight>();
+        controller = GetComponent<PlayerController>();
+    }
+    private void Start() {
+        inventoryWindow.SetActive(false);
     }
     void Update()
     {
@@ -137,9 +146,33 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    public void OnOpenInventory(InputAction.CallbackContext context){
+        if(context.phase == InputActionPhase.Performed)
+        {
+            Toggle();
+        }
+    }
+
+    private void Toggle()
+    {
+        if (inventoryWindow.activeInHierarchy)
+        {
+            inventoryWindow.SetActive(false);
+            //onCloseInventory.Invoke();
+            controller.ToggleCursor(false);
+        }
+        else
+        {
+            inventoryWindow.SetActive(true);
+            //onOpenInventory.Invoke();
+            //ClearSelectedItemWindow();
+            controller.ToggleCursor(true);
+        }
+    }
+
     //클릭시, 그리드라면, GridInteract를 통해 아이탬그리드가 null이 아닐경우 작동
     public void OnClickInventoyInput(InputAction.CallbackContext context){
-        if(context.phase == InputActionPhase.Performed)
+        if(context.phase == InputActionPhase.Performed && inventoryWindow.activeInHierarchy)
         {
             if (selectedItemGrid == null) { 
                 inventoryHighLight.Show(false);

@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
      public Camera cam;
 
+     #region 유니티 기본전처리 과정
      private void Awake(){
           rig = GetComponent<Rigidbody>();
           anim = GetComponentInChildren<Animator>();
@@ -67,8 +68,9 @@ public class PlayerController : MonoBehaviour
                CameraLook();
           }
      }
+     #endregion
 
-
+     #region 플레이어 기본적인 움직임(앞뒤좌우)
      public void OnMoveInput(InputAction.CallbackContext callback){
           if(isMovementAllowed){
                if(callback.phase == InputActionPhase.Performed){  
@@ -104,9 +106,9 @@ public class PlayerController : MonoBehaviour
           moveVec.y = rig.velocity.y;
           rig.velocity = moveVec;
      }
-
+     #endregion
    
-
+     #region 플레이어 점프 관련
      public void OnJumpInput(InputAction.CallbackContext callback){
           if(callback.phase == InputActionPhase.Started){
                if(IsGrounded()){  
@@ -145,7 +147,9 @@ public class PlayerController : MonoBehaviour
           Gizmos.DrawRay(transform.position + (transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down);
           Gizmos.DrawRay(transform.position + (-transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down);
      }
+     #endregion
 
+     #region 플레이어 시점 관련
      public void OnLookInput(InputAction.CallbackContext context){
           mouseDelta = context.ReadValue<Vector2>();
      }
@@ -162,4 +166,5 @@ public class PlayerController : MonoBehaviour
           Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
           canLook = !toggle;
      }
+     #endregion
 }

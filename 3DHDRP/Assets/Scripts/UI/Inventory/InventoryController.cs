@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class InventoryController : MonoBehaviour
 {
@@ -20,56 +22,64 @@ public class InventoryController : MonoBehaviour
     }
 
     public GameObject inventoryWindow;
+    public GameObject detailInventoryWindow;
     PlayerController controller;
 
     InventoryItem selectedItem;
     InventoryItem overlapItem;
     RectTransform rectTransform;
-
+ 
+    ItemGrid detailedGrid;
+    
     [SerializeField] List<ItemData> items;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] Transform gridTransform;
+    [SerializeField] Transform dropPosition;
 
     Vector2Int oldPosition;
     InventoryHighLight inventoryHighLight;
-
     
     public UnityEvent onOpenInventory;
     public UnityEvent onCloseInventory;
 
+    bool isInventoryOpen;
+
+    InventoryItem itemToHighlight;
+    Vector2Int itemToDetail;
+
+
+    #region 기본 유니티 전처리과정
     private void Awake() {
         inventoryHighLight = GetComponent<InventoryHighLight>();
         controller = GetComponent<PlayerController>();
     }
     private void Start() {
+        detailInventoryWindow.SetActive(false);
         inventoryWindow.SetActive(false);
     }
     void Update()
     {
-        ItemIconDrag();
-        
-        if(Input.GetKeyDown(KeyCode.Q)){
-            if(selectedItem == null){
-                CreateRandomItem();
+        if(isInventoryOpen){
+            ItemIconDrag();
+            
+            if(Input.GetKeyDown(KeyCode.Q)){
+                if(selectedItem == null){
+                    CreateRandomItem();
+                }
             }
-        }
-        if(Input.GetKeyDown(KeyCode.W)){
-            InsertRandomItem();
-        }
+            if(Input.GetKeyDown(KeyCode.W)){
+                InsertRandomItem();
+            }
 
-        if(Input.GetKeyDown(KeyCode.R)){
-            RotateItem();
-        }
-        HandleHighlight(); 
-        
+            if(Input.GetKeyDown(KeyCode.R)){
+                RotateItem();
+            }
+            HandleHighlight(); 
+        }  
     }
-
-    private void RotateItem()
-    {
-        if(selectedItem == null){return;}
-        selectedItem.Rotate();
-    }
-
+    #endregion
+    
+    #region 아이탬 생성관련(테스트용)
     private void InsertRandomItem()
     {
         if( selectedItemGrid == null){ return;}
@@ -87,11 +97,26 @@ public class InventoryController : MonoBehaviour
         selectedItemGrid.PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
     }
 
-    InventoryItem itemToHighlight;
+    private void CreateRandomItem()
+    {
+        InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
+        selectedItem = inventoryItem;
+
+        rectTransform = inventoryItem.GetComponent<RectTransform>();
+        rectTransform.SetParent(gridTransform);
+        rectTransform.SetAsLastSibling();
+
+        int selectedItemId = UnityEngine.Random.Range(0, items.Count);
+        inventoryItem.Set(items[selectedItemId]);
+    }
+    #endregion
+
+    #region 아이탬하이라이트 및 회전 관련
 
     //하이라이트를 켜고끄고, 마우스를 따라 기존의 아이탬과 함께 아이탬경계를 하이라이트로 보여줍니다.
     private void HandleHighlight()
     {
+        if(selectedItemGrid == null) { return; }
         Vector2Int positionOnGrid = GetTileGridPosition();
 
         if(oldPosition == positionOnGrid){return;}
@@ -122,34 +147,85 @@ public class InventoryController : MonoBehaviour
             inventoryHighLight.SetPosition(selectedItemGrid, selectedItem, positionOnGrid.x, positionOnGrid.y);
         }
     }
-
-    private void CreateRandomItem()
+    private void RotateItem()
     {
-        InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
-        selectedItem = inventoryItem;
-
-        rectTransform = inventoryItem.GetComponent<RectTransform>();
-        rectTransform.SetParent(gridTransform);
-        rectTransform.SetAsLastSibling();
-
-        int selectedItemId = UnityEngine.Random.Range(0, items.Count);
-        inventoryItem.Set(items[selectedItemId]);
+        if(selectedItem == null){return;}
+        selectedItem.Rotate();
     }
 
     private void ItemIconDrag()
     {
         if (selectedItem != null)
         {
-            //rectTransform.SetParent(gridTransform.GetComponent<RectTransform>());
+            rectTransform.SetParent(gridTransform.GetComponent<RectTransform>());
             rectTransform.SetAsLastSibling();
             rectTransform.position = Input.mousePosition;
         }
     }
+    #endregion
 
+    #region 키세팅(Input) 스크립트
     public void OnOpenInventory(InputAction.CallbackContext context){
         if(context.phase == InputActionPhase.Performed)
         {
             Toggle();
+        }
+    }
+
+    public void OnDetailInventoryInput(InputAction.CallbackContext context){
+        if(context.phase == InputActionPhase.Performed && isInventoryOpen)
+        {
+            if (selectedItemGrid == null) { 
+                inventoryHighLight.Show(false);
+                return;
+            }
+            ClickDetailInventory();
+        }
+    }
+
+    
+    //클릭시, 그리드라면, GridInteract를 통해 아이탬그리드가 null이 아닐경우 작동
+    public void OnClickInventoyInput(InputAction.CallbackContext context){
+        if(context.phase == InputActionPhase.Performed && isInventoryOpen)
+        {
+            if (selectedItemGrid == null) { 
+                inventoryHighLight.Show(false);
+                return;
+            }
+            LeftMouseButtonPress();
+        }
+    }
+    #endregion
+
+    #region Input 관련 스크립트
+    private void ClickDetailInventory()
+    {
+        Vector2Int itemToDetailPos = GetTileGridPosition();
+        
+        InventoryItem detailedItem = selectedItemGrid.GetItem(itemToDetailPos.x, itemToDetailPos.y);
+
+        if (detailedItem == null) { return; }
+        itemToDetail = itemToDetailPos;
+        detailedGrid = selectedItemGrid;
+        DetailToggle();
+    }
+
+    private void DetailToggle()
+    {
+        RectTransform rectTransform = detailInventoryWindow.GetComponent<RectTransform>();
+
+        if (detailInventoryWindow.activeInHierarchy)
+        {
+            detailInventoryWindow.SetActive(false);
+            
+        }
+        else
+        {
+            detailInventoryWindow.SetActive(true);
+            
+            Vector2 mousePos = Input.mousePosition;
+            Vector2 size = rectTransform.sizeDelta / 2;
+            rectTransform.position = new Vector2(mousePos.x + size.x, mousePos.y + size.y);
         }
     }
 
@@ -160,6 +236,7 @@ public class InventoryController : MonoBehaviour
             inventoryWindow.SetActive(false);
             //onCloseInventory.Invoke();
             controller.ToggleCursor(false);
+            isInventoryOpen = false;
         }
         else
         {
@@ -167,25 +244,14 @@ public class InventoryController : MonoBehaviour
             //onOpenInventory.Invoke();
             //ClearSelectedItemWindow();
             controller.ToggleCursor(true);
-        }
-    }
-
-    //클릭시, 그리드라면, GridInteract를 통해 아이탬그리드가 null이 아닐경우 작동
-    public void OnClickInventoyInput(InputAction.CallbackContext context){
-        if(context.phase == InputActionPhase.Performed && inventoryWindow.activeInHierarchy)
-        {
-            if (selectedItemGrid == null) { 
-                inventoryHighLight.Show(false);
-                return;
-            }
-            LeftMouseButtonPress();
+            isInventoryOpen = true;
         }
     }
 
     private void LeftMouseButtonPress()
     {
         Vector2Int tileGridPosition = GetTileGridPosition();
-
+        Debug.Log("tileGridPositin : "+ tileGridPosition.x + ":" + tileGridPosition.y);
         if (selectedItem == null)
         {
             PickUpItem(tileGridPosition);
@@ -195,9 +261,12 @@ public class InventoryController : MonoBehaviour
             PlaceItem(tileGridPosition);
         }
     }
+    #endregion
 
+    //마우스 클릭한 위치의 좌표를 확인해서, 그리드 내 좌표로 변환합니다.
     private Vector2Int GetTileGridPosition()
     {
+        if(selectedItemGrid != null) {}
         Vector2 position = Input.mousePosition;
 
         //아이탬을 놓을 위치를 아이탬의 중심을 기준으로 놓게됨(없을시, 좌상단이 기준)
@@ -209,7 +278,7 @@ public class InventoryController : MonoBehaviour
        
         return selectedItemGrid.GetTileGridPosition(position);
     }
-
+    #region LeftMouseButtonPress 관련
     private void PlaceItem(Vector2Int tileGridPosition)
     {
         bool complete = selectedItemGrid.PlaceItem(selectedItem, tileGridPosition.x, tileGridPosition.y, ref overlapItem);
@@ -233,4 +302,37 @@ public class InventoryController : MonoBehaviour
             rectTransform = selectedItem.GetComponent<RectTransform>();
         }
     }
+    #endregion
+
+    #region 디테일 버튼 관리
+    public void OnPickUpButton(){
+        selectedItem = detailedGrid.PickUpItem(itemToDetail.x, itemToDetail.y);
+        if (selectedItem != null)
+        {
+            rectTransform = selectedItem.GetComponent<RectTransform>();
+        }
+
+        DetailToggle();
+    }
+
+    public void OnUseButton(){
+        Debug.Log("Use!!");
+        DetailToggle();
+    }
+
+    public void OnDivisionButton(){
+        Debug.Log("Check!!");
+        DetailToggle();
+    }
+
+    public void OnThrowButton(){
+        InventoryItem item = detailedGrid.GetItem(itemToDetail.x, itemToDetail.y);
+        Instantiate(item.itemData.dropPrefab, dropPosition.position, quaternion.identity);
+        
+        Destroy(item.gameObject);
+
+        DetailToggle();
+    }
+
+    #endregion
 }

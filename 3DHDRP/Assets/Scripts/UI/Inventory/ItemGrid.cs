@@ -42,6 +42,7 @@ public class ItemGrid : MonoBehaviour
 
         return tileGridPosition;
     }
+
     //인벤토리에 선택된 아이탬을 드랍할 경우
     //인벤토리 바운더리 이내일경우 작동합니다.
     //클릭한 위치에 다른 아이탬이 존재할 경우, 그위치에 선택된아이탬을 나두고, 오버랩된 아이탬을 선택아이탬으로 교체합니다.
@@ -127,6 +128,7 @@ public class ItemGrid : MonoBehaviour
         return toReturn;
     }
 
+    // 인벤토리 아이탬 좌표 삭제(예를들어 2X2아이탬이 삭제시 이 스크립트롤 통해 총 4칸의 아이탬슬롯 정보 초기화)
     private void CleanGridReference(InventoryItem item)
     {
         for (int ix = 0; ix < item.WIDTH; ix++)
@@ -138,6 +140,8 @@ public class ItemGrid : MonoBehaviour
         }
     }
 
+
+    #region 인벤토리 바운더리 확인 관련
     // 단순히 아이탬의 기준좌표가 인벤토리 바운더리 이내인지 이외인지 체크합니다.
     bool PositionCheck(int posX, int posY){
         if(posX < 0 || posY < 0){
@@ -159,12 +163,14 @@ public class ItemGrid : MonoBehaviour
 
         return true;
     }
+    #endregion
 
-    internal InventoryItem GetItem(int x, int y)
+    public InventoryItem GetItem(int x, int y)
     {
         return inventoryItemSlot[x, y];
     }
 
+    #region 인벤토리 빈공간 자동 확인 관련
     public Vector2Int? FindSpaceForObject(InventoryItem itemToInsert)
     {
         
@@ -192,7 +198,7 @@ public class ItemGrid : MonoBehaviour
                 }
             }
         }
-
         return true;
     }
+    #endregion
 }

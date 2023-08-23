@@ -33,15 +33,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Interactive",
-                    "type": "Button",
-                    "id": "1688dd08-1db8-41ec-8415-308622145e72",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "SitDown",
                     "type": "Button",
                     "id": "114867cf-8fe1-4f9e-b10e-b3863cfb273e",
@@ -54,6 +45,24 @@
                     "name": "LeftClick",
                     "type": "Button",
                     "id": "fc324623-e56a-4eba-b708-56d8fc29477a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightClick",
+                    "type": "Button",
+                    "id": "ab0a11d3-3f9b-46bf-a7c4-526b9a456617",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interactive",
+                    "type": "Button",
+                    "id": "1688dd08-1db8-41ec-8415-308622145e72",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -160,23 +169,12 @@
                 },
                 {
                     "name": "",
-                    "id": "d570e98e-bace-4633-a09d-d797b958f928",
-                    "path": "",
+                    "id": "054f215f-bd39-464a-a482-4cd30fbe7157",
+                    "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SitDown",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7f08a846-b403-4b32-980f-7df83814a0e1",
-                    "path": "<Keyboard>/ctrl",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SitDown",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -193,12 +191,23 @@
                 },
                 {
                     "name": "",
-                    "id": "054f215f-bd39-464a-a482-4cd30fbe7157",
-                    "path": "<Keyboard>/i",
+                    "id": "7f08a846-b403-4b32-980f-7df83814a0e1",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Inventory",
+                    "action": "SitDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09a3b82c-4e78-4153-9b5d-4d5479a16427",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

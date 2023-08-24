@@ -27,10 +27,9 @@ public class InventoryController : MonoBehaviour
     PlayerController controller;
 
     InventoryItem selectedItem;
+    InventoryItem pickupItem;
     InventoryItem overlapItem;
     RectTransform rectTransform;
- 
-    ItemGrid detailedGrid;
     
     [SerializeField] List<ItemData> items;
     [SerializeField] GameObject itemPrefab;
@@ -38,14 +37,13 @@ public class InventoryController : MonoBehaviour
     [SerializeField] Transform dropPosition;
 
     Vector2Int oldPosition;
-    Vector2Int oldItemPosition;
 
     InventoryHighLight inventoryHighLight;
 
     bool isInventoryOpen;
 
     InventoryItem itemToHighlight;
-    Vector2Int itemToDetail;
+
 
     GameObject loadedPrefab;
 
@@ -58,20 +56,20 @@ public class InventoryController : MonoBehaviour
         inventoryHighLight = GetComponent<InventoryHighLight>();
         controller = GetComponent<PlayerController>();
         loadedPrefab = Resources.Load<GameObject>("Prefabs/Item");
-        Debug.Log(loadedPrefab.name);
     }
+
     private void Start() {
         detailInventoryWindow.SetActive(false);
         inventoryWindow.SetActive(false);
-
     }
+
     void Update()
     {
         if(isInventoryOpen){
             ItemIconDrag();
             
             if(Input.GetKeyDown(KeyCode.Q)){
-                if(selectedItem == null){
+                if(pickupItem == null){
                     CreateRandomItem();
                 }
             }
@@ -107,7 +105,7 @@ public class InventoryController : MonoBehaviour
         for(int i = 0; i < grids.Length; i++){
             Vector2Int? posOnGrid = grids[i].FindSpaceForObject(itemToInsert);
             if(posOnGrid != null){ 
-                grids[i].PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
+                grids[i].PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y, grids[i]);
                 return true;
             }
         }
@@ -118,7 +116,7 @@ public class InventoryController : MonoBehaviour
     private void CreateRandomItem()
     {
         InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
-        selectedItem = inventoryItem;
+        pickupItem = inventoryItem;
 
         rectTransform = inventoryItem.GetComponent<RectTransform>();
         rectTransform.SetParent(gridTransform);
@@ -141,7 +139,7 @@ public class InventoryController : MonoBehaviour
 
         oldPosition = positionOnGrid;
 
-        if(selectedItem == null){
+        if(pickupItem == null){
             itemToHighlight = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
 
             if(itemToHighlight != null){
@@ -158,22 +156,22 @@ public class InventoryController : MonoBehaviour
             inventoryHighLight.Show(selectedItemGrid.BoundaryCheck(
                 positionOnGrid.x,
                 positionOnGrid.y,
-                selectedItem.WIDTH,
-                selectedItem.HEIGHT
+                pickupItem.WIDTH,
+                pickupItem.HEIGHT
                 ));
-            inventoryHighLight.SetSize(selectedItem);
-            inventoryHighLight.SetPosition(selectedItemGrid, selectedItem, positionOnGrid.x, positionOnGrid.y);
+            inventoryHighLight.SetSize(pickupItem);
+            inventoryHighLight.SetPosition(selectedItemGrid, pickupItem, positionOnGrid.x, positionOnGrid.y);
         }
     }
     private void RotateItem()
     {
-        if(selectedItem == null){return;}
-        selectedItem.Rotate();
+        if(pickupItem == null){return;}
+        pickupItem.Rotate();
     }
 
     private void ItemIconDrag()
     {
-        if (selectedItem != null)
+        if (pickupItem != null)
         {
             rectTransform.SetParent(gridTransform.GetComponent<RectTransform>());
             rectTransform.SetAsLastSibling();
@@ -191,8 +189,12 @@ public class InventoryController : MonoBehaviour
     }
 
     public void OnDetailInventoryInput(InputAction.CallbackContext context){
-        if(context.phase == InputActionPhase.Performed && isInventoryOpen)
+        if(context.phase == InputActionPhase.Started && isInventoryOpen)
         {
+            if(pickupItem != null){
+                PlaceItem(new Vector2Int(selectedItem.onGridPositionX, selectedItem.onGridPositionY)); 
+            }
+
             if (selectedItemGrid == null) { 
                 inventoryHighLight.Show(false);
                 return;
@@ -205,8 +207,10 @@ public class InventoryController : MonoBehaviour
     
     //클릭시, 그리드라면, GridInteract를 통해 아이탬그리드가 null이 아닐경우 작동
     public void OnClickInventoyInput(InputAction.CallbackContext context){
-        if(context.phase == InputActionPhase.Performed && isInventoryOpen)
+        if(context.phase == InputActionPhase.Started && isInventoryOpen)
         {
+            //if(detailInventoryWindow.activeInHierarchy){ DetailToggle(); }
+
             if (selectedItemGrid == null) { 
                 inventoryHighLight.Show(false);
                 return;
@@ -214,8 +218,8 @@ public class InventoryController : MonoBehaviour
 
             if(clickTime - Time.time > - 0.15f && !isDoubleClick ){
                 isDoubleClick = true;
-                PlaceItem(oldItemPosition);
-                OnUseButton();
+                PlaceItem(new Vector2Int(selectedItem.onGridPositionX, selectedItem.onGridPositionY));
+                UseItem();
                 return;
             }
 
@@ -232,15 +236,6 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
-
-    public void OnDoubleClickInventoryInput(InputAction.CallbackContext context){
-        if(context.phase == InputActionPhase.Performed && isInventoryOpen)
-        {
-            detailInventoryWindow.SetActive(false);
-            OnUseButton();
-        }
-    }
-
     
     #endregion
 
@@ -252,8 +247,9 @@ public class InventoryController : MonoBehaviour
         InventoryItem detailedItem = selectedItemGrid.GetItem(itemToDetailPos.x, itemToDetailPos.y);
 
         if (detailedItem == null) { return; }
-        itemToDetail = itemToDetailPos;
-        detailedGrid = selectedItemGrid;
+
+        selectedItem = detailedItem;
+
         DetailToggle();
     }
 
@@ -264,7 +260,7 @@ public class InventoryController : MonoBehaviour
         if (detailInventoryWindow.activeInHierarchy)
         {
             detailInventoryWindow.SetActive(false);
-            
+            selectedItem = null;
         }
         else
         {
@@ -297,15 +293,13 @@ public class InventoryController : MonoBehaviour
     {
         Vector2Int tileGridPosition = GetTileGridPosition();
         //Debug.Log("tileGridPositin : "+ tileGridPosition.x + ":" + tileGridPosition.y);
-        if (selectedItem == null)
+        if (pickupItem == null)
         {
-            InventoryItem oldItem = selectedItemGrid.GetItem(tileGridPosition.x, tileGridPosition.y);
-            oldItemPosition = new Vector2Int(oldItem.onGridPositionX, oldItem.onGridPositionY);
             PickUpItem(tileGridPosition);
         }
         else
         {
-            PlaceItem(tileGridPosition);
+            PlaceItem(tileGridPosition);    
         }
     }
     #endregion
@@ -317,10 +311,10 @@ public class InventoryController : MonoBehaviour
         Vector2 position = Input.mousePosition;
 
         //아이탬을 놓을 위치를 아이탬의 중심을 기준으로 놓게됨(없을시, 좌상단이 기준)
-        if (selectedItem != null)
+        if (pickupItem != null)
         {
-            position.x -= (selectedItem.WIDTH - 1) * ItemGrid.tileSizeWidth / 2;
-            position.y += (selectedItem.HEIGHT - 1) * ItemGrid.tileSizeHeight / 2;
+            position.x -= (pickupItem.WIDTH - 1) * ItemGrid.tileSizeWidth / 2;
+            position.y += (pickupItem.HEIGHT - 1) * ItemGrid.tileSizeHeight / 2;
         }
        
         return selectedItemGrid.GetTileGridPosition(position);
@@ -329,14 +323,18 @@ public class InventoryController : MonoBehaviour
     #region LeftMouseButtonPress 관련
     private void PlaceItem(Vector2Int tileGridPosition)
     {
-        bool complete = selectedItemGrid.PlaceItem(selectedItem, tileGridPosition.x, tileGridPosition.y, ref overlapItem);
+        bool complete = selectedItemGrid.PlaceItem(pickupItem, tileGridPosition.x, tileGridPosition.y, selectedItemGrid, ref overlapItem);
 
         if(complete){
+            pickupItem = null;
             selectedItem = null;
+
             if(overlapItem != null){
-                selectedItem = overlapItem;
+                pickupItem = overlapItem;
                 overlapItem = null;
-                rectTransform = selectedItem.GetComponent<RectTransform>();
+
+                selectedItem = pickupItem;
+                rectTransform = pickupItem.GetComponent<RectTransform>();
                 
             }
         }
@@ -344,50 +342,62 @@ public class InventoryController : MonoBehaviour
 
     private void PickUpItem(Vector2Int tileGridPosition)
     {
-        selectedItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
-        if (selectedItem != null)
+        pickupItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
+        if (pickupItem != null)
         {
-            rectTransform = selectedItem.GetComponent<RectTransform>();
+            selectedItem = pickupItem;
+            rectTransform = pickupItem.GetComponent<RectTransform>();
         }
+    }
+
+    private void PickUpItem(InventoryItem item)
+    {
+        pickupItem = item;
+        rectTransform = pickupItem.GetComponent<RectTransform>();
     }
     #endregion
 
     #region 디테일 버튼 관리
-    public void OnPickUpButton(){
-        selectedItem = detailedGrid.PickUpItem(itemToDetail.x, itemToDetail.y);
-        if (selectedItem != null)
-        {
-            rectTransform = selectedItem.GetComponent<RectTransform>();
-        }
-
-        detailInventoryWindow.SetActive(false);
+    public void OnPickUpButton()
+    {
+        PickUpItem(selectedItem);
+        DetailToggle();
     }
+
+    
 
     public void OnUseButton(){
-        Debug.Log("Use!!");
-        detailInventoryWindow.SetActive(false);
+        UseItem();
+        DetailToggle();
     }
 
-    public void OnDivisionButton(){
-        Debug.Log("Check!!");
-        detailInventoryWindow.SetActive(false);
+    public void OnDivideButton(){
+        DivideItem();
+        DetailToggle();
     }
 
-    public void OnThrowButton()
+    public void OnThrowButton(){
+        DropItem(selectedItem);
+        DetailToggle();
+    }
+    #endregion
+
+    #region 아이탬사용
+    private void UseItem()
     {
-        InventoryItem item = detailedGrid.GetItem(itemToDetail.x, itemToDetail.y);
-        
-        DropItem(item);
+        Debug.Log("Use");
+    }
 
-        Destroy(item.gameObject);
-
-        detailInventoryWindow.SetActive(false);
+    private void DivideItem(){
+        Debug.Log("Divide");
     }
 
     private void DropItem(InventoryItem item)
     {
         Instantiate(item.itemData.dropPrefab, dropPosition.position, quaternion.identity);
-    }
+        Destroy(item.gameObject);
 
+        selectedItem = null;
+    }
     #endregion
 }

@@ -46,7 +46,7 @@ public class ItemGrid : MonoBehaviour
     //인벤토리에 선택된 아이탬을 드랍할 경우
     //인벤토리 바운더리 이내일경우 작동합니다.
     //클릭한 위치에 다른 아이탬이 존재할 경우, 그위치에 선택된아이탬을 나두고, 오버랩된 아이탬을 선택아이탬으로 교체합니다.
-    public bool PlaceItem(InventoryItem inventoryItem, int posX, int posY, ref InventoryItem overlapItem)
+    public bool PlaceItem(InventoryItem inventoryItem, int posX, int posY, ItemGrid itemGrid, ref InventoryItem overlapItem)
     {
         if (BoundaryCheck(posX, posY, inventoryItem.WIDTH, inventoryItem.HEIGHT) == false)
         {
@@ -64,12 +64,12 @@ public class ItemGrid : MonoBehaviour
             CleanGridReference(overlapItem);
         }
 
-        PlaceItem(inventoryItem, posX, posY);
+        PlaceItem(inventoryItem, posX, posY, itemGrid);
 
         return true;
     }
 
-    public void PlaceItem(InventoryItem inventoryItem, int posX, int posY)
+    public void PlaceItem(InventoryItem inventoryItem, int posX, int posY, ItemGrid itemGrid)
     {
         RectTransform rectTransform = inventoryItem.GetComponent<RectTransform>();
         rectTransform.SetParent(this.rectTransform);
@@ -84,6 +84,7 @@ public class ItemGrid : MonoBehaviour
 
         inventoryItem.onGridPositionX = posX;
         inventoryItem.onGridPositionY = posY;
+        inventoryItem.grid = itemGrid;
         Vector2 position = CalulatePositionOnGrid(inventoryItem, posX, posY);
 
         rectTransform.localPosition = position;

@@ -2261,7 +2261,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2125722893}
         m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
-        m_MethodName: OnDivisionButton
+        m_MethodName: OnDivideButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4225,22 +4225,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1499e513-9ff3-4e5c-af67-8889cd4879e1
     m_ActionName: Player/Inventory[/Keyboard/i]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2125722893}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
-        m_MethodName: OnDoubleClickInventoryInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 82269144-7dde-4385-a97e-36e4a5301a0c
-    m_ActionName: Player/UseItem[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

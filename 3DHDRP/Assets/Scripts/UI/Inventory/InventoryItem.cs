@@ -9,6 +9,7 @@ public class InventoryItem : MonoBehaviour
     public ItemData itemData;
     public int onGridPositionX;
     public int onGridPositionY;
+    public ItemGrid grid;
 
     public bool rotated = false;
 

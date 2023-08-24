@@ -2642,7 +2642,7 @@ PrefabInstance:
     - target: {fileID: 4093077621643718676, guid: 0e329539ab77b6e43b318f793d518977,
         type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: InventoryCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 5912369517075258063, guid: 0e329539ab77b6e43b318f793d518977,
         type: 3}
@@ -4197,22 +4197,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2125722893}
         m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
-        m_MethodName: OnOpenInventory
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 87f636b2-a84f-466b-aa28-cc6ad1df2eed
-    m_ActionName: Player/Inventory[/Keyboard/i]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2125722893}
-        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
         m_MethodName: OnDetailInventoryInput
         m_Mode: 0
         m_Arguments:
@@ -4225,6 +4209,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ab0a11d3-3f9b-46bf-a7c4-526b9a456617
     m_ActionName: Player/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2125722893}
+        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+        m_MethodName: OnOpenInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1499e513-9ff3-4e5c-af67-8889cd4879e1
+    m_ActionName: Player/Inventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2125722893}
+        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+        m_MethodName: OnDoubleClickInventoryInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 82269144-7dde-4385-a97e-36e4a5301a0c
+    m_ActionName: Player/UseItem[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -4380,12 +4396,6 @@ MonoBehaviour:
     type: 3}
   gridTransform: {fileID: 1551950449}
   dropPosition: {fileID: 1901727839}
-  onOpenInventory:
-    m_PersistentCalls:
-      m_Calls: []
-  onCloseInventory:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2125722894
 MonoBehaviour:
   m_ObjectHideFlags: 0

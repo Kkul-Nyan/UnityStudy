@@ -71,7 +71,16 @@
                 {
                     "name": "Inventory",
                     "type": "Button",
-                    "id": "87f636b2-a84f-466b-aa28-cc6ad1df2eed",
+                    "id": "1499e513-9ff3-4e5c-af67-8889cd4879e1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseItem",
+                    "type": "Button",
+                    "id": "82269144-7dde-4385-a97e-36e4a5301a0c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -169,17 +178,6 @@
                 },
                 {
                     "name": "",
-                    "id": "054f215f-bd39-464a-a482-4cd30fbe7157",
-                    "path": "<Keyboard>/i",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "f95e334f-a1b9-4a2f-8314-c60ee6f54f32",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -208,6 +206,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "58edc992-2118-46af-ba67-9ee51c28bc4f",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c458fbbd-679b-4e34-b1bf-1bfda93716d5",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "MultiTap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

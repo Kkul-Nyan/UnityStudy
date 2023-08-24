@@ -38,9 +38,6 @@ public class InventoryController : MonoBehaviour
 
     Vector2Int oldPosition;
     InventoryHighLight inventoryHighLight;
-    
-    public UnityEvent onOpenInventory;
-    public UnityEvent onCloseInventory;
 
     bool isInventoryOpen;
 
@@ -69,7 +66,7 @@ public class InventoryController : MonoBehaviour
             
             if(Input.GetKeyDown(KeyCode.Q)){
                 if(selectedItem == null){
-                    AddItem(items[2]);
+                    CreateRandomItem();
                 }
             }
 
@@ -210,6 +207,16 @@ public class InventoryController : MonoBehaviour
             LeftMouseButtonPress();
         }
     }
+
+    public void OnDoubleClickInventoryInput(InputAction.CallbackContext context){
+        if(context.phase == InputActionPhase.Performed && isInventoryOpen)
+        {
+            detailInventoryWindow.SetActive(false);
+            OnUseButton();
+        }
+    }
+
+    
     #endregion
 
     #region Input 관련 스크립트
@@ -244,20 +251,18 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+
     public void Toggle()
     {
         if (inventoryWindow.activeInHierarchy)
         {
             inventoryWindow.SetActive(false);
-            //onCloseInventory.Invoke();
             controller.ToggleCursor(false);
             isInventoryOpen = false;
         }
         else
         {
             inventoryWindow.SetActive(true);
-            //onOpenInventory.Invoke();
-            //ClearSelectedItemWindow();
             controller.ToggleCursor(true);
             isInventoryOpen = true;
         }
@@ -328,17 +333,17 @@ public class InventoryController : MonoBehaviour
             rectTransform = selectedItem.GetComponent<RectTransform>();
         }
 
-        DetailToggle();
+        detailInventoryWindow.SetActive(false);
     }
 
     public void OnUseButton(){
         Debug.Log("Use!!");
-        DetailToggle();
+        detailInventoryWindow.SetActive(false);
     }
 
     public void OnDivisionButton(){
         Debug.Log("Check!!");
-        DetailToggle();
+        detailInventoryWindow.SetActive(false);
     }
 
     public void OnThrowButton()
@@ -349,7 +354,7 @@ public class InventoryController : MonoBehaviour
 
         Destroy(item.gameObject);
 
-        DetailToggle();
+        detailInventoryWindow.SetActive(false);
     }
 
     private void DropItem(InventoryItem item)

@@ -1,5 +1,5 @@
 public interface IInteractable
 {
     string GetInteractPrompt();
-    void OnInteract();
+    void OnInteract(InventoryController manager);
 }

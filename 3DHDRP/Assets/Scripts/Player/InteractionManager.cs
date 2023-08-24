@@ -49,7 +49,7 @@ public class InteractionManager : MonoBehaviour
 
     public void OnInteractInput(InputAction.CallbackContext context){
         if(context.phase == InputActionPhase.Started && curInteractable != null){
-            curInteractable.OnInteract();
+            curInteractable.OnInteract(this.GetComponent<InventoryController>());
             curInteractGameObject = null;
             curInteractable = null;
             promptText.gameObject.SetActive(false);

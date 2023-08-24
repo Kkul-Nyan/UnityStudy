@@ -19,7 +19,7 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: e0992dca9a2e0f44d87c3d83e00f7c41, type: 3}
   width: 1
   height: 2
-  dropPrefab: {fileID: 7357354876237735026, guid: 457f40f4b0b462743b39add7df7f7a77,
+  dropPrefab: {fileID: 4271806556134565087, guid: 8ce0d63b16cc9aa40b470af5c5afbe4e,
     type: 3}
   canStack: 0
   maxStackAmount: 0

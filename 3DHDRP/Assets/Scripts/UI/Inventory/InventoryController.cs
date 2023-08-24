@@ -47,15 +47,20 @@ public class InventoryController : MonoBehaviour
     InventoryItem itemToHighlight;
     Vector2Int itemToDetail;
 
+    GameObject loadedPrefab;
+
 
     #region 기본 유니티 전처리과정
     private void Awake() {
         inventoryHighLight = GetComponent<InventoryHighLight>();
         controller = GetComponent<PlayerController>();
+        loadedPrefab = Resources.Load<GameObject>("Prefabs/Item");
+        Debug.Log(loadedPrefab.name);
     }
     private void Start() {
         detailInventoryWindow.SetActive(false);
         inventoryWindow.SetActive(false);
+
     }
     void Update()
     {
@@ -64,11 +69,8 @@ public class InventoryController : MonoBehaviour
             
             if(Input.GetKeyDown(KeyCode.Q)){
                 if(selectedItem == null){
-                    CreateRandomItem();
+                    AddItem(items[2]);
                 }
-            }
-            if(Input.GetKeyDown(KeyCode.W)){
-                InsertRandomItem();
             }
 
             if(Input.GetKeyDown(KeyCode.R)){
@@ -80,21 +82,34 @@ public class InventoryController : MonoBehaviour
     #endregion
     
     #region 아이탬 생성관련(테스트용)
-    private void InsertRandomItem()
+    public void AddItem(ItemData item)
     {
-        if( selectedItemGrid == null){ return;}
-        CreateRandomItem();
-        InventoryItem itemToInsert = selectedItem;
-        selectedItem = null;
-        InsertListItem(itemToInsert);
+        
+        InventoryItem inventoryItem = Instantiate(loadedPrefab).GetComponent<InventoryItem>();
+        
+        rectTransform = inventoryItem.GetComponent<RectTransform>();
+        //rectTransform.SetParent(gridTransform);
+        rectTransform.SetAsLastSibling();
+
+        inventoryItem.Set(item);
+
+        if(!InsertListItem(inventoryItem)){
+            DropItem(inventoryItem);
+        }    
     }
 
-    private void InsertListItem(InventoryItem itemToInsert)
+    private bool InsertListItem(InventoryItem itemToInsert)
     {
-        Vector2Int? posOnGrid = selectedItemGrid.FindSpaceForObject(itemToInsert);
-        if(posOnGrid == null){ return;}
-
-        selectedItemGrid.PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
+        ItemGrid[] grids = inventoryWindow.GetComponentsInChildren<ItemGrid>();
+        for(int i = 0; i < grids.Length; i++){
+            Vector2Int? posOnGrid = grids[i].FindSpaceForObject(itemToInsert);
+            if(posOnGrid != null){ 
+                grids[i].PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
+                return true;
+            }
+        }
+        return false;
+ 
     }
 
     private void CreateRandomItem()
@@ -229,7 +244,7 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    private void Toggle()
+    public void Toggle()
     {
         if (inventoryWindow.activeInHierarchy)
         {
@@ -278,6 +293,7 @@ public class InventoryController : MonoBehaviour
        
         return selectedItemGrid.GetTileGridPosition(position);
     }
+    
     #region LeftMouseButtonPress 관련
     private void PlaceItem(Vector2Int tileGridPosition)
     {
@@ -325,13 +341,20 @@ public class InventoryController : MonoBehaviour
         DetailToggle();
     }
 
-    public void OnThrowButton(){
+    public void OnThrowButton()
+    {
         InventoryItem item = detailedGrid.GetItem(itemToDetail.x, itemToDetail.y);
-        Instantiate(item.itemData.dropPrefab, dropPosition.position, quaternion.identity);
         
+        DropItem(item);
+
         Destroy(item.gameObject);
 
         DetailToggle();
+    }
+
+    private void DropItem(InventoryItem item)
+    {
+        Instantiate(item.itemData.dropPrefab, dropPosition.position, quaternion.identity);
     }
 
     #endregion

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class ItemObject : MonoBehaviour, IInteractable
 {
@@ -10,8 +10,9 @@ public class ItemObject : MonoBehaviour, IInteractable
     public string GetInteractPrompt(){
         return string.Format("Pickup {0}", item.displayName);
     }
-    public void OnInteract(){
+    public void OnInteract(InventoryController inventoryController){
         Debug.Log("Interactive");
+        inventoryController.AddItem(item);
         Destroy(gameObject);
     }
     

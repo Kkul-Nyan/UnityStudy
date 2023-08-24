@@ -17,7 +17,8 @@ public enum ConsumableType {
     Mana,
     Hunger,
     Thirst,
-    Sleep
+    Sleep,
+    Ammunition
 }
 
 [CreateAssetMenu(fileName = "Item", menuName = "New Item Data")]

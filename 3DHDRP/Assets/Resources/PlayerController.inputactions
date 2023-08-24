@@ -76,15 +76,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "UseItem",
-                    "type": "Button",
-                    "id": "82269144-7dde-4385-a97e-36e4a5301a0c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -217,17 +208,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c458fbbd-679b-4e34-b1bf-1bfda93716d5",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "MultiTap",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UseItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

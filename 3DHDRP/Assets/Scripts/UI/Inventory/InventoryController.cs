@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -37,6 +38,8 @@ public class InventoryController : MonoBehaviour
     [SerializeField] Transform dropPosition;
 
     Vector2Int oldPosition;
+    Vector2Int oldItemPosition;
+
     InventoryHighLight inventoryHighLight;
 
     bool isInventoryOpen;
@@ -45,6 +48,9 @@ public class InventoryController : MonoBehaviour
     Vector2Int itemToDetail;
 
     GameObject loadedPrefab;
+
+    float clickTime;
+    bool isDoubleClick;
 
 
     #region 기본 유니티 전처리과정
@@ -193,6 +199,7 @@ public class InventoryController : MonoBehaviour
             }
             ClickDetailInventory();
         }
+        
     }
 
     
@@ -204,7 +211,25 @@ public class InventoryController : MonoBehaviour
                 inventoryHighLight.Show(false);
                 return;
             }
+
+            if(clickTime - Time.time > - 0.15f && !isDoubleClick ){
+                isDoubleClick = true;
+                PlaceItem(oldItemPosition);
+                OnUseButton();
+                return;
+            }
+
             LeftMouseButtonPress();
+            
+        }
+        else if(context.phase == InputActionPhase.Canceled){
+            if(isDoubleClick){
+                clickTime = Time.time - 1f;
+                isDoubleClick = false;
+            }
+            else{
+                clickTime = Time.time;
+            }
         }
     }
 
@@ -271,9 +296,11 @@ public class InventoryController : MonoBehaviour
     private void LeftMouseButtonPress()
     {
         Vector2Int tileGridPosition = GetTileGridPosition();
-        Debug.Log("tileGridPositin : "+ tileGridPosition.x + ":" + tileGridPosition.y);
+        //Debug.Log("tileGridPositin : "+ tileGridPosition.x + ":" + tileGridPosition.y);
         if (selectedItem == null)
         {
+            InventoryItem oldItem = selectedItemGrid.GetItem(tileGridPosition.x, tileGridPosition.y);
+            oldItemPosition = new Vector2Int(oldItem.onGridPositionX, oldItem.onGridPositionY);
             PickUpItem(tileGridPosition);
         }
         else

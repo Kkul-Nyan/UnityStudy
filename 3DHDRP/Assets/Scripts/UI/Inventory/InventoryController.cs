@@ -210,6 +210,12 @@ public class InventoryController : MonoBehaviour
         if(context.phase == InputActionPhase.Started && isInventoryOpen)
         {
             //if(detailInventoryWindow.activeInHierarchy){ DetailToggle(); }
+            if(selectedItemGrid == null && pickupItem != null){
+                DropItem(selectedItem);
+                pickupItem = null;
+                selectedItem = null;
+                return;
+            }
 
             if (selectedItemGrid == null) { 
                 inventoryHighLight.Show(false);
@@ -323,6 +329,7 @@ public class InventoryController : MonoBehaviour
     #region LeftMouseButtonPress 관련
     private void PlaceItem(Vector2Int tileGridPosition)
     {
+        
         bool complete = selectedItemGrid.PlaceItem(pickupItem, tileGridPosition.x, tileGridPosition.y, selectedItemGrid, ref overlapItem);
 
         if(complete){

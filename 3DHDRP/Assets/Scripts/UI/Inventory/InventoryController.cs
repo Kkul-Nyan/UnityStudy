@@ -2,11 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 
 public class InventoryController : MonoBehaviour
 {

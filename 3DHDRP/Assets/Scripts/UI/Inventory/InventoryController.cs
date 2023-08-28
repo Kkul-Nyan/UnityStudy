@@ -41,10 +41,12 @@ public class InventoryController : MonoBehaviour
     Vector2Int oldPosition;
 
     InventoryHighLight inventoryHighLight;
+    InventoryDescription inventoryDescription;
 
     bool isInventoryOpen;
 
     InventoryItem itemToHighlight;
+    InventoryItem itemForDescription;
 
 
     GameObject loadedPrefab;
@@ -56,6 +58,7 @@ public class InventoryController : MonoBehaviour
     #region 기본 유니티 전처리과정
     private void Awake() {
         inventoryHighLight = GetComponent<InventoryHighLight>();
+        inventoryDescription = GetComponent<InventoryDescription>();
         controller = GetComponent<PlayerController>();
         loadedPrefab = Resources.Load<GameObject>("Prefabs/Item");
         itemGrids = FindObjectsOfType<ItemGrid>();;
@@ -80,7 +83,9 @@ public class InventoryController : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.R)){
                 RotateItem();
             }
+
             HandleHighlight(); 
+            DescribeUI();
         }  
     }
     #endregion
@@ -134,13 +139,12 @@ public class InventoryController : MonoBehaviour
 
     //하이라이트를 켜고끄고, 마우스를 따라 기존의 아이탬과 함께 아이탬경계를 하이라이트로 보여줍니다.
     private void HandleHighlight()
-    {
+    {      
         if(selectedItemGrid == null) { return; }
         Vector2Int positionOnGrid = GetTileGridPosition();
-
+        
         if(oldPosition == positionOnGrid){return;}
-
-        oldPosition = positionOnGrid;
+        oldPosition = positionOnGrid; 
 
         if(pickupItem == null){
             itemToHighlight = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
@@ -148,13 +152,14 @@ public class InventoryController : MonoBehaviour
             if(itemToHighlight != null){
                 inventoryHighLight.Show(true);
                 inventoryHighLight.SetSize(itemToHighlight);
-                inventoryHighLight.SetPosition(selectedItemGrid, itemToHighlight);
+                inventoryHighLight.SetPosition(selectedItemGrid, itemToHighlight);    
             }
             else{
-            inventoryHighLight.Show(false);
+                inventoryHighLight.Show(false);
             }
         }
         else{
+            inventoryDescription.Show(false);
             //바운더리를 체크해서 바운더리 밖에서는 SetActive를 false 시켜서 작동 안하도록한다.
             inventoryHighLight.Show(selectedItemGrid.BoundaryCheck(
                 positionOnGrid.x,
@@ -166,6 +171,37 @@ public class InventoryController : MonoBehaviour
             inventoryHighLight.SetPosition(selectedItemGrid, pickupItem, positionOnGrid.x, positionOnGrid.y);
         }
     }
+
+    //하이라이트처럼 마우스가 위에 올라왔을떄 자동으로 아이탬설명창을 띄웁니다.
+    void DescribeUI(){
+        Debug.Log("Work0");
+        if(selectedItemGrid == null) { return; }
+        Debug.Log("Work1");
+        Vector2Int positionOnGrid = GetTileGridPosition();
+
+        //if(oldPosition == positionOnGrid){return;}
+        //oldPosition = positionOnGrid;
+        Debug.Log("Work2");
+
+        if(pickupItem == null){
+            Debug.Log("Work3");
+            itemForDescription = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
+
+            if(itemForDescription != null){
+                inventoryDescription.Show(true);
+                inventoryDescription.SetPosition();
+                inventoryDescription.SetDesciption(itemForDescription);
+            }
+            else{
+                inventoryDescription.Show(false);
+            }
+        }
+        else{
+            Debug.Log("Nopickupitem so false");
+            inventoryDescription.Show(false);
+        }
+    }
+
     private void RotateItem()
     {
         if(pickupItem == null){return;}
@@ -212,7 +248,6 @@ public class InventoryController : MonoBehaviour
     public void OnClickInventoyInput(InputAction.CallbackContext context){
         if(context.phase == InputActionPhase.Started && isInventoryOpen)
         {
-            //if(detailInventoryWindow.activeInHierarchy){ DetailToggle(); }
             if(selectedItemGrid == null && pickupItem != null){
                 DropItem(selectedItem);
                 pickupItem = null;

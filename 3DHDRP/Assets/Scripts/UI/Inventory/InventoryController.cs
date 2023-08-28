@@ -19,6 +19,9 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    public GameObject selectedgrid;
+    ItemGrid[] itemGrids;
+
     public GameObject inventoryWindow;
     public GameObject detailInventoryWindow;
     PlayerController controller;
@@ -53,6 +56,7 @@ public class InventoryController : MonoBehaviour
         inventoryHighLight = GetComponent<InventoryHighLight>();
         controller = GetComponent<PlayerController>();
         loadedPrefab = Resources.Load<GameObject>("Prefabs/Item");
+        itemGrids = FindObjectsOfType<ItemGrid>();;
     }
 
     private void Start() {
@@ -283,12 +287,20 @@ public class InventoryController : MonoBehaviour
             inventoryWindow.SetActive(false);
             controller.ToggleCursor(false);
             isInventoryOpen = false;
+            
         }
         else
         {
             inventoryWindow.SetActive(true);
             controller.ToggleCursor(true);
             isInventoryOpen = true;
+
+            //Close버튼을 통해 단일 grid가 껴져있을수 있으므로 다시 킵니다.
+            for(int i = 0; i < itemGrids.Length; i++){
+                if(!itemGrids[i].gameObject.activeInHierarchy){
+                    itemGrids[i].transform.parent.gameObject.SetActive(true);
+                }
+            }
         }
     }
 
@@ -404,4 +416,21 @@ public class InventoryController : MonoBehaviour
         selectedItem = null;
     }
     #endregion
+
+
+     public void CheckClose(){
+        int toggleCount = 0;
+        
+        Debug.Log(selectedgrid.name);
+        selectedgrid.gameObject.SetActive(false);
+        for(int i = 0; i < itemGrids.Length; i++){
+            if(!itemGrids[i].gameObject.activeInHierarchy){
+                toggleCount ++;
+            }
+        }
+        Debug.Log("toggleCount : " + toggleCount);
+        if(toggleCount == itemGrids.Length){
+            Toggle();
+        }
+    }
 }

@@ -460,6 +460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43c61d190f7c7d489e320ef0be8282f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryWindow: {fileID: 0}
+  detailInventoryWindow: {fileID: 0}
   items:
   - {fileID: 11400000, guid: 17d8db99d65f34b4f87e2b9c87689fd8, type: 2}
   - {fileID: 11400000, guid: 9b5b5167587af4c43aab69d7c31d855e, type: 2}
@@ -467,6 +469,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 6700837634025323381, guid: 3617beee474522c498c808e544e80458,
     type: 3}
   gridTransform: {fileID: 529789878}
+  dropPosition: {fileID: 0}
 --- !u!114 &1527672569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,6 +821,36 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2639743818211861590, guid: 0e329539ab77b6e43b318f793d518977,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2639743818211861590, guid: 0e329539ab77b6e43b318f793d518977,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2639743818211861590, guid: 0e329539ab77b6e43b318f793d518977,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782742393972843659, guid: 0e329539ab77b6e43b318f793d518977,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782742393972843659, guid: 0e329539ab77b6e43b318f793d518977,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782742393972843659, guid: 0e329539ab77b6e43b318f793d518977,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4093077621643718676, guid: 0e329539ab77b6e43b318f793d518977,
         type: 3}
       propertyPath: m_Name
@@ -934,6 +967,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1527672567}
   - {fileID: 1217139567}
-  - {fileID: 8764268543093963284}
   - {fileID: 1824781214}
   - {fileID: 2070712326}
+  - {fileID: 8764268543093963284}

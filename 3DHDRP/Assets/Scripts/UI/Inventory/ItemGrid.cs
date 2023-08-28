@@ -15,21 +15,29 @@ public class ItemGrid : MonoBehaviour
     InventoryItem[,] inventoryItemSlot;
 
     RectTransform rectTransform;
+    RectTransform backGroundrectTransform;
 
     Vector2 positionTheGrid = new Vector2();
     Vector2Int tileGridPosition = new Vector2Int();
+
+    public Vector2 bgSize = new Vector2(40, 60);
     
     void Start(){
         rectTransform = GetComponent<RectTransform>();
+        backGroundrectTransform =  this.transform.parent.GetComponent<RectTransform>();
         Init(gridWidthCount, gridHeightCount);
     }
 
+    
     //인벤토리 그리드 사이즈 초기화
     private void Init(int width, int height)
     {
         inventoryItemSlot = new InventoryItem[width, height];
         Vector2 size = new Vector2(width * tileSizeWidth, height * tileSizeHeight);
         rectTransform.sizeDelta = size;
+
+        Vector2 size2 = new Vector2(size.x + bgSize.x, size.y + bgSize.y);
+        backGroundrectTransform.sizeDelta = size2;
     }
 
     //인벤토리 마우스포인터위치의 그리드 좌표 계산 Anchor를 기준으로생성 현재는 0,1기준

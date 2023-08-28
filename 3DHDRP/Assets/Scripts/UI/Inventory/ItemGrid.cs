@@ -21,6 +21,8 @@ public class ItemGrid : MonoBehaviour
     Vector2Int tileGridPosition = new Vector2Int();
 
     public Vector2 bgSize = new Vector2(40, 60);
+
+    public bool isMinimize = false;
     
     void Start(){
         rectTransform = GetComponent<RectTransform>();
@@ -210,4 +212,21 @@ public class ItemGrid : MonoBehaviour
         return true;
     }
     #endregion
+
+    public bool IsMinimize(){
+        if(isMinimize){
+            Init(gridWidthCount, gridHeightCount);
+            this.gameObject.SetActive(true);
+            isMinimize = false;
+
+            return false;
+        }
+        else{
+            Init(gridWidthCount, 0);
+            this.gameObject.SetActive(false);
+            isMinimize = true;
+            
+            return true;
+        }
+    }
 }

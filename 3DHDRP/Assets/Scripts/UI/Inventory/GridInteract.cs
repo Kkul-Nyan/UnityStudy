@@ -19,7 +19,7 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerEnter(PointerEventData eventData)
     {
         inventoryController.SelectedItemGrid = itemGrid;
-        inventoryController.selectedgrid = itemGrid.transform.parent.gameObject;
+        inventoryController.selectedgrid = itemGrid.gameObject;
     }
 
     public void OnPointerExit(PointerEventData eventData)

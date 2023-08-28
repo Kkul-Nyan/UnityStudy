@@ -274,8 +274,11 @@ public class InventoryController : MonoBehaviour
         {
             detailInventoryWindow.SetActive(true);
             
+            //디테일 인벤토리 아이탬 이미지 교체
             Image itemImage = detailInventoryWindow.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
             itemImage.sprite = selectedItem.itemData.itemIcon;
+
+            //디테일 인벤토리 위치조정
             Vector2 mousePos = Input.mousePosition;
             Vector2 size = rectTransform.sizeDelta / 2;
             rectTransform.position = new Vector2(mousePos.x + size.x, mousePos.y + size.y);
@@ -425,7 +428,7 @@ public class InventoryController : MonoBehaviour
         int toggleCount = 0;
         
         Debug.Log(selectedgrid.name);
-        selectedgrid.gameObject.SetActive(false);
+        selectedgrid.transform.parent.gameObject.SetActive(false);
         for(int i = 0; i < itemGrids.Length; i++){
             if(!itemGrids[i].gameObject.activeInHierarchy){
                 toggleCount ++;
@@ -436,5 +439,19 @@ public class InventoryController : MonoBehaviour
             Toggle();
         }
     }
+
+    public int Minimize()
+    {
+        bool ismini = selectedgrid.transform.GetComponent<ItemGrid>().IsMinimize();
+        if(ismini){
+            return 1;
+                
+        }
+        else{
+            return 0;
+                
+        }
+    }
+    
     #endregion
 }

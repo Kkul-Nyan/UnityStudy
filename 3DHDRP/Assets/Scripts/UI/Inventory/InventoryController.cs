@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -254,7 +255,17 @@ public class InventoryController : MonoBehaviour
         
         InventoryItem detailedItem = selectedItemGrid.GetItem(itemToDetailPos.x, itemToDetailPos.y);
 
-        if (detailedItem == null) { return; }
+        if (detailedItem == null) {
+            if(detailInventoryWindow.activeInHierarchy){
+                detailInventoryWindow.SetActive(false);
+                selectedItem = null;
+            }
+            return;
+        }
+
+        if(pickupItem != null){
+            return;
+        }
 
         selectedItem = detailedItem;
 
@@ -312,6 +323,10 @@ public class InventoryController : MonoBehaviour
 
     private void LeftMouseButtonPress()
     {
+        if(detailInventoryWindow.activeInHierarchy){
+            detailInventoryWindow.SetActive(false);
+            selectedItem = null;
+        }
         Vector2Int tileGridPosition = GetTileGridPosition();
         //Debug.Log("tileGridPositin : "+ tileGridPosition.x + ":" + tileGridPosition.y);
         if (pickupItem == null)

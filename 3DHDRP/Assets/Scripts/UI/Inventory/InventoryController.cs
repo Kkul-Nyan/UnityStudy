@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
 {
@@ -273,6 +274,8 @@ public class InventoryController : MonoBehaviour
         {
             detailInventoryWindow.SetActive(true);
             
+            Image itemImage = detailInventoryWindow.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
+            itemImage.sprite = selectedItem.itemData.itemIcon;
             Vector2 mousePos = Input.mousePosition;
             Vector2 size = rectTransform.sizeDelta / 2;
             rectTransform.position = new Vector2(mousePos.x + size.x, mousePos.y + size.y);
@@ -416,8 +419,8 @@ public class InventoryController : MonoBehaviour
         selectedItem = null;
     }
     #endregion
-
-
+    
+    #region 캔버스 컨트롤
      public void CheckClose(){
         int toggleCount = 0;
         
@@ -433,4 +436,5 @@ public class InventoryController : MonoBehaviour
             Toggle();
         }
     }
+    #endregion
 }

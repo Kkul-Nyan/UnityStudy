@@ -12,6 +12,5 @@ public class ButtonController : MonoBehaviour
 
     public void CloseCanvas(){
         inventoryController.CheckClose();
-
     }
 }

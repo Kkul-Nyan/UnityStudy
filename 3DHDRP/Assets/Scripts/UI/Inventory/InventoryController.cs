@@ -174,19 +174,15 @@ public class InventoryController : MonoBehaviour
 
     //하이라이트처럼 마우스가 위에 올라왔을떄 자동으로 아이탬설명창을 띄웁니다.
     void DescribeUI(){
-        Debug.Log("Work0");
         if(selectedItemGrid == null) { return; }
-        Debug.Log("Work1");
         Vector2Int positionOnGrid = GetTileGridPosition();
-
-        //if(oldPosition == positionOnGrid){return;}
-        //oldPosition = positionOnGrid;
-        Debug.Log("Work2");
 
         if(pickupItem == null){
             Debug.Log("Work3");
-            itemForDescription = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
-
+            InventoryItem item = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
+            if(itemForDescription == item) { return;}
+            
+            itemForDescription = item;
             if(itemForDescription != null){
                 inventoryDescription.Show(true);
                 inventoryDescription.SetPosition();

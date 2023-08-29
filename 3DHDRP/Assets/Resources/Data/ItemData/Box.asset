@@ -13,15 +13,24 @@ MonoBehaviour:
   m_Name: Box
   m_EditorClassIdentifier: 
   id: 
+  dropPrefab: {fileID: 7357354876237735026, guid: 457f40f4b0b462743b39add7df7f7a77,
+    type: 3}
   displayName: Box
   description: box
   type: 0
   itemIcon: {fileID: 21300000, guid: cb5bc76873cab054aa03bbc7aa04e32e, type: 3}
+  equipPrefab: {fileID: 0}
   width: 3
   height: 3
-  dropPrefab: {fileID: 7357354876237735026, guid: 457f40f4b0b462743b39add7df7f7a77,
-    type: 3}
   canStack: 0
   maxStackAmount: 0
   consumable: []
-  equipPrefab: {fileID: 0}
+  equipItemSetting:
+    weaponType: 0
+    armorType: 0
+    armorPlaceType: 0
+    maxValue: 0
+    minValue: 0
+    secondValue: 0
+    maxDurability: 0
+    minDurability: 0

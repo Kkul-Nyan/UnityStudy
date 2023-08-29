@@ -11,7 +11,6 @@ public class ItemObject : MonoBehaviour, IInteractable
         return string.Format("Pickup {0}", item.displayName);
     }
     public void OnInteract(InventoryController inventoryController){
-        Debug.Log("Interactive");
         inventoryController.AddItem(item);
         Destroy(gameObject);
     }

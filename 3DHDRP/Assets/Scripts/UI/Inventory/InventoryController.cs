@@ -178,6 +178,10 @@ public class InventoryController : MonoBehaviour
         Vector2Int positionOnGrid = GetTileGridPosition();
 
         if(pickupItem == null){
+            if(selectedItem !=null){
+                inventoryDescription.Show(false);
+                return;
+            }
             Debug.Log("Work3");
             InventoryItem item = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
             if(itemForDescription == item) { return;}

@@ -21,13 +21,16 @@ public class ItemGrid : MonoBehaviour
     Vector2Int tileGridPosition = new Vector2Int();
 
     public Vector2 bgSize = new Vector2(40, 60);
+    public Vector2 equipSize = new Vector2();
 
     public bool isMinimize = false;
+    public bool includeEquip = false;
     
     void Start(){
         rectTransform = GetComponent<RectTransform>();
         backGroundrectTransform =  this.transform.parent.GetComponent<RectTransform>();
         Init(gridWidthCount, gridHeightCount);
+        BGInin(gridWidthCount, gridHeightCount);
     }
 
     
@@ -37,9 +40,17 @@ public class ItemGrid : MonoBehaviour
         inventoryItemSlot = new InventoryItem[width, height];
         Vector2 size = new Vector2(width * tileSizeWidth, height * tileSizeHeight);
         rectTransform.sizeDelta = size;
+    }
 
-        Vector2 size2 = new Vector2(size.x + bgSize.x, size.y + bgSize.y);
-        backGroundrectTransform.sizeDelta = size2;
+    void BGInin(int width, int height){
+        if(includeEquip){
+            Vector2 size = new Vector2((width * tileSizeWidth) + (bgSize.x * 2) + equipSize.x, height * tileSizeHeight + bgSize.y);
+            backGroundrectTransform.sizeDelta = size;
+        }
+        else{
+            Vector2 size = new Vector2(width * tileSizeWidth + bgSize.x, height * tileSizeHeight + bgSize.y);
+            backGroundrectTransform.sizeDelta = size;
+        }
     }
 
     //인벤토리 마우스포인터위치의 그리드 좌표 계산 Anchor를 기준으로생성 현재는 0,1기준
@@ -216,13 +227,15 @@ public class ItemGrid : MonoBehaviour
     public bool IsMinimize(){
         if(isMinimize){
             Init(gridWidthCount, gridHeightCount);
+            BGInin(gridWidthCount, gridHeightCount);
             this.gameObject.SetActive(true);
             isMinimize = false;
 
             return false;
         }
         else{
-            Init(gridWidthCount, 0);
+            //Init(gridWidthCount, 0);
+            BGInin(gridWidthCount, 0);
             this.gameObject.SetActive(false);
             isMinimize = true;
             

@@ -42,7 +42,7 @@ public class InventoryController : MonoBehaviour
     InventoryHighLight inventoryHighLight;
     InventoryDescription inventoryDescription;
 
-    bool isInventoryOpen;
+    public bool isInventoryOpen;
 
     InventoryItem itemToHighlight;
     InventoryItem itemForDescription;
@@ -476,29 +476,14 @@ public class InventoryController : MonoBehaviour
      public void CheckClose(){
         int toggleCount = 0;
         
-        Debug.Log(selectedgrid.name);
-        selectedgrid.transform.parent.gameObject.SetActive(false);
         for(int i = 0; i < itemGrids.Length; i++){
             if(!itemGrids[i].gameObject.activeInHierarchy){
                 toggleCount ++;
             }
         }
-        Debug.Log("toggleCount : " + toggleCount);
+   
         if(toggleCount == itemGrids.Length){
             Toggle();
-        }
-    }
-
-    public int Minimize()
-    {
-        bool ismini = selectedgrid.transform.GetComponent<ItemGrid>().IsMinimize();
-        if(ismini){
-            return 1;
-                
-        }
-        else{
-            return 0;
-                
         }
     }
     

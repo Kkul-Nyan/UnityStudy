@@ -19,7 +19,7 @@ public class InventoryController : MonoBehaviour
             inventoryHighLight.SetParent(value);
         }
     }
-
+    public WindowController selectedWindow;
     public GameObject selectedgrid;
     ItemGrid[] itemGrids;
 
@@ -38,6 +38,7 @@ public class InventoryController : MonoBehaviour
     [SerializeField] Transform dropPosition;
 
     Vector2Int oldPosition;
+    Vector2 oldPos;
 
     InventoryHighLight inventoryHighLight;
     InventoryDescription inventoryDescription;
@@ -52,7 +53,7 @@ public class InventoryController : MonoBehaviour
 
     float clickTime;
     bool isDoubleClick;
-
+    bool isDrag;
 
     #region 기본 유니티 전처리과정
     private void Awake() {
@@ -245,8 +246,12 @@ public class InventoryController : MonoBehaviour
     
     //클릭시, 그리드라면, GridInteract를 통해 아이탬그리드가 null이 아닐경우 작동
     public void OnClickInventoyInput(InputAction.CallbackContext context){
-        if(context.phase == InputActionPhase.Started && isInventoryOpen)
+        if(context.phase == InputActionPhase.Performed && isInventoryOpen)
         {
+            
+            if(selectedWindow != null){
+                isDrag = true;
+            }
             if(selectedItemGrid == null && pickupItem != null){
                 DropItem(selectedItem);
                 pickupItem = null;
@@ -269,7 +274,10 @@ public class InventoryController : MonoBehaviour
             LeftMouseButtonPress();
             
         }
+
         else if(context.phase == InputActionPhase.Canceled){
+            isDrag = false;
+            oldPos = Vector2.zero;
             if(isDoubleClick){
                 clickTime = Time.time - 1f;
                 isDoubleClick = false;
@@ -279,7 +287,24 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
-    
+
+    public void OnVectorInput(InputAction.CallbackContext context){
+        if(context.phase == InputActionPhase.Performed && isDrag){
+            Vector2 vector2 = context.ReadValue<Vector2>();
+            if(oldPos == Vector2.zero){ oldPos = vector2; }
+            if(oldPos == vector2){ return; }
+            Vector2 moveVec = vector2 - oldPos;
+            oldPos = vector2;
+
+            selectedWindow.top.position += new Vector3(moveVec.x, moveVec.y, 0f);
+        }
+    }
+    public void DragInventory(){
+        
+        selectedWindow.top.position = Input.mousePosition;
+        Debug.Log("MoveCanvas");
+    }
+
     #endregion
 
     #region Input 관련 스크립트

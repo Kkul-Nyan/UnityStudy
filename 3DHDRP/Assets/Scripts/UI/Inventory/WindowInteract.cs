@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class WindowInteract : MonoBehaviour
+public class WindowInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    InventoryController inventoryController;
+    [SerializeField]WindowController windowController;
+
+    private void Awake() {
+        inventoryController = FindObjectOfType(typeof(InventoryController)) as InventoryController;
+        windowController = GetComponent<WindowController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        
+        inventoryController.selectedWindow = windowController;
+        Debug.Log("window");
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        inventoryController.selectedWindow = null;
     }
 }

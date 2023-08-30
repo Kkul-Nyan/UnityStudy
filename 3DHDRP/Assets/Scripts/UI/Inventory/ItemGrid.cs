@@ -21,7 +21,6 @@ public class ItemGrid : MonoBehaviour
     InventoryItem[,] inventoryItemSlot;
 
     RectTransform rectTransform;
-    RectTransform backGroundrectTransform;
 
     Vector2 positionTheGrid = new Vector2();
     Vector2Int tileGridPosition = new Vector2Int();
@@ -34,7 +33,6 @@ public class ItemGrid : MonoBehaviour
     
     void Start(){
         rectTransform = GetComponent<RectTransform>();
-        backGroundrectTransform =  this.transform.parent.GetComponent<RectTransform>();
         Init(gridWidthCount, gridHeightCount);
 
     }

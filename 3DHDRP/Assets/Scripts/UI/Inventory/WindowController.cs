@@ -8,7 +8,7 @@ public class WindowController : MonoBehaviour
 {
     InventoryController inventoryController;
     RectTransform rectTransform;
-    RectTransform top;
+    public RectTransform top;
     ItemGrid itemGrid;
     CharactorEquip charactorEquip;
   

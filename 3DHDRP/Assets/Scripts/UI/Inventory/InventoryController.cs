@@ -140,7 +140,11 @@ public class InventoryController : MonoBehaviour
     //하이라이트를 켜고끄고, 마우스를 따라 기존의 아이탬과 함께 아이탬경계를 하이라이트로 보여줍니다.
     private void HandleHighlight()
     {      
-        if(selectedItemGrid == null) { return; }
+        if(selectedItemGrid == null) { 
+            inventoryHighLight.Show(false); 
+            itemToHighlight = null;
+            return; 
+        }
         Vector2Int positionOnGrid = GetTileGridPosition();
         
         if(oldPosition == positionOnGrid){return;}
@@ -174,7 +178,11 @@ public class InventoryController : MonoBehaviour
 
     //하이라이트처럼 마우스가 위에 올라왔을떄 자동으로 아이탬설명창을 띄웁니다.
     void DescribeUI(){
-        if(selectedItemGrid == null) { return; }
+        if(selectedItemGrid == null) { 
+            inventoryDescription.Show(false);
+            itemForDescription = null;
+            return; 
+        }
         Vector2Int positionOnGrid = GetTileGridPosition();
 
         if(pickupItem == null){
@@ -182,7 +190,6 @@ public class InventoryController : MonoBehaviour
                 inventoryDescription.Show(false);
                 return;
             }
-            Debug.Log("Work3");
             InventoryItem item = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
             if(itemForDescription == item) { return;}
             
@@ -197,7 +204,6 @@ public class InventoryController : MonoBehaviour
             }
         }
         else{
-            Debug.Log("Nopickupitem so false");
             inventoryDescription.Show(false);
         }
     }
@@ -298,11 +304,6 @@ public class InventoryController : MonoBehaviour
 
             selectedWindow.top.position += new Vector3(moveVec.x, moveVec.y, 0f);
         }
-    }
-    public void DragInventory(){
-        
-        selectedWindow.top.position = Input.mousePosition;
-        Debug.Log("MoveCanvas");
     }
 
     #endregion

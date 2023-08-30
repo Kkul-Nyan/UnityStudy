@@ -35,16 +35,17 @@ public enum WeaponType{
 public enum ArmorType{
     Heavy,
     Middle,
-    Light
+    Light,
+    Normal
 }
 
 [EnumToggleButtons]
 public enum ArmorPlaceType{
     Head,
     Body,
-    Top,
-    Bottom,
-    Shoes
+    Belt,
+    Accessory,
+    Normal
 }
 #endregion
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GridEquip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class EquipInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     InventoryController inventoryController;
     EquipSlot equipSlot;

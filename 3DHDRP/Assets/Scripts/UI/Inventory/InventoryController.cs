@@ -50,7 +50,8 @@ public class InventoryController : MonoBehaviour
     InventoryItem itemToHighlight;
     InventoryItem itemForDescription;
 
-
+    Vector2Int detailItemPos;
+    ItemGrid detailItemGrid;
     GameObject loadedPrefab;
 
     float clickTime;
@@ -325,7 +326,7 @@ public class InventoryController : MonoBehaviour
     private void CallDetailInventory()
     {
         Vector2Int itemToDetailPos = GetTileGridPosition();
-        
+        Debug.Log(itemToDetailPos);
         InventoryItem detailedItem = selectedItemGrid.GetItem(itemToDetailPos.x, itemToDetailPos.y);
 
         if (detailedItem == null) {
@@ -341,7 +342,8 @@ public class InventoryController : MonoBehaviour
         }
 
         selectedItem = detailedItem;
-        
+        detailItemPos = itemToDetailPos;
+        detailItemGrid = selectedItemGrid;
         DetailToggle();
     }
 
@@ -465,6 +467,8 @@ public class InventoryController : MonoBehaviour
        
         return selectedItemGrid.GetTileGridPosition(position);
     }
+
+    
     
     #region 07.LeftMouseButtonPress 관련
     private void PlaceItem(Vector2Int tileGridPosition)
@@ -496,18 +500,22 @@ public class InventoryController : MonoBehaviour
             rectTransform = pickupItem.GetComponent<RectTransform>();
         }
     }
-
-    private void PickUpItem(InventoryItem item)
+    private void PickUpItem(Vector2Int tileGridPosition, ItemGrid grid)
     {
-        pickupItem = item;
-        rectTransform = pickupItem.GetComponent<RectTransform>();
+        pickupItem = grid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
+        if (pickupItem != null)
+        {
+            selectedItem = pickupItem;
+            rectTransform = pickupItem.GetComponent<RectTransform>();
+        }
     }
+
     #endregion
 
     #region 08.디테일 버튼 관리
     public void OnPickUpButton()
     {
-        PickUpItem(selectedItem);
+        PickUpItem(detailItemPos, detailItemGrid);
         DetailToggle();
     }
 

@@ -148,6 +148,16 @@ public class ItemGrid : MonoBehaviour
         return toReturn;
     }
 
+    public InventoryItem PickUpItem(InventoryItem item)
+    {
+        InventoryItem toReturn = item;
+
+        if (toReturn == null) { return null; }
+
+        CleanGridReference(toReturn);
+        return toReturn;
+    }
+
     // 인벤토리 아이탬 좌표 삭제(예를들어 2X2아이탬이 삭제시 이 스크립트롤 통해 총 4칸의 아이탬슬롯 정보 초기화)
     private void CleanGridReference(InventoryItem item)
     {

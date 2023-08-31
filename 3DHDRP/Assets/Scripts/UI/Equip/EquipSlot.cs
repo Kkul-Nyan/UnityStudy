@@ -18,8 +18,8 @@ public enum SlotType{
 public class EquipSlot : MonoBehaviour
 {
     public SlotType slotType;
-    [SerializeField] ItemData curEquipItem;
-
+    public ItemData curEquipItem;
+    public ItemData temporaryItemData;
     Image image;
     Sprite originalSprite;
 
@@ -29,6 +29,9 @@ public class EquipSlot : MonoBehaviour
     }
 
     public void EquipItem(InventoryItem item){
+        if(curEquipItem != null){
+            temporaryItemData = curEquipItem;
+        }
         curEquipItem = item.itemData;
         image.sprite = curEquipItem.itemIcon;
     }

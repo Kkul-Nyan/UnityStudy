@@ -137,6 +137,17 @@ public class InventoryController : MonoBehaviour
         int selectedItemId = UnityEngine.Random.Range(0, items.Count);
         inventoryItem.Set(items[selectedItemId]);
     }
+
+    private void CreateItem(InventoryItem item){
+        InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
+        pickupItem = inventoryItem;
+
+        rectTransform = inventoryItem.GetComponent<RectTransform>();
+        rectTransform.SetParent(gridTransform);
+        rectTransform.SetAsLastSibling();
+
+        inventoryItem.Set(item.itemData);
+    }
     #endregion
 
     #region 04.아이탬하이라이트 및 회전 관련
@@ -538,8 +549,13 @@ public class InventoryController : MonoBehaviour
     #region 11.장비 장착 관련
     private void EquipItem(InventoryItem item , EquipSlot slot){
         if(CheckEquipSlot(item, slot)){
-            selectedEquipSlot.EquipItem(item);
-            Destroy(pickupItem.gameObject);
+            slot.EquipItem(item);
+            if(slot.temporaryItemData != null){
+                item.Set(slot.temporaryItemData);
+            }
+            else{
+                Destroy(item.gameObject);
+            }
         }
     }
 

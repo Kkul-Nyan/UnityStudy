@@ -19,6 +19,7 @@ public class InventoryController : MonoBehaviour
             inventoryHighLight.SetParent(value);
         }
     }
+    private CharactorEquip charactorEquip;
     public WindowController selectedWindow;
     public GameObject selectedgrid;
     ItemGrid[] itemGrids;
@@ -62,6 +63,7 @@ public class InventoryController : MonoBehaviour
         controller = GetComponent<PlayerController>();
         loadedPrefab = Resources.Load<GameObject>("Prefabs/Item");
         itemGrids = FindObjectsOfType<ItemGrid>();;
+        charactorEquip = FindObjectOfType<CharactorEquip>();
     }
 
     private void Start() {
@@ -272,8 +274,8 @@ public class InventoryController : MonoBehaviour
 
             if(clickTime - Time.time > - 0.15f && !isDoubleClick ){
                 isDoubleClick = true;
-                PlaceItem(new Vector2Int(selectedItem.onGridPositionX, selectedItem.onGridPositionY));
                 UseItem();
+                PlaceItem(new Vector2Int(selectedItem.onGridPositionX, selectedItem.onGridPositionY));
                 return;
             }
 
@@ -482,7 +484,19 @@ public class InventoryController : MonoBehaviour
     #region 아이탬사용
     private void UseItem()
     {
-        Debug.Log("Use");
+        /*
+        switch (selectedItem.itemData.type){
+            case ItemType.Equipable:
+                charactorEquip.EquipItem();
+                break;
+            case ItemType.Consumable:
+                Debug.Log("Using Consumable Item");
+                break;
+            case ItemType.Resource:
+                
+                break;
+        }
+        */
     }
 
     private void DivideItem(){

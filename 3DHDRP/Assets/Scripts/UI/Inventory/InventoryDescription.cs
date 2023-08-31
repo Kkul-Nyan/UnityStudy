@@ -9,7 +9,7 @@ public class InventoryDescription : MonoBehaviour
     [SerializeField] RectTransform descriptionUI;
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI descriptiveText;
-    ItemType itemType;
+    
 
     [Button]
     public void Show(bool a){
@@ -25,17 +25,5 @@ public class InventoryDescription : MonoBehaviour
     public void SetDesciption(InventoryItem item){
         nameText.text = item.itemData.displayName;
         descriptiveText.text = item.itemData.description;
-        itemType = item.itemData.type;
-        switch (itemType){
-            case ItemType.Resource:
-                Debug.Log("Resource");
-                break;
-            case ItemType.Equipable:
-                Debug.Log("Equipable");
-                break;
-            case ItemType.Consumable:
-                Debug.Log("Consumable");
-                break;
-        }
     }
 }

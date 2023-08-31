@@ -17,7 +17,7 @@ MonoBehaviour:
     type: 3}
   displayName: SmallSword
   description: SmallSword
-  type: 1
+  cunsumable: 0
   itemIcon: {fileID: 21300000, guid: e0992dca9a2e0f44d87c3d83e00f7c41, type: 3}
   equipPrefab: {fileID: 0}
   width: 1
@@ -25,12 +25,11 @@ MonoBehaviour:
   canStack: 0
   maxStackAmount: 0
   consumable: []
-  equipItemSetting:
-    weaponType: 0
-    armorType: 0
-    armorPlaceType: 0
-    maxValue: 0
-    minValue: 0
-    secondValue: 0
-    maxDurability: 0
-    minDurability: 0
+  equipType: 0
+  armorType: 0
+  armorPlaceType: 0
+  maxValue: 0
+  minValue: 0
+  secondValue: 0
+  maxDurability: 0
+  minDurability: 0

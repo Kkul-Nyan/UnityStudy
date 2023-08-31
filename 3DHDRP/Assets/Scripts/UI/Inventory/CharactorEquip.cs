@@ -1,18 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharactorEquip : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private EquipSlot[] equipSlots;
     void Start()
     {
-        
+        equipSlots = GetComponentsInChildren<EquipSlot>();
+        for (int i = 0; i < equipSlots.Length; i++){
+            Debug.Log(equipSlots[i].slotType);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void EquipItem()
     {
-        
+        throw new NotImplementedException();
     }
 }
+  

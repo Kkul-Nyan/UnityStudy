@@ -25,10 +25,10 @@ public enum EquipType{
 
 [EnumToggleButtons]
 public enum WeaponType{
-    OneHandedMelee,
-    TwoHandedMelee,
-    DefenseMelee,
-    LongRange
+    BothHandedMelee,
+    MainHandedMelee,
+    SubHandedMelee,
+    TwoHandedMelee
 }
 
 [EnumToggleButtons]

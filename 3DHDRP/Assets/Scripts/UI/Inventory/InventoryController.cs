@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
 {
-    
+    #region 01.변수
     private ItemGrid selectedItemGrid;
 
     public ItemGrid SelectedItemGrid
@@ -20,6 +20,7 @@ public class InventoryController : MonoBehaviour
         }
     }
     private CharactorEquip charactorEquip;
+    public EquipSlot selectedEquipSlot;
     public WindowController selectedWindow;
     public GameObject selectedgrid;
     ItemGrid[] itemGrids;
@@ -55,8 +56,9 @@ public class InventoryController : MonoBehaviour
     float clickTime;
     bool isDoubleClick;
     bool isDrag;
+    #endregion
 
-    #region 기본 유니티 전처리과정
+    #region 02.기본 유니티 전처리과정
     private void Awake() {
         inventoryHighLight = GetComponent<InventoryHighLight>();
         inventoryDescription = GetComponent<InventoryDescription>();
@@ -92,7 +94,7 @@ public class InventoryController : MonoBehaviour
     }
     #endregion
     
-    #region 아이탬 생성관련(테스트용)
+    #region 03.아이탬 생성관련(테스트용)
     public void AddItem(ItemData item)
     {
         
@@ -137,7 +139,7 @@ public class InventoryController : MonoBehaviour
     }
     #endregion
 
-    #region 아이탬하이라이트 및 회전 관련
+    #region 04.아이탬하이라이트 및 회전 관련
 
     //하이라이트를 켜고끄고, 마우스를 따라 기존의 아이탬과 함께 아이탬경계를 하이라이트로 보여줍니다.
     private void HandleHighlight()
@@ -227,7 +229,7 @@ public class InventoryController : MonoBehaviour
     }
     #endregion
 
-    #region 키세팅(Input) 스크립트
+    #region 05.키세팅(Input) 스크립트
     public void OnOpenInventory(InputAction.CallbackContext context){
         if(context.phase == InputActionPhase.Performed)
         {
@@ -260,11 +262,17 @@ public class InventoryController : MonoBehaviour
             if(selectedWindow != null){
                 isDrag = true;
             }
+
             if(selectedItemGrid == null && pickupItem != null){
-                DropItem(selectedItem);
-                pickupItem = null;
-                selectedItem = null;
-                return;
+                if(selectedEquipSlot != null){
+                    EquipItem(pickupItem, selectedEquipSlot);
+                }
+                else{
+                    DropItem(pickupItem);
+                    pickupItem = null;
+                    selectedItem = null;
+                    return;
+                }
             }
 
             if (selectedItemGrid == null) { 
@@ -310,7 +318,7 @@ public class InventoryController : MonoBehaviour
 
     #endregion
 
-    #region Input 관련 스크립트
+    #region 06.Input 관련 스크립트
     private void ClickDetailInventory()
     {
         Vector2Int itemToDetailPos = GetTileGridPosition();
@@ -358,7 +366,6 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-
     public void Toggle()
     {
         if (inventoryWindow.activeInHierarchy)
@@ -397,7 +404,7 @@ public class InventoryController : MonoBehaviour
         }
         else
         {
-            PlaceItem(tileGridPosition);    
+            PlaceItem(tileGridPosition);       
         }
     }
     #endregion
@@ -418,7 +425,7 @@ public class InventoryController : MonoBehaviour
         return selectedItemGrid.GetTileGridPosition(position);
     }
     
-    #region LeftMouseButtonPress 관련
+    #region 07.LeftMouseButtonPress 관련
     private void PlaceItem(Vector2Int tileGridPosition)
     {
         
@@ -456,7 +463,7 @@ public class InventoryController : MonoBehaviour
     }
     #endregion
 
-    #region 디테일 버튼 관리
+    #region 08.디테일 버튼 관리
     public void OnPickUpButton()
     {
         PickUpItem(selectedItem);
@@ -481,7 +488,7 @@ public class InventoryController : MonoBehaviour
     }
     #endregion
 
-    #region 아이탬사용
+    #region 09.아이탬사용
     private void UseItem()
     {
         /*
@@ -512,7 +519,7 @@ public class InventoryController : MonoBehaviour
     }
     #endregion
     
-    #region 캔버스 컨트롤
+    #region 10.캔버스 컨트롤
      public void CheckClose(){
         int toggleCount = 0;
         
@@ -526,6 +533,78 @@ public class InventoryController : MonoBehaviour
             Toggle();
         }
     }
+    #endregion
+
+    #region 11.장비 장착 관련
+    private void EquipItem(InventoryItem item , EquipSlot slot){
+        if(CheckEquipSlot(item, slot)){
+            selectedEquipSlot.EquipItem(item);
+            Destroy(pickupItem.gameObject);
+        }
+    }
+
+    private bool CheckEquipSlot(InventoryItem item, EquipSlot slot)
+    {
+        InventoryItem checkItem = item;
+        EquipSlot curSlot = slot;
+        
+        if(checkItem.itemData.equipType == EquipType.Weapon){
+            switch(checkItem.itemData.weaponType){
+                case WeaponType.BothHandedMelee:
+                    if(curSlot.slotType == SlotType.Weapon || curSlot.slotType == SlotType.Weapon2){
+                        return true;
+                    }
+                    break;
+                case WeaponType.MainHandedMelee:
+                    if(curSlot.slotType == SlotType.Weapon){
+                        return true;
+                    }
+                    break;
+                case WeaponType.SubHandedMelee:
+                    if(curSlot.slotType == SlotType.Weapon2){
+                        return true;
+                    }
+                    break;
+                case WeaponType.TwoHandedMelee:
+                    if(curSlot.slotType == SlotType.Weapon){
+                        return true;
+                    }
+                    break;
+            }
+        }
+        else{
+            switch(checkItem.itemData.armorPlaceType){
+                case ArmorPlaceType.Head:
+                    if(curSlot.slotType == SlotType.Head){
+                        return true;
+                    }
+                    break;
+                case ArmorPlaceType.Body:
+                    if(curSlot.slotType == SlotType.Body){
+                        return true;
+                    }
+                    break;
+                case ArmorPlaceType.Belt:
+                    if(curSlot.slotType == SlotType.Belt){
+                        return true;
+                    }
+                    break;
+                case ArmorPlaceType.Accessory:
+                    if(curSlot.slotType == SlotType.Accessory){
+                        return true;
+                    }
+                    break;
+                case ArmorPlaceType.Normal:
+                    if(curSlot.slotType == SlotType.Normal){
+                        return true;
+                    }
+                    break;
+            }
+        }
+        Debug.Log("curSlotType : "+ curSlot.slotType + "ItemType : " + checkItem.itemData.equipType +" ");
+        return false;
+    }
     
+
     #endregion
 }

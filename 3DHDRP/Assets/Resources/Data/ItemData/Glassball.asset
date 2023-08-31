@@ -29,7 +29,7 @@ MonoBehaviour:
   equipType: 1
   weaponType: 3
   armorType: 0
-  armorPlaceType: 3
+  armorPlaceType: 1
   maxValue: 0
   minValue: 0
   secondValue: 0

@@ -138,7 +138,7 @@ public class InventoryController : MonoBehaviour
         inventoryItem.Set(items[selectedItemId]);
     }
 
-    private void CreateItem(InventoryItem item){
+    private void CreateItem(ItemData item){
         InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
         pickupItem = inventoryItem;
 
@@ -146,7 +146,7 @@ public class InventoryController : MonoBehaviour
         rectTransform.SetParent(gridTransform);
         rectTransform.SetAsLastSibling();
 
-        inventoryItem.Set(item.itemData);
+        inventoryItem.Set(item);
     }
     #endregion
 
@@ -259,7 +259,7 @@ public class InventoryController : MonoBehaviour
                 inventoryHighLight.Show(false);
                 return;
             }
-            ClickDetailInventory();
+            CallDetailInventory();
         }
         
     }
@@ -269,37 +269,27 @@ public class InventoryController : MonoBehaviour
     public void OnClickInventoyInput(InputAction.CallbackContext context){
         if(context.phase == InputActionPhase.Performed && isInventoryOpen)
         {
-            
-            if(selectedWindow != null){
-                isDrag = true;
-            }
 
-            if(selectedItemGrid == null && pickupItem != null){
-                if(selectedEquipSlot != null){
-                    EquipItem(pickupItem, selectedEquipSlot);
-                }
-                else{
-                    DropItem(pickupItem);
-                    pickupItem = null;
-                    selectedItem = null;
-                    return;
-                }
-            }
+            DragWindow();
+            EquipItemOrDrop();
 
-            if (selectedItemGrid == null) { 
+            if (selectedItemGrid == null)
+            {
                 inventoryHighLight.Show(false);
                 return;
             }
 
-            if(clickTime - Time.time > - 0.15f && !isDoubleClick ){
+            if (clickTime - Time.time > -0.15f && !isDoubleClick)
+            {
                 isDoubleClick = true;
                 UseItem();
                 PlaceItem(new Vector2Int(selectedItem.onGridPositionX, selectedItem.onGridPositionY));
                 return;
             }
 
-            LeftMouseButtonPress();
-            
+            CloseDetailWindow();
+            ClickItemInGrid();
+
         }
 
         else if(context.phase == InputActionPhase.Canceled){
@@ -314,6 +304,8 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
+
+    
 
     public void OnVectorInput(InputAction.CallbackContext context){
         if(context.phase == InputActionPhase.Performed && isDrag){
@@ -330,7 +322,7 @@ public class InventoryController : MonoBehaviour
     #endregion
 
     #region 06.Input 관련 스크립트
-    private void ClickDetailInventory()
+    private void CallDetailInventory()
     {
         Vector2Int itemToDetailPos = GetTileGridPosition();
         
@@ -349,7 +341,7 @@ public class InventoryController : MonoBehaviour
         }
 
         selectedItem = detailedItem;
-
+        
         DetailToggle();
     }
 
@@ -401,12 +393,17 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    private void LeftMouseButtonPress()
+    private void CloseDetailWindow()
     {
-        if(detailInventoryWindow.activeInHierarchy){
+        if (detailInventoryWindow.activeInHierarchy)
+        {
             detailInventoryWindow.SetActive(false);
             selectedItem = null;
         }
+    }
+
+    private void ClickItemInGrid()
+    {
         Vector2Int tileGridPosition = GetTileGridPosition();
         //Debug.Log("tileGridPositin : "+ tileGridPosition.x + ":" + tileGridPosition.y);
         if (pickupItem == null)
@@ -418,6 +415,39 @@ public class InventoryController : MonoBehaviour
             PlaceItem(tileGridPosition);       
         }
     }
+
+    private void DragWindow()
+    {
+        if (selectedWindow != null)
+        {
+            isDrag = true;
+        }
+    }
+
+    private void EquipItemOrDrop(){
+        if(selectedItemGrid == null){
+            if(selectedEquipSlot != null){
+                if(pickupItem != null){
+                    EquipItem(pickupItem, selectedEquipSlot);
+                    
+                }        
+                else{
+                    UnEquipItem(selectedEquipSlot);
+                }
+            }
+            else{
+                if(pickupItem != null){
+                    DropItem(pickupItem);
+                    pickupItem = null;
+                    selectedItem = null;
+                    return;
+                }
+            }
+        }
+    }
+
+    
+
     #endregion
 
     //마우스 클릭한 위치의 좌표를 확인해서, 그리드 내 좌표로 변환합니다.
@@ -559,6 +589,13 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    private void UnEquipItem(EquipSlot selectedEquipSlot)
+    {
+        if(selectedEquipSlot.curEquipItem == null){ return; }
+        CreateItem(selectedEquipSlot.curEquipItem);
+        selectedEquipSlot.UnEquipItem();
+    }
+
     private bool CheckEquipSlot(InventoryItem item, EquipSlot slot)
     {
         InventoryItem checkItem = item;
@@ -586,6 +623,8 @@ public class InventoryController : MonoBehaviour
                         return true;
                     }
                     break;
+                default:
+                    return false;
             }
         }
         else{
@@ -615,6 +654,8 @@ public class InventoryController : MonoBehaviour
                         return true;
                     }
                     break;
+                default:
+                    return false;
             }
         }
         Debug.Log("curSlotType : "+ curSlot.slotType + "ItemType : " + checkItem.itemData.equipType +" ");

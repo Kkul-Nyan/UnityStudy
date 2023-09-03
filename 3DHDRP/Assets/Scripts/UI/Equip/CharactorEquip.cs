@@ -39,149 +39,99 @@ public class CharactorEquip : MonoBehaviour
         minDefense = 0;
     }
 
-    /*
-    public EquipSlot AutoCheckEquipSlot(InventoryItem item){
-        //우선 끼울수있는 슬롯을 찾더라도 빈 슬롯에 우선해서 장착하기 위해 먼저 장착된슬롯인지 확인
-        foreach(EquipSlot equipitem in equipSlots){
-            if(item.itemData.equipType == EquipType.Weapon){
-                switch(item.itemData.weaponType){
-                    case WeaponType.BothHandedMelee:
-                        if(equipitem.slotType == SlotType.Weapon ){
-                            if(CheckisNull(equipitem)){
-                                return equipitem;
-                            }
-                        }
-                        else if(equipitem.slotType == SlotType.Weapon2 ){
-                            if(CheckisNull(equipitem)){
-                                return equipitem;
-                            }
-                        }
-                        break;
-                    case WeaponType.MainHandedMelee:
-                        if(equipitem.slotType == SlotType.Weapon){
-                            if(CheckisNull(equipitem)){
-                                return equipitem;
-                            }
-                        }
-                        break;
-                    case WeaponType.SubHandedMelee:
-                        if(equipitem.slotType == SlotType.Weapon2){
-                            if(CheckisNull(equipitem)){
-                                return equipitem;
-                            }
-                        }
-                        break;
-                    case WeaponType.TwoHandedMelee:
-                        if(equipitem.slotType == SlotType.Weapon){
-                            if(CheckisNull(equipitem)){
-                                return equipitem;
-                            }
-                        }
-                        break;
-                }
-            }
-            else{
-                switch(item.itemData.armorPlaceType){
-                    case ArmorPlaceType.Head:
-                        if(equipitem.slotType == SlotType.Head){
-                            if(CheckisNull(equipitem)){
-                                return equipitem;
-                            }
-                        }
-                        break;
-                    case ArmorPlaceType.Body:
-                        if(equipitem.slotType == SlotType.Body){
-                            if(CheckisNull(equipitem)){
-                                return equipitem;
-                            }
-                        }
-                        break;
-                    case ArmorPlaceType.Belt:
-                        if(equipitem.slotType == SlotType.Belt){
-                            if(CheckisNull(equipitem)){
-                                return equipitem;
-                            }
-                        }
-                        break;
-                    case ArmorPlaceType.Accessory:
-                        if(equipitem.slotType == SlotType.Accessory){
-                            if(CheckisNull(equipitem)){
-                                return equipitem;
-                            }
-                        }
-                        break;
-                    case ArmorPlaceType.Normal:
-                        if(equipitem.slotType == SlotType.Normal){
-                            if(CheckisNull(equipitem)){
-                                return equipitem;
-                            }
-                        }
-                        break;
-                }
+    private EquipSlot FindSlot(SlotType slotTypeToFind)
+    {
+        foreach (EquipSlot slot in equipSlots)
+        {
+            if (slot.slotType == slotTypeToFind)
+            {
+                return slot;
             }
         }
-        //장착된 슬롯외에 자리가 없다면, 가장먼저 가능한 곳에 장착
-        foreach(EquipSlot equipitem in equipSlots){
-            if(item.itemData.equipType == EquipType.Weapon){
-                switch(item.itemData.weaponType){
-                    case WeaponType.BothHandedMelee:
-                        if(equipitem.slotType == SlotType.Weapon ){
-                            return equipitem;
-                        }
-                        else if(equipitem.slotType == SlotType.Weapon2 ){
-                            return equipitem;
-                        }
-                        break;
-                    case WeaponType.MainHandedMelee:
-                        if(equipitem.slotType == SlotType.Weapon){
-                            return equipitem;
-                        }
-                        break;
-                    case WeaponType.SubHandedMelee:
-                        if(equipitem.slotType == SlotType.Weapon2){
-                            return equipitem;
-                        }
-                        break;
-                    case WeaponType.TwoHandedMelee:
-                        if(equipitem.slotType == SlotType.Weapon){
-                            return equipitem;
-                        }
-                        break;
-                }
-            }
-            else{
-                switch(item.itemData.armorPlaceType){
-                    case ArmorPlaceType.Head:
-                        if(equipitem.slotType == SlotType.Head){
-                            return equipitem;
-                        }
-                        break;
-                    case ArmorPlaceType.Body:
-                        if(equipitem.slotType == SlotType.Body){
-                            return equipitem;
-                        }
-                        break;
-                    case ArmorPlaceType.Belt:
-                        if(equipitem.slotType == SlotType.Belt){
-                            return equipitem;
-                        }
-                        break;
-                    case ArmorPlaceType.Accessory:
-                        if(equipitem.slotType == SlotType.Accessory){
-                            return equipitem;
-                        }
-                        break;
-                    case ArmorPlaceType.Normal:
-                        if(equipitem.slotType == SlotType.Normal){
-                            return equipitem;
-                        }
-                        break;
-                }
-            }
-        }
-    return null;     
+        return null;
     }
-*/
+
+    public EquipSlot SearchCanEquip(InventoryItem inventoryItem){
+        ItemData itemData= inventoryItem.itemData;
+        if(itemData.equipType == EquipType.Weapon){
+            EquipSlot weapon = FindSlot(SlotType.Weapon);
+            Debug.Log("weapon");
+            EquipSlot weapon2 = FindSlot(SlotType.Weapon2);
+
+            if(itemData.weaponType == WeaponType.BothHandedMelee){
+                if(weapon.curEquipItem == null){
+                    return weapon;
+                }
+                else if(weapon.curEquipItem != null && weapon2.curEquipItem == null){
+                    return weapon2;
+                }
+                else if(weapon.curEquipItem != null && weapon2.curEquipItem != null){
+                    return weapon;
+                }
+            }
+            else if(itemData.weaponType == WeaponType.MainHandedMelee){
+                return weapon;
+                
+            }
+            else if(itemData.weaponType == WeaponType.SubHandedMelee){
+                return weapon;
+                
+            }
+            else if(itemData.weaponType == WeaponType.TwoHandedMelee){
+                weapon2.UnEquipItem();
+                return weapon;
+            }
+        }
+        else if(itemData.equipType == EquipType.Armor){
+            if(itemData.armorPlaceType == ArmorPlaceType.Head){
+                EquipSlot head = FindSlot(SlotType.Head);
+                return head;
+            }
+            else if(itemData.armorPlaceType == ArmorPlaceType.Body){
+                EquipSlot body = FindSlot(SlotType.Body);
+                return body;
+            }
+            else if(itemData.armorPlaceType == ArmorPlaceType.Belt){
+                EquipSlot belt = FindSlot(SlotType.Belt);
+                belt.EquipItem(inventoryItem);
+            }
+            else if(itemData.armorPlaceType == ArmorPlaceType.Accessory){
+                int count = 0;
+                foreach(EquipSlot curslot in equipSlots){
+                    if(curslot.curEquipItem == null && curslot.slotType == SlotType.Accessory){
+                        return curslot;
+                    }
+                    else{
+                        count ++;
+                        if(equipSlots.Length == count){
+                            EquipSlot accessory = FindSlot(SlotType.Accessory);
+                            return accessory;
+                        }
+                    }
+                } 
+            }
+            else if(itemData.armorPlaceType == ArmorPlaceType.Normal){
+                int count = 0;
+                foreach(EquipSlot curslot in equipSlots){
+                    if(curslot.curEquipItem == null && curslot.slotType == SlotType.Normal){
+                        return curslot;
+                    }
+                    else{
+                        count ++;
+                        if(equipSlots.Length == count){
+                            EquipSlot normal = FindSlot(SlotType.Normal);
+                            return normal;
+                        }
+                    }
+                } 
+            }
+
+        }
+        else{
+            return null;
+        }
+        return null;
+    }
     
 }
   

@@ -540,16 +540,15 @@ public class InventoryController : MonoBehaviour
     #region 09.아이탬사용
     private void UseItem()
     {
-        /*EquipSlot checkSlot = charactorEquip.AutoCheckEquipSlot(selectedItem);
-        if(checkSlot != null){
-            checkSlot.EquipItem(selectedItem);
-            if(checkSlot.temporaryItemData != null){
-                selectedItem.Set(checkSlot.temporaryItemData);
-            }
-            else{
-                Destroy(selectedItem.gameObject);
-            }
-        }*/
+        EquipSlot slot = charactorEquip.SearchCanEquip(selectedItem);
+        slot.EquipItem(selectedItem);
+        if(slot.temporaryItemData != null){
+            selectedItem.Set(slot.temporaryItemData);
+        }
+        else{
+            Destroy(selectedItem.gameObject);
+        }
+        
     }
 
     private void DivideItem(){
@@ -583,7 +582,7 @@ public class InventoryController : MonoBehaviour
 
     #region 11.장비 장착 관련
     private void EquipItem(InventoryItem item , EquipSlot slot){
-        if(slot.CheckCanEquip(item)){
+        if(CheckEquipSlot(item, slot)){
             slot.EquipItem(item);
             if(slot.temporaryItemData != null){
                 item.Set(slot.temporaryItemData);

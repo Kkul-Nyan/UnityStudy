@@ -1,10 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerStatus : MonoBehaviour, IDamagable
 {
+    private Status level;
+    public Status xp;
     public Status health;
     public Status stamina;
     public Status mana;
@@ -22,6 +26,7 @@ public class PlayerStatus : MonoBehaviour, IDamagable
     public float keepStaminaMax;
 
     void Start(){
+        level.curValue = level.startValue;
         health.curValue = health.startValue;
         stamina.curValue = stamina.startValue;
         mana.curValue = mana.startValue;
@@ -29,6 +34,7 @@ public class PlayerStatus : MonoBehaviour, IDamagable
         thirst.curValue = thirst.startValue;
         sleep.curValue = sleep.startValue;
         keepStaminaMax = stamina.maxValue;
+        xp.curValue = xp.startValue;
     }
 
     void Update(){
@@ -63,6 +69,7 @@ public class PlayerStatus : MonoBehaviour, IDamagable
         hunger.uiBar.fillAmount = hunger.GetPercentage();
         thirst.uiBar.fillAmount = thirst.GetPercentage();
         //sleep.uiBar.fillAmount = sleep.GetPercentage();
+        xp.uiBar.fillAmount = xp.GetPercentage();
     }
 
     void HungrySound(){
@@ -110,6 +117,21 @@ public class PlayerStatus : MonoBehaviour, IDamagable
     public void Sleep(float amount){
         sleep.Subtract(amount);
     }
+    public void GetXP(float amount){
+        xp.curValue = xp.curValue + amount;
+        if( xp.curValue > xp.maxValue){
+            xp.curValue = xp.curValue - xp.maxValue;
+            xp.maxValue += Mathf.Round(xp.maxValue * 0.5f);
+            LevelUp();
+        }
+    
+    }
+
+    private void LevelUp()
+    {
+        level.Add(1);
+    }
+
     public void TakePhysicalDamage(int amount){
         health.Subtract(amount);
         notBattleTime = 60;
@@ -149,4 +171,5 @@ public class Status
     public float GetPercentage (){
         return curValue / maxValue;
     }
+    
 }

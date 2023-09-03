@@ -655,46 +655,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2125722893}
-    - target: {fileID: 39627514793931925, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: slotType
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 88494393690105200, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotAccessory6
-      objectReference: {fileID: 0}
-    - target: {fileID: 205395942047444493, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: slotType
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1094612985171759391, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotNormal3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1135828656124242082, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: slotType
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1584527845098715226, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotBody
-      objectReference: {fileID: 0}
-    - target: {fileID: 1734397505504519692, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: slotType
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1880705290847557188, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotAccessory3
-      objectReference: {fileID: 0}
     - target: {fileID: 2639743818211861590, guid: 0e329539ab77b6e43b318f793d518977,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -734,71 +694,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2841680308795524293, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotAccessory8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3048535060292928559, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: slotType
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3191605793326617186, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotAccessory4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577741867407833135, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotBelt
-      objectReference: {fileID: 0}
-    - target: {fileID: 3707644616548543434, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotAccessory2
       objectReference: {fileID: 0}
     - target: {fileID: 3780224099716080962, guid: 0e329539ab77b6e43b318f793d518977,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2125722893}
-    - target: {fileID: 3795499616812782517, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: slotType
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4093077621643718676, guid: 0e329539ab77b6e43b318f793d518977,
         type: 3}
       propertyPath: m_Name
       value: InventoryCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 4230971458287115997, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotWeapon2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378693304553754083, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotAccessory7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4672603388858640311, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotWeapon
-      objectReference: {fileID: 0}
-    - target: {fileID: 5661625926011328133, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotNormal2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5765746011376133654, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotHead
       objectReference: {fileID: 0}
     - target: {fileID: 5912369517075258063, guid: 0e329539ab77b6e43b318f793d518977,
         type: 3}
@@ -900,46 +805,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5945646752882426849, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: slotType
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6178321644603988401, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotAccessory1
-      objectReference: {fileID: 0}
     - target: {fileID: 6199587623416146383, guid: 0e329539ab77b6e43b318f793d518977,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2125722893}
-    - target: {fileID: 6533164123786735799, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: slotType
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850158404180430895, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: slotType
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 7243539803469203275, guid: 0e329539ab77b6e43b318f793d518977,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2125722893}
-    - target: {fileID: 7376602547974487750, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotAccessory5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8920821210750769082, guid: 0e329539ab77b6e43b318f793d518977,
-        type: 3}
-      propertyPath: m_Name
-      value: SlotNormal1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1852,6 +1727,11 @@ PrefabInstance:
       objectReference: {fileID: 1537319998}
     - target: {fileID: 5625315987676833270, guid: 344fbaa93ead987458ced066f383a9d4,
         type: 3}
+      propertyPath: xp.maxValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625315987676833270, guid: 344fbaa93ead987458ced066f383a9d4,
+        type: 3}
       propertyPath: health.uiBar
       value: 
       objectReference: {fileID: 930819495}
@@ -1870,6 +1750,26 @@ PrefabInstance:
       propertyPath: stamina.uiBar
       value: 
       objectReference: {fileID: 1369579071}
+    - target: {fileID: 5625315987676833270, guid: 344fbaa93ead987458ced066f383a9d4,
+        type: 3}
+      propertyPath: xp.startValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625315987676833270, guid: 344fbaa93ead987458ced066f383a9d4,
+        type: 3}
+      propertyPath: level.curValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625315987676833270, guid: 344fbaa93ead987458ced066f383a9d4,
+        type: 3}
+      propertyPath: level.maxValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625315987676833270, guid: 344fbaa93ead987458ced066f383a9d4,
+        type: 3}
+      propertyPath: level.startValue
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8909962766605932576, guid: 344fbaa93ead987458ced066f383a9d4,
         type: 3}
       propertyPath: m_Name

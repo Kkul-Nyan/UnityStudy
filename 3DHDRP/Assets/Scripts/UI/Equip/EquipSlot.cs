@@ -22,12 +22,16 @@ public class EquipSlot : MonoBehaviour
     public ItemData temporaryItemData;
     Image image;
     Sprite originalSprite;
-    CharactorEquip charactorEquip;
+    Image backgroundImage;
+    Sprite bgOrginalSprite;
+
 
     private void Awake() {
         image = GetComponent<Image>();
         originalSprite = image.sprite;
-        charactorEquip = GetComponent<CharactorEquip>();
+        backgroundImage = transform.parent.GetChild(0).GetComponent<Image>();
+        Debug.Log(backgroundImage.name);
+        bgOrginalSprite = backgroundImage.sprite;
     }
 
     public void EquipItem(InventoryItem item){
@@ -42,6 +46,35 @@ public class EquipSlot : MonoBehaviour
         curEquipItem = null;
         image.sprite = originalSprite;
         temporaryItemData = null;
+    }
+
+    public void Show(bool a, bool b){
+        switch(a){
+            case true :
+                switch(b){
+                    case true:
+                        backgroundImage.sprite = null;
+                        backgroundImage.color = Color.green;
+                    break;
+                    case false:
+                        backgroundImage.sprite = null;
+                        backgroundImage.color = Color.red;
+                    break;
+                }
+            break;
+            case false :
+                switch(b){
+                    case true:
+                        backgroundImage.sprite = bgOrginalSprite;
+                        backgroundImage.color = Color.white;
+                    break;
+                    case false:
+                        backgroundImage.sprite = bgOrginalSprite;
+                        backgroundImage.color = Color.white;
+                    break;
+                }
+            break;
+        }
     }
 
 }

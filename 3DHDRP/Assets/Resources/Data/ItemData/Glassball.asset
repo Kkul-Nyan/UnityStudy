@@ -26,7 +26,7 @@ MonoBehaviour:
   maxStackAmount: 0
   consumable: []
   quality: 0
-  equipType: 0
+  equipType: 1
   weaponType: 0
   armorType: 0
   armorPlaceType: 1

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
@@ -91,6 +92,7 @@ public class InventoryController : MonoBehaviour
 
             HandleHighlight(); 
             DescribeUI();
+            HandleEquipHighLight();
         }  
     }
     #endregion
@@ -192,6 +194,18 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    private void HandleEquipHighLight(){
+        if(selectedEquipSlot == null ){ return; }
+        Debug.Log(selectedEquipSlot.name);
+        if(pickupItem == null){ return;}
+        Debug.Log(pickupItem.name);
+           
+        bool check = CheckEquipSlot(pickupItem, selectedEquipSlot);
+        Debug.Log(check);
+        selectedEquipSlot.Show(true, check);
+         
+        
+    }
     //하이라이트처럼 마우스가 위에 올라왔을떄 자동으로 아이탬설명창을 띄웁니다.
     void DescribeUI(){
         if(selectedItemGrid == null) { 

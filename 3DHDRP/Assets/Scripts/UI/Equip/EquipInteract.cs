@@ -15,12 +15,11 @@ public class EquipInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData)
     {
         inventoryController.selectedEquipSlot = equipSlot;
-        Debug.Log(equipSlot.name);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        inventoryController.selectedEquipSlot.Show(false, false);
         inventoryController.selectedEquipSlot = null;
-
     }
 }

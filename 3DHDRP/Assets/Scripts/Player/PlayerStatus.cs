@@ -69,7 +69,7 @@ public class PlayerStatus : MonoBehaviour, IDamagable
         hunger.uiBar.fillAmount = hunger.GetPercentage();
         thirst.uiBar.fillAmount = thirst.GetPercentage();
         //sleep.uiBar.fillAmount = sleep.GetPercentage();
-        xp.uiBar.fillAmount = xp.GetPercentage();
+        //xp.uiBar.fillAmount = xp.GetPercentage();
     }
 
     void HungrySound(){

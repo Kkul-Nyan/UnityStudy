@@ -19,6 +19,8 @@ public class EquipSlot : MonoBehaviour
 {
     public SlotType slotType;
     public ItemData curEquipItem;
+    public ItemData curEquipItem2;
+    public ItemData saveItemData;
     public ItemData temporaryItemData;
     Image image;
     Sprite originalSprite;
@@ -39,6 +41,9 @@ public class EquipSlot : MonoBehaviour
             temporaryItemData = curEquipItem;
         }
         curEquipItem = item.itemData;
+        image.sprite = curEquipItem.itemIcon;
+    }
+    public void EquipItem(){
         image.sprite = curEquipItem.itemIcon;
     }
 

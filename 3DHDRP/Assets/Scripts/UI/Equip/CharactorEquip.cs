@@ -2,17 +2,36 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharactorEquip : MonoBehaviour
 {
     private EquipSlot[] equipSlots;
     private int maxDamage, minDamage, maxDefense, minDefense;
-
+    private EquipSlot weaponSlot;
+    private EquipSlot weaponSlot2;
+    
+    public Button[] slot1BTNs;
+    public Button[] slot2BTNs;
+    bool isSlot1 = true;
+    Sprite originalSprite;
     void Start()
     {
         equipSlots = GetComponentsInChildren<EquipSlot>();
         for (int i = 0; i < equipSlots.Length; i++){
             Debug.Log(equipSlots[i].slotType);
+        }
+
+        weaponSlot = FindSlot(SlotType.Weapon);
+        weaponSlot2 = FindSlot(SlotType.Weapon2);
+        Image image = slot1BTNs[0].GetComponent<Image>();
+        originalSprite = image.sprite;
+
+        if(isSlot1 == true){
+            OnChangeWeaponSlot1Button();
+        }
+        else{
+            OnChangeWeaponSlot2Button();
         }
     }
 
@@ -133,5 +152,70 @@ public class CharactorEquip : MonoBehaviour
         return null;
     }
     
+    public void OnChangeWeaponSlot1Button(){
+        isSlot1 = true;
+        foreach(Button btn in slot1BTNs){
+            Image image = btn.GetComponent<Image>();
+            image.sprite = originalSprite;
+        }
+        foreach(Button btn in slot2BTNs){
+            Image image = btn.GetComponent<Image>();
+            image.sprite = btn.spriteState.disabledSprite;
+        }
+        weaponSlot.saveItemData = weaponSlot.curEquipItem;
+        weaponSlot.curEquipItem = weaponSlot.curEquipItem2;
+        weaponSlot.curEquipItem2 = weaponSlot.saveItemData;
+
+        weaponSlot2.saveItemData = weaponSlot2.curEquipItem;
+        weaponSlot2.curEquipItem = weaponSlot2.curEquipItem2;
+        weaponSlot2.curEquipItem2 = weaponSlot2.saveItemData;
+        
+        if(weaponSlot.curEquipItem == null){ 
+            weaponSlot.UnEquipItem(); 
+        }
+        else{
+            weaponSlot.EquipItem();
+        }
+
+        if(weaponSlot2.curEquipItem == null){ 
+            weaponSlot2.UnEquipItem(); 
+        }
+        else{
+            weaponSlot2.EquipItem();
+        }
+    }
+
+    public void OnChangeWeaponSlot2Button(){
+          isSlot1 = false;
+        foreach(Button btn in slot2BTNs){
+            Image image = btn.GetComponent<Image>();
+            image.sprite = originalSprite;
+        }
+        foreach(Button btn in slot1BTNs){
+            Image image = btn.GetComponent<Image>();
+            image.sprite = btn.spriteState.disabledSprite;
+        }
+        weaponSlot.saveItemData = weaponSlot.curEquipItem;
+        weaponSlot.curEquipItem = weaponSlot.curEquipItem2;
+        weaponSlot.curEquipItem2 = weaponSlot.saveItemData;
+
+        weaponSlot2.saveItemData = weaponSlot2.curEquipItem;
+        weaponSlot2.curEquipItem = weaponSlot2.curEquipItem2;
+        weaponSlot2.curEquipItem2 = weaponSlot2.saveItemData;
+        
+        if(weaponSlot.curEquipItem == null){ 
+            weaponSlot.UnEquipItem(); 
+        }
+        else{
+            weaponSlot.EquipItem();
+        }
+        
+        if(weaponSlot2.curEquipItem == null){ 
+            weaponSlot2.UnEquipItem(); 
+        }
+        else{
+            weaponSlot2.EquipItem();
+        }
+    }
 }
   

@@ -967,6 +967,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChangeWeaponSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 3274577303313942375, guid: 0e329539ab77b6e43b318f793d518977,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3780224099716080962, guid: 0e329539ab77b6e43b318f793d518977,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2074,6 +2079,23 @@ MonoBehaviour:
   descriptionUI: {fileID: 2138688583}
   nameText: {fileID: 1355858868}
   descriptiveText: {fileID: 182304565}
+--- !u!114 &2125722911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125722886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2059bbce3018141bfc142b2ec6da07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon1: {fileID: 0}
+  weapon2: {fileID: 0}
+  curWeapon1: {fileID: 0}
+  curWeapon2: {fileID: 0}
+  equipParent: {fileID: 0}
 --- !u!224 &2138688583 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3017240495364722233, guid: 0e329539ab77b6e43b318f793d518977,
@@ -2489,6 +2511,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2125722902}
+    - targetCorrespondingSourceObject: {fileID: 8909962766605932576, guid: 344fbaa93ead987458ced066f383a9d4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2125722911}
   m_SourcePrefab: {fileID: 100100000, guid: 344fbaa93ead987458ced066f383a9d4, type: 3}
 --- !u!1001 &8886717536921580070
 PrefabInstance:

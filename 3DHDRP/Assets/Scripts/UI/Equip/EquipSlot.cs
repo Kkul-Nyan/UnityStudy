@@ -17,6 +17,7 @@ public enum SlotType{
 }
 public class EquipSlot : MonoBehaviour
 {
+    private EquipItemManager equipItemManager;
     public SlotType slotType;
     public ItemData curEquipItem;
     public ItemData curEquipItem2;
@@ -29,6 +30,7 @@ public class EquipSlot : MonoBehaviour
 
 
     private void Awake() {
+        equipItemManager = FindObjectOfType<EquipItemManager>();
         image = GetComponent<Image>();
         originalSprite = image.sprite;
         backgroundImage = transform.parent.GetChild(0).GetComponent<Image>();
@@ -42,15 +44,34 @@ public class EquipSlot : MonoBehaviour
         }
         curEquipItem = item.itemData;
         image.sprite = curEquipItem.itemIcon;
+
+        CheckItemDataforEquipManager();
     }
     public void EquipItem(){
         image.sprite = curEquipItem.itemIcon;
+
+        CheckItemDataforEquipManager();
     }
 
-    public void UnEquipItem(){
+    public void UnEquipItem()
+    {
         curEquipItem = null;
         image.sprite = originalSprite;
         temporaryItemData = null;
+
+        CheckItemDataforEquipManager();
+    }
+
+    private void CheckItemDataforEquipManager()
+    {
+        if (slotType == SlotType.Weapon)
+        {
+            equipItemManager.Weapon1 = curEquipItem;
+        }
+        if (slotType == SlotType.Weapon2)
+        {
+            equipItemManager.Weapon2 = curEquipItem;
+        }
     }
 
     public void Show(bool a, bool b){

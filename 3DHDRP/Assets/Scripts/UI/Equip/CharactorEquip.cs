@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CharactorEquip : MonoBehaviour
 {
+    
     private EquipSlot[] equipSlots;
     private int maxDamage, minDamage, maxDefense, minDefense;
     private EquipSlot weaponSlot;

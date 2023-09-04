@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class EquipItemManager : MonoBehaviour
+public class EquipItemManager : EquipItem
 {
 
     public EquipItem curEquip;

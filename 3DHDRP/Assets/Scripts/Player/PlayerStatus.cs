@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class PlayerStatus : MonoBehaviour, IDamagable
 {
-    private Status level;
+    public Status level;
     public Status xp;
     public Status health;
     public Status stamina;

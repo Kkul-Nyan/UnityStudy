@@ -16,7 +16,6 @@ public class WindowInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         inventoryController.selectedWindow = windowController;
-        Debug.Log("window");
     }
 
     public void OnPointerExit(PointerEventData eventData)

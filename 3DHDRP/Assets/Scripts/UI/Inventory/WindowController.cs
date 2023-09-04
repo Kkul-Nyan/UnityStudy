@@ -34,9 +34,6 @@ public class WindowController : MonoBehaviour
 
     public void Init(int width, int height){
         if(includeEquip ){
-            Debug.Log(
-                "Width : " + width + ", Higth : "+ height 
-            );
             Vector2 size = new Vector2((width * ItemGrid.tileSizeWidth) + (bgSize.x * 2) + equipSize.x, (height * ItemGrid.tileSizeHeight)+ bgSize.y);
             top.sizeDelta = size;
         }

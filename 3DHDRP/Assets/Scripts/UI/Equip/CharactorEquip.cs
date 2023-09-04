@@ -19,12 +19,10 @@ public class CharactorEquip : MonoBehaviour
     void Start()
     {
         equipSlots = GetComponentsInChildren<EquipSlot>();
-        for (int i = 0; i < equipSlots.Length; i++){
-            Debug.Log(equipSlots[i].slotType);
-        }
 
         weaponSlot = FindSlot(SlotType.Weapon);
         weaponSlot2 = FindSlot(SlotType.Weapon2);
+        
         Image image = slot1BTNs[0].GetComponent<Image>();
         originalSprite = image.sprite;
 

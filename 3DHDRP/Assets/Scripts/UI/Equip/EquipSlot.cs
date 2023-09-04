@@ -34,7 +34,6 @@ public class EquipSlot : MonoBehaviour
         image = GetComponent<Image>();
         originalSprite = image.sprite;
         backgroundImage = transform.parent.GetChild(0).GetComponent<Image>();
-        Debug.Log(backgroundImage.name);
         bgOrginalSprite = backgroundImage.sprite;
     }
 

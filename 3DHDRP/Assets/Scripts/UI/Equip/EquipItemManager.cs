@@ -11,7 +11,7 @@ public class EquipItemManager : MonoBehaviour
         set{
             if( weapon1 != value ){
                 OnChangeWeapon1(value);
-                weapon2 = value;
+                weapon1 = value;
             }
         }
     }
@@ -34,21 +34,25 @@ public class EquipItemManager : MonoBehaviour
 
 
     public void OnAttackInput(InputAction.CallbackContext context){
+        if(curWeapon1 == null){ return; }
         curWeapon1.OnAttackInput();
     }
 
     public void OnAltAttackInput(InputAction.CallbackContext context){
+        if(curWeapon1 == null){ return; }
         curWeapon1.OnAltAttackInput();
     }
 
-    void OnChangeWeapon1(ItemData item){
+    void OnChangeWeapon1(ItemData item = null ){
         if( curWeapon1 != null ){ Destroy(curWeapon1.gameObject); }
-        if(item.equipPrefab == null ){ return; }
-        curWeapon1 = Instantiate(item.equipPrefab, weapon1equipParent).GetComponent<EquipItem>();
+        if(item != null ){
+            curWeapon1 = Instantiate(item.equipPrefab, weapon1equipParent).GetComponent<EquipItem>();
+        }
     }
-    void OnChangeWeapon2(ItemData item){
+    void OnChangeWeapon2(ItemData item = null ){
         if( curWeapon2 != null ){ Destroy(curWeapon2.gameObject); }
-        if(item.equipPrefab == null ){ return; }
-        curWeapon2 = Instantiate(item.equipPrefab, weapon2equipParent).GetComponent<EquipItem>();
+        if(item != null ){
+            curWeapon2 = Instantiate(item.equipPrefab, weapon2equipParent).GetComponent<EquipItem>();
+        }
     }
 }

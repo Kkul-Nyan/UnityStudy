@@ -70,7 +70,7 @@ public class CharactorEquip : MonoBehaviour
     }
 
     public EquipSlot SearchCanEquip(InventoryItem inventoryItem){
-        ItemData itemData= inventoryItem.itemData;
+        ItemData itemData = inventoryItem.itemData;
         if(itemData.equipType == EquipType.Weapon){
             EquipSlot weapon = FindSlot(SlotType.Weapon);
             Debug.Log("weapon");

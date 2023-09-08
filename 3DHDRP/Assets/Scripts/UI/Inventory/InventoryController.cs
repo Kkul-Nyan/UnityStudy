@@ -58,6 +58,7 @@ public class InventoryController : MonoBehaviour
     float clickTime;
     bool isDoubleClick;
     bool isDrag;
+
     #endregion
 
     #region 02.기본 유니티 전처리과정

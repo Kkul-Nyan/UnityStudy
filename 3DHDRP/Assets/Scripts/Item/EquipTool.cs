@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipTool : EquipItem
+public class EquipTool : MonoBehaviour
 {
     public float attckRate;
     public float damage;
@@ -12,13 +12,6 @@ public class EquipTool : EquipItem
     private Camera cam;
     public bool doesGatherResources;
     public bool doesDealDamage;
-
-    public override void OnAttackInput(){
-        
-    }
-    public override void OnAltAttackInput(){
-        
-    }
 
     private void OnTriggerEnter(Collider other) {
         if(doesGatherResources){

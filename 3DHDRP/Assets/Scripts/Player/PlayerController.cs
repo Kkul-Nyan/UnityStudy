@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,7 +34,10 @@ public class PlayerController : MonoBehaviour
 
      public Camera cam;
      public bool isGround;
+     bool battleMode;
+     public Action Attack;
      public static PlayerController instance;
+
 
      #region 유니티 기본전처리 과정
      private void Awake(){
@@ -41,13 +45,15 @@ public class PlayerController : MonoBehaviour
           anim = GetComponentInChildren<Animator>();
           playerStatus = GetComponent<PlayerStatus>();
           cam = Camera.main;
+          instance = this;
+          
      }
 
      private void Start(){
           Cursor.lockState = CursorLockMode.Locked;
      }
 
-      private void FixedUpdate()
+          private void FixedUpdate()
      {
           if (isMovementAllowed)
           {
@@ -85,7 +91,7 @@ public class PlayerController : MonoBehaviour
           }
           
      }
-     
+
      void PlayerMove()
      {
           if (inputVec != Vector2.zero)
@@ -108,68 +114,114 @@ public class PlayerController : MonoBehaviour
           rig.velocity = moveVec;
      }
      #endregion
-   
+
      #region 플레이어 점프 관련
      public void OnJumpInput(InputAction.CallbackContext callback){
           if(callback.phase == InputActionPhase.Started){
                if(isGround)
-            {
+               {
                anim.SetBool("StandJump", true);
                Invoke("DoJump", 0.2f); 
-            }
-        }
+               }
+          }
      }
 
-    private void DoJump()
-    {
-        
-        rig.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-        isGround = false;
-    }
+     private void DoJump()
+     {
+          
+          rig.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+          isGround = false;
+     }
 
-    /*
-    void CheckGround(){
-         if(IsGrounded()){
-              anim.SetBool("StandJump", false);
-              Debug.Log("Ground!");
-         }
-    }
-    bool IsGrounded () {
-         Ray[] rays = new Ray[4]{
-              new Ray(transform.position + (transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f),
-              new Ray(transform.position + (-transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f),
-              new Ray(transform.position + (transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f),
-              new Ray(transform.position + (-transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f)
-         };
+     public void OnBattleModeInput(InputAction.CallbackContext context){
+          if(context.phase == InputActionPhase.Started){
+               ToggleBattleMode();
+          }
+     }
 
-         for(int i = 0; i <rays.Length; i ++) {
-              if(Physics.Raycast(rays[i], 0.1f, groundLayerMask)){
-                   return true;
-              }
-         }
-         return false;
-    }
+     void ToggleBattleMode(){
+          if(battleMode == true){
+               anim.SetLayerWeight(1,0);
+               battleMode = false;
+          }
+          else{
+               anim.SetLayerWeight(1,1);
+               battleMode = true;
+          }
+     }
+     /*
+     void CheckGround(){
+          if(IsGrounded()){
+               anim.SetBool("StandJump", false);
+               Debug.Log("Ground!");
+          }
+     }
+     bool IsGrounded () {
+          Ray[] rays = new Ray[4]{
+               new Ray(transform.position + (transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f),
+               new Ray(transform.position + (-transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f),
+               new Ray(transform.position + (transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f),
+               new Ray(transform.position + (-transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f)
+          };
 
-    void OnDrawGizmos() {
-         Gizmos.color = Color.red;
+          for(int i = 0; i <rays.Length; i ++) {
+               if(Physics.Raycast(rays[i], 0.1f, groundLayerMask)){
+                    return true;
+               }
+          }
+          return false;
+     }
 
-         Gizmos.DrawRay(transform.position + (transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
-         Gizmos.DrawRay(transform.position + (-transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
-         Gizmos.DrawRay(transform.position + (transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
-         Gizmos.DrawRay(transform.position + (-transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
-    }*/
-    
-    private void OnCollisionEnter(Collision other) {
-         if(other.gameObject.CompareTag("Ground")){
-              isGround = true;
-              anim.SetBool("StandJump", false);
-         }
-    }
+     void OnDrawGizmos() {
+          Gizmos.color = Color.red;
 
-    #endregion
+          Gizmos.DrawRay(transform.position + (transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
+          Gizmos.DrawRay(transform.position + (-transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
+          Gizmos.DrawRay(transform.position + (transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
+          Gizmos.DrawRay(transform.position + (-transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
+     }*/
 
-    #region 플레이어 시점 관련
-    public void OnLookInput(InputAction.CallbackContext context){
+     private void OnCollisionEnter(Collision other) {
+          if(other.gameObject.CompareTag("Ground")){
+               isGround = true;
+               anim.SetBool("StandJump", false);
+          }
+     }
+
+     #endregion
+
+     #region 플레이어 좌클릭 공격
+     
+     float checkTime = 0.2f;
+     float clickTime = 0f;
+     bool isClick;
+     public void OnAttackInput(InputAction.CallbackContext context){
+          
+          if(context.phase == InputActionPhase.Performed && canLook == true){
+               isClick = true;
+               clickTime = 0;
+               StartCoroutine(CheckPressOrHold());
+          }
+          else if(context.phase == InputActionPhase.Canceled && canLook == true){
+               isClick = false;
+               StopCoroutine(CheckPressOrHold());
+               if(clickTime < checkTime){
+                    Attack();
+               }
+          }
+     }    
+     IEnumerator CheckPressOrHold(){
+          while(isClick){
+               clickTime += Time.deltaTime;
+               
+               yield return new WaitForEndOfFrame();
+          }
+     }
+
+     #endregion
+
+     #region 플레이어 시점 관련
+     public void OnLookInput(InputAction.CallbackContext context){
           mouseDelta = context.ReadValue<Vector2>();
      }
 

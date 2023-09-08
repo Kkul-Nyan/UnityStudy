@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,32 +28,41 @@ public class EquipItemManager : MonoBehaviour
         }
     }
 
-    public EquipItem curWeapon1;
-    public EquipItem curWeapon2;
+    public EquipTool curWeapon1;
+    public EquipTool curWeapon2;
     public Transform weapon1equipParent;
     public Transform weapon2equipParent;
 
+    PlayerController playerController;
 
-    public void OnAttackInput(InputAction.CallbackContext context){
-        if(curWeapon1 == null){ return; }
-        curWeapon1.OnAttackInput();
+    private void Awake() {
+        playerController = GetComponent<PlayerController>();
     }
 
-    public void OnAltAttackInput(InputAction.CallbackContext context){
+    private void Start() {
+        playerController.Attack += OnAttack;
+    }
+
+    public void OnAttack(){
+       //if(curWeapon1 == null){ return; }
+        Debug.Log("Attack");
+    }
+
+    public void OnAltAttack(){
         if(curWeapon1 == null){ return; }
-        curWeapon1.OnAltAttackInput();
+        
     }
 
     void OnChangeWeapon1(ItemData item = null ){
         if( curWeapon1 != null ){ Destroy(curWeapon1.gameObject); }
         if(item != null ){
-            curWeapon1 = Instantiate(item.equipPrefab, weapon1equipParent).GetComponent<EquipItem>();
+            curWeapon1 = Instantiate(item.equipPrefab, weapon1equipParent).GetComponent<EquipTool>();
         }
     }
     void OnChangeWeapon2(ItemData item = null ){
         if( curWeapon2 != null ){ Destroy(curWeapon2.gameObject); }
         if(item != null ){
-            curWeapon2 = Instantiate(item.equipPrefab, weapon2equipParent).GetComponent<EquipItem>();
+            curWeapon2 = Instantiate(item.equipPrefab, weapon2equipParent).GetComponent<EquipTool>();
         }
     }
 }

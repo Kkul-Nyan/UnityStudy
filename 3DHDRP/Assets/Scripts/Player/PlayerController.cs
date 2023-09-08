@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
      public float immobilizeDuration = 3f;
 
      public Camera cam;
+     public bool isGround;
+     public static PlayerController instance;
 
      #region 유니티 기본전처리 과정
      private void Awake(){
@@ -59,7 +61,6 @@ public class PlayerController : MonoBehaviour
                     isMovementAllowed = true;
                }
           }
-          CheckGround();
      }
 
 
@@ -100,7 +101,7 @@ public class PlayerController : MonoBehaviour
                     return; // 스태미너가 부족하면 이동하지 않습니다.
                }
           }
-
+          
           Vector3 moveVec = transform.forward * inputVec.y + transform.right * inputVec.x;
           moveVec *= playerSpeed;
           moveVec.y = rig.velocity.y;
@@ -111,46 +112,64 @@ public class PlayerController : MonoBehaviour
      #region 플레이어 점프 관련
      public void OnJumpInput(InputAction.CallbackContext callback){
           if(callback.phase == InputActionPhase.Started){
-               if(IsGrounded()){  
-                    anim.SetBool("StandJump", true);
-                    rig.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-               }
-          }
+               if(isGround)
+            {
+               anim.SetBool("StandJump", true);
+               Invoke("DoJump", 0.2f); 
+            }
+        }
      }
 
-     void CheckGround(){
-          if(!IsGrounded()){
-               anim.SetBool("StandJump", false);
-          }
-     }
-     bool IsGrounded () {
-          Ray[] rays = new Ray[4]{
-               new Ray(transform.position + (transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down),
-               new Ray(transform.position + (-transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down),
-               new Ray(transform.position + (transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down),
-               new Ray(transform.position + (-transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down)
-          };
+    private void DoJump()
+    {
+        
+        rig.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+        isGround = false;
+    }
 
-          for(int i = 0; i <rays.Length; i ++) {
-               if(Physics.Raycast(rays[i], 0.1f, groundLayerMask)){
-                    return true;
-               }
-          }
-          return false;
-     }
+    /*
+    void CheckGround(){
+         if(IsGrounded()){
+              anim.SetBool("StandJump", false);
+              Debug.Log("Ground!");
+         }
+    }
+    bool IsGrounded () {
+         Ray[] rays = new Ray[4]{
+              new Ray(transform.position + (transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f),
+              new Ray(transform.position + (-transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f),
+              new Ray(transform.position + (transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f),
+              new Ray(transform.position + (-transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f)
+         };
 
-     void OnDrawGizmos() {
-          Gizmos.color = Color.red;
+         for(int i = 0; i <rays.Length; i ++) {
+              if(Physics.Raycast(rays[i], 0.1f, groundLayerMask)){
+                   return true;
+              }
+         }
+         return false;
+    }
 
-          Gizmos.DrawRay(transform.position + (transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down);
-          Gizmos.DrawRay(transform.position + (-transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down);
-          Gizmos.DrawRay(transform.position + (transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down);
-          Gizmos.DrawRay(transform.position + (-transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down);
-     }
-     #endregion
+    void OnDrawGizmos() {
+         Gizmos.color = Color.red;
 
-     #region 플레이어 시점 관련
-     public void OnLookInput(InputAction.CallbackContext context){
+         Gizmos.DrawRay(transform.position + (transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
+         Gizmos.DrawRay(transform.position + (-transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
+         Gizmos.DrawRay(transform.position + (transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
+         Gizmos.DrawRay(transform.position + (-transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down * 0.1f);
+    }*/
+    
+    private void OnCollisionEnter(Collision other) {
+         if(other.gameObject.CompareTag("Ground")){
+              isGround = true;
+              anim.SetBool("StandJump", false);
+         }
+    }
+
+    #endregion
+
+    #region 플레이어 시점 관련
+    public void OnLookInput(InputAction.CallbackContext context){
           mouseDelta = context.ReadValue<Vector2>();
      }
 

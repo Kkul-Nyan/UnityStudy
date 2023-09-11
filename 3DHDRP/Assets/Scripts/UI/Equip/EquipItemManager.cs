@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -34,25 +35,19 @@ public class EquipItemManager : MonoBehaviour
     public Transform weapon2equipParent;
 
     PlayerController playerController;
+    bool attacking;
+
+    float checkTime = 0.2f;
+    float clickTime = 0f;
+    bool isClick;
+    Animator anim;
 
     private void Awake() {
         playerController = GetComponent<PlayerController>();
+        anim = GetComponentInChildren<Animator>();
     }
 
-    private void Start() {
-        playerController.Attack += OnAttack;
-    }
-
-    public void OnAttack(){
-       //if(curWeapon1 == null){ return; }
-        Debug.Log("Attack");
-    }
-
-    public void OnAltAttack(){
-        if(curWeapon1 == null){ return; }
-        
-    }
-
+    
     void OnChangeWeapon1(ItemData item = null ){
         if( curWeapon1 != null ){ Destroy(curWeapon1.gameObject); }
         if(item != null ){
@@ -65,4 +60,58 @@ public class EquipItemManager : MonoBehaviour
             curWeapon2 = Instantiate(item.equipPrefab, weapon2equipParent).GetComponent<EquipTool>();
         }
     }
+
+    public void OnAttackInput(InputAction.CallbackContext context){
+          
+          if(context.phase == InputActionPhase.Performed && playerController.CanLook){
+               isClick = true;
+               clickTime = 0;
+               StartCoroutine(CheckPressOrHold());
+          }
+          else if(context.phase == InputActionPhase.Canceled && playerController.CanLook){
+               isClick = false;
+               StopCoroutine(CheckPressOrHold());
+               OnAttack(clickTime);
+          }
+     }    
+     IEnumerator CheckPressOrHold(){
+          while(isClick){
+               clickTime += Time.deltaTime;
+               
+               yield return new WaitForEndOfFrame();
+          }
+     }
+
+    public void OnAttack(float clickTime){
+            Debug.Log("1");
+        if(clickTime < checkTime){
+            if(!playerController.BattleMode){
+                anim.SetLayerWeight(1,1);
+                playerController.BattleMode = true;
+                Debug.Log("2");
+            }
+            else if(playerController.BattleMode){
+                if(!attacking){
+                    Debug.Log("3");
+                    attacking = true;
+                    anim.SetBool("Attack", true);
+                    Invoke("OnCanAttack", curWeapon1.attckRate);
+                }
+            }
+        }
+        else{
+            Debug.Log("4");
+        }
+    }
+    void OnCanAttack(){
+        attacking = false;
+        anim.SetBool("Attack", false);
+    }
+
+    public void OnAltAttack(){
+        if(curWeapon1 == null){ return; }
+        
+    }
+
+
 }

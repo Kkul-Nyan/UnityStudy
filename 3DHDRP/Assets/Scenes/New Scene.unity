@@ -1873,7 +1873,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 2125722925}
+      objectReference: {fileID: 2125722911}
     - target: {fileID: 183363240791678741, guid: 344fbaa93ead987458ced066f383a9d4,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1922,7 +1922,7 @@ PrefabInstance:
     - target: {fileID: 183363240791678741, guid: 344fbaa93ead987458ced066f383a9d4,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: PlayerController, Assembly-CSharp
+      value: EquipItemManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 183363240791678741, guid: 344fbaa93ead987458ced066f383a9d4,
         type: 3}

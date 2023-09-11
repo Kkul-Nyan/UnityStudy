@@ -24,6 +24,11 @@ public class PlayerController : MonoBehaviour
      public float lookSensitivity;
 
      bool canLook = true;
+     public bool CanLook{
+          get{return canLook;}
+     }
+
+
      Vector2 mouseDelta;
 
      Animator anim;
@@ -35,9 +40,11 @@ public class PlayerController : MonoBehaviour
      public Camera cam;
      public bool isGround;
      bool battleMode;
-     public Action Attack;
-     public static PlayerController instance;
-
+     public bool BattleMode{
+          get{return battleMode;}
+          set{battleMode = value;}
+     }
+       
 
      #region 유니티 기본전처리 과정
      private void Awake(){
@@ -45,8 +52,6 @@ public class PlayerController : MonoBehaviour
           anim = GetComponentInChildren<Animator>();
           playerStatus = GetComponent<PlayerStatus>();
           cam = Camera.main;
-          instance = this;
-          
      }
 
      private void Start(){
@@ -139,7 +144,7 @@ public class PlayerController : MonoBehaviour
           }
      }
 
-     void ToggleBattleMode(){
+     public void ToggleBattleMode(){
           if(battleMode == true){
                anim.SetLayerWeight(1,0);
                battleMode = false;
@@ -192,32 +197,8 @@ public class PlayerController : MonoBehaviour
 
      #region 플레이어 좌클릭 공격
      
-     float checkTime = 0.2f;
-     float clickTime = 0f;
-     bool isClick;
-     public void OnAttackInput(InputAction.CallbackContext context){
-          
-          if(context.phase == InputActionPhase.Performed && canLook == true){
-               isClick = true;
-               clickTime = 0;
-               StartCoroutine(CheckPressOrHold());
-          }
-          else if(context.phase == InputActionPhase.Canceled && canLook == true){
-               isClick = false;
-               StopCoroutine(CheckPressOrHold());
-               if(clickTime < checkTime){
-                    Attack();
-               }
-          }
-     }    
-     IEnumerator CheckPressOrHold(){
-          while(isClick){
-               clickTime += Time.deltaTime;
-               
-               yield return new WaitForEndOfFrame();
-          }
-     }
-
+     
+     
      #endregion
 
      #region 플레이어 시점 관련

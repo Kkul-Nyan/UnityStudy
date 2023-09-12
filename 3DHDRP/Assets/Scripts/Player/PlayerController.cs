@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -146,11 +146,11 @@ public class PlayerController : MonoBehaviour
 
      public void ToggleBattleMode(){
           if(battleMode == true){
-               anim.SetLayerWeight(1,0);
+               anim.SetLayerWeight(2,0);
                battleMode = false;
           }
           else{
-               anim.SetLayerWeight(1,1);
+               anim.SetLayerWeight(2,1);
                battleMode = true;
           }
      }

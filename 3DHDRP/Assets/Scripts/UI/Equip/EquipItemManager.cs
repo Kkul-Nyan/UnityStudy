@@ -73,20 +73,20 @@ public class EquipItemManager : MonoBehaviour
                StopCoroutine(CheckPressOrHold());
                OnAttack(clickTime);
           }
-     }    
-     IEnumerator CheckPressOrHold(){
-          while(isClick){
-               clickTime += Time.deltaTime;
-               
-               yield return new WaitForEndOfFrame();
-          }
-     }
+    }    
+    IEnumerator CheckPressOrHold(){
+        while(isClick){
+            clickTime += Time.deltaTime;
+            
+            yield return new WaitForEndOfFrame();
+        }
+    }
 
     public void OnAttack(float clickTime){
-            Debug.Log("1");
+        Debug.Log("1");
         if(clickTime < checkTime){
             if(!playerController.BattleMode){
-                anim.SetLayerWeight(1,1);
+                anim.SetLayerWeight(2,1);
                 playerController.BattleMode = true;
                 Debug.Log("2");
             }
@@ -94,7 +94,7 @@ public class EquipItemManager : MonoBehaviour
                 if(!attacking){
                     Debug.Log("3");
                     attacking = true;
-                    anim.SetBool("Attack", true);
+                    anim.SetTrigger("Attack");
                     Invoke("OnCanAttack", curWeapon1.attckRate);
                 }
             }
@@ -105,7 +105,7 @@ public class EquipItemManager : MonoBehaviour
     }
     void OnCanAttack(){
         attacking = false;
-        anim.SetBool("Attack", false);
+        //anim.SetTrigger("Attack", false);
     }
 
     public void OnAltAttack(){

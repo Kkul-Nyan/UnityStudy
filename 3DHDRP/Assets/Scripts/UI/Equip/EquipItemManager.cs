@@ -63,19 +63,20 @@ public class EquipItemManager : MonoBehaviour
 
     private void Update() {
         
-            if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f && !anim.GetNextAnimatorStateInfo(0).IsName("Combo1")){
+            
+            if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && !anim.GetNextAnimatorStateInfo(0).IsName("Combo1")){
                 anim.SetBool("Attack",false);
                 attacking = false;
             }
-            else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo1") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8f && !anim.GetNextAnimatorStateInfo(0).IsName("Combo2")){
+            else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo1") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && !anim.GetNextAnimatorStateInfo(0).IsName("Combo2")){
                 anim.SetBool("Combo1",false);
                 attacking = false;
             }
-            else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo2") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8f && !anim.GetNextAnimatorStateInfo(0).IsName("Combo3")){
+            else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo2") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && !anim.GetNextAnimatorStateInfo(0).IsName("Combo3")){
                 anim.SetBool("Combo2",false);
                 attacking = false;
             }
-            else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo3") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8f){
+            else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo3") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f){
                 anim.SetBool("Combo3",false);
                 attacking = false;
             }
@@ -160,17 +161,21 @@ public class EquipItemManager : MonoBehaviour
         //CancelInvoke("ResetCombo");
 
         if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")){
+            Debug.Log("1111");
             anim.SetBool("Attack",true);
         }
         else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack")){
+            Debug.Log("2222");
             anim.SetBool("Attack",false);
             anim.SetBool("Combo1",true);
         }
         else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo1")){
+            Debug.Log("3333");
             anim.SetBool("Combo1",false);
             anim.SetBool("Combo2",true);
         }
         else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo2")){
+            Debug.Log("4444");
             anim.SetBool("Combo2",false);
             anim.SetBool("Combo3",true);
         }

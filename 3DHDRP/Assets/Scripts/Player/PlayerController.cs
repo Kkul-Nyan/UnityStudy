@@ -1,44 +1,45 @@
  using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
      PlayerStatus playerStatus;
+     Rigidbody rig;
+     Animator anim;
+     public Transform cameraContainer;
+     Vector2 inputVec;
+     float camCurXRot;
 
+     [Title("움직임관련 변수")]
      public float decoyStamina;
-
      public float playerSpeed;
      public float jumpPower;
-     public LayerMask groundLayerMask;
-     Rigidbody rig;
-     Vector2 inputVec;
-
-     public Transform player;
-     public Transform cameraContainer;
-     public float minXLook;
-     public float maxXLook;
-     float camCurXRot;
-     public float lookSensitivity;
-
-     bool canLook = true;
-     public bool CanLook{
-          get{return canLook;}
-     }
-
-
-     Vector2 mouseDelta;
-
-     Animator anim;
-
      bool isMovementAllowed = true;
      float immobilizeEndTime = 0f;
      public float immobilizeDuration = 3f;
+     public bool isGround;
+
+     [Title("공격관련 변수")]
+     bool isClick;
+     float checkTime = 0.2f;
+     [SerializeField]float clickTime = 0f;
+     EquipItemManager equipItemManager;
+     bool canLook = true;
+
+     [Title("시점관련 변수")]
+     public bool CanLook{
+          get{return canLook;}
+     }
+     public float lookSensitivity;
+     Vector2 mouseDelta;
+     public float minXLook;
+     public float maxXLook;
 
      public Camera cam;
-     public bool isGround;
      bool battleMode;
      public bool BattleMode{
           get{return battleMode;}
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
           anim = GetComponentInChildren<Animator>();
           playerStatus = GetComponent<PlayerStatus>();
           cam = Camera.main;
+          equipItemManager = GetComponent<EquipItemManager>();
      }
 
      private void Start(){
@@ -85,7 +87,7 @@ public class PlayerController : MonoBehaviour
      #region 플레이어 기본적인 움직임(앞뒤좌우)
      public void OnMoveInput(InputAction.CallbackContext callback){
           if(isMovementAllowed){
-               if(callback.phase == InputActionPhase.Performed){  
+               if(callback.phase == InputActionPhase.Performed && !equipItemManager.attacking){  
                     anim.SetBool("Run", true);
                     inputVec = callback.ReadValue<Vector2>();
                }
@@ -122,7 +124,7 @@ public class PlayerController : MonoBehaviour
 
      #region 플레이어 점프 관련
      public void OnJumpInput(InputAction.CallbackContext callback){
-          if(callback.phase == InputActionPhase.Started){
+          if(callback.phase == InputActionPhase.Started && !equipItemManager.attacking){
                if(isGround)
                {
                anim.SetBool("StandJump", true);
@@ -195,10 +197,39 @@ public class PlayerController : MonoBehaviour
 
      #endregion
 
-     #region 플레이어 좌클릭 공격
-     
-     
-     
+     #region 공격관련 Callback
+          
+     public void OnAttackInput(InputAction.CallbackContext context){
+          
+          if(context.phase == InputActionPhase.Performed && CanLook && isGround){
+               isClick = true;
+               clickTime = 0; 
+               StartCoroutine(CheckPressOrHold());
+          }
+          else if(context.phase == InputActionPhase.Canceled && CanLook){
+               isClick = false;
+               StopCoroutine(CheckPressOrHold());
+               equipItemManager.OnAttack(clickTime, checkTime);
+               
+          }
+     }  
+
+     public void OnAltAttackInput(InputAction.CallbackContext context){
+          if(context.phase == InputActionPhase.Performed && CanLook){
+               
+          }
+          else if(context.phase == InputActionPhase.Canceled && CanLook){
+
+          }
+     }  
+
+     IEnumerator CheckPressOrHold(){
+          while(isClick){
+               clickTime += Time.deltaTime;
+               
+               yield return new WaitForEndOfFrame();
+          }
+     }
      #endregion
 
      #region 플레이어 시점 관련

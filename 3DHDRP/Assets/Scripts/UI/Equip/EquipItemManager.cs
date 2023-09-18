@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class EquipItemManager : MonoBehaviour
 {
@@ -35,11 +33,8 @@ public class EquipItemManager : MonoBehaviour
     public Transform weapon2equipParent;
 
     PlayerController playerController;
-    bool attacking;
-
-    float checkTime = 0.2f;
-    [SerializeField]float clickTime = 0f;
-    bool isClick;
+    public bool attacking;
+ 
 
     bool combo;
     bool combo1;
@@ -62,23 +57,21 @@ public class EquipItemManager : MonoBehaviour
     }
 
     private void Update() {
-            if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f ){
-                anim.SetBool("Attack",false);
-                attacking = false;
-            }
-            else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo1") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f ){
-                anim.SetBool("Combo1",false);
-                attacking = false;
-            }
-            else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo2") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f ){
-                anim.SetBool("Combo2",false);
-                attacking = false;
-            }
-            else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo3") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f){
-                anim.SetBool("Combo3",false);
-                attacking = false;
-            }
-        
+        if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f ){
+            anim.SetBool("Attack",false);
+        }
+        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo1") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f ){
+            anim.SetBool("Combo1",false);
+        }
+        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo2") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f ){
+            anim.SetBool("Combo2",false);
+        }
+        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Combo3") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f){
+            anim.SetBool("Combo3",false);
+        }
+        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
+            attacking = false;
+        }
         
     }
 
@@ -96,29 +89,7 @@ public class EquipItemManager : MonoBehaviour
         }
     }
 
-    public void OnAttackInput(InputAction.CallbackContext context){
-         
-        if(context.phase == InputActionPhase.Performed && playerController.CanLook){
-            isClick = true;
-            clickTime = 0; 
-            StartCoroutine(CheckPressOrHold());
-        }
-        else if(context.phase == InputActionPhase.Canceled && playerController.CanLook){
-            isClick = false;
-            StopCoroutine(CheckPressOrHold());
-            OnAttack(clickTime);
-            
-        }
-    }    
-    IEnumerator CheckPressOrHold(){
-        while(isClick){
-            clickTime += Time.deltaTime;
-            
-            yield return new WaitForEndOfFrame();
-        }
-    }
-
-    public void OnAttack(float clickTime){
+    public void OnAttack(float clickTime, float checkTime){
         Debug.Log("1");
         if(clickTime < checkTime){
             if(!playerController.BattleMode){
@@ -131,8 +102,6 @@ public class EquipItemManager : MonoBehaviour
                     Debug.Log("3");
 
                     attacking = true;
-                    
-                    
 
                     float animTime;
                     if(curWeapon1 == null){
@@ -151,7 +120,7 @@ public class EquipItemManager : MonoBehaviour
             }
         }
         else{
-            Debug.Log("4");
+            Debug.Log("강공격");
         }
     }
 
@@ -174,18 +143,8 @@ public class EquipItemManager : MonoBehaviour
             anim.SetBool("Combo3",true);
         }
     }
-    void ResetCombo(){
-        attacking = false;
-        combo = false;
-        combo1 = false;
-        combo2 = false;
-        combo3 = false;
+    
 
-        anim.SetBool("Attack",false);
-        anim.SetBool("Combo1",false);
-        anim.SetBool("Combo2",false);
-        anim.SetBool("Combo3",false);
-    }
 
     public void OnAltAttack(){
         if(curWeapon1 == null){ return; }

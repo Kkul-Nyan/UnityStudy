@@ -11,7 +11,6 @@ public class InventoryController : MonoBehaviour
 {
     #region 01.변수
     private ItemGrid selectedItemGrid;
-
     public ItemGrid SelectedItemGrid
     {
         get => selectedItemGrid;
@@ -21,7 +20,10 @@ public class InventoryController : MonoBehaviour
         }
     }
     private CharactorEquip charactorEquip;
+    //캔버스 밖일경우에만 드래그 드랍이 되도록 변수설정
     public EquipSlot selectedEquipSlot;
+    public bool isBackGroundCanvas;
+
     public WindowController selectedWindow;
     public GameObject selectedgrid;
     ItemGrid[] itemGrids;
@@ -448,7 +450,7 @@ public class InventoryController : MonoBehaviour
                 }
             }
             else{
-                if(pickupItem != null){
+                if(pickupItem != null && !isBackGroundCanvas){
                     DropItem(pickupItem);
                     pickupItem = null;
                     selectedItem = null;

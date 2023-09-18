@@ -85,7 +85,6 @@ public class ItemData : ScriptableObject
     public int height = 1;
 
     [Title("CanStack")]
-    [ShowIf("cunsumable")]
     [Tooltip("인벤토리상 중복이 가능한 경우 체크")]
     public bool canStack = false;
 

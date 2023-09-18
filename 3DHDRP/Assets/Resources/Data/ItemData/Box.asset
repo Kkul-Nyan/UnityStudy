@@ -17,13 +17,13 @@ MonoBehaviour:
     type: 3}
   displayName: Box
   description: box
-  cunsumable: 0
+  cunsumable: 1
   itemIcon: {fileID: 21300000, guid: cb5bc76873cab054aa03bbc7aa04e32e, type: 3}
   equipPrefab: {fileID: 0}
   width: 3
   height: 3
-  canStack: 0
-  maxStackAmount: 0
+  canStack: 1
+  maxStackAmount: 5
   consumable: []
   quality: 0
   equipType: 1

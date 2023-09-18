@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.UIElements;
 
 public class ItemGrid : MonoBehaviour
@@ -17,8 +20,7 @@ public class ItemGrid : MonoBehaviour
     public int GridHeightCount{
         get { return gridHeightCount; }
     } 
-
-    InventoryItem[,] inventoryItemSlot;
+    public InventoryItem[,] inventoryItemSlot;
 
     RectTransform rectTransform;
 
@@ -91,6 +93,8 @@ public class ItemGrid : MonoBehaviour
     public void PlaceItem(InventoryItem inventoryItem, int posX, int posY, ItemGrid itemGrid)
     {
         RectTransform rectTransform = inventoryItem.GetComponent<RectTransform>();
+        TextMeshProUGUI text = inventoryItem.GetComponentInChildren<TextMeshProUGUI>();
+        text.enabled = true;
         rectTransform.SetParent(this.rectTransform);
 
         for (int x = 0; x < inventoryItem.WIDTH; x++)
@@ -104,6 +108,7 @@ public class ItemGrid : MonoBehaviour
         inventoryItem.onGridPositionX = posX;
         inventoryItem.onGridPositionY = posY;
         inventoryItem.grid = itemGrid;
+        inventoryItem.StackText();
         Vector2 position = CalulatePositionOnGrid(inventoryItem, posX, posY);
 
         rectTransform.localPosition = position;
@@ -141,9 +146,10 @@ public class ItemGrid : MonoBehaviour
     public InventoryItem PickUpItem(int x, int y)
     {
         InventoryItem toReturn = inventoryItemSlot[x, y];
-
         if (toReturn == null) { return null; }
 
+        TextMeshProUGUI text = toReturn.GetComponentInChildren<TextMeshProUGUI>();
+        text.enabled = false;
         CleanGridReference(toReturn);
         return toReturn;
     }
@@ -190,6 +196,23 @@ public class ItemGrid : MonoBehaviour
     {
         return inventoryItemSlot[x, y];
     }
+   
+    public InventoryItem GetStackItem(ItemData itemData){
+        for(int x = 0; x < gridWidthCount; x++){
+            for(int y = 0; y < gridHeightCount; y++){
+                if(inventoryItemSlot[x,y] != null){
+                    InventoryItem inventoryItem = inventoryItemSlot[x,y];
+
+                    if(inventoryItem.itemData == itemData){
+                        return inventoryItem;
+                    }
+
+                }
+            }
+        }
+        return null;
+    }
+
 
     #region 인벤토리 빈공간 자동 확인 관련
     public Vector2Int? FindSpaceForObject(InventoryItem itemToInsert)

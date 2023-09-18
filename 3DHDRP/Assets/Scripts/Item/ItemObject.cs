@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class ItemObject : MonoBehaviour, IInteractable
 {
     public ItemData item;
+    [SerializeField] int quantity = 0;
 
     public string GetInteractPrompt(){
         return string.Format("Pickup {0}", item.displayName);
     }
     public void OnInteract(InventoryController inventoryController){
-        inventoryController.AddItem(item);
+        inventoryController.AddItem(item, quantity);
         Destroy(gameObject);
     }
     

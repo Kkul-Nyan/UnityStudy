@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Glassball
   m_EditorClassIdentifier: 
   id: 
-  dropPrefab: {fileID: 7357354876237735026, guid: 457f40f4b0b462743b39add7df7f7a77,
+  dropPrefab: {fileID: 4771815088540662581, guid: 8c7efa5f1c2ed9a4aa9b0cc972de11af,
     type: 3}
   displayName: Glassball
   description: Glassball
@@ -22,12 +22,12 @@ MonoBehaviour:
   equipPrefab: {fileID: 0}
   width: 1
   height: 1
-  canStack: 0
-  maxStackAmount: 0
+  canStack: 1
+  maxStackAmount: 99
   consumable: []
   quality: 0
-  equipType: 1
-  weaponType: 0
+  equipType: 0
+  weaponType: 1
   armorType: 0
   armorPlaceType: 1
   maxValue: 0

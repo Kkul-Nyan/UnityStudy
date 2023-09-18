@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -32,8 +33,8 @@ public class InventoryController : MonoBehaviour
     public GameObject detailInventoryWindow;
     PlayerController controller;
 
-    InventoryItem selectedItem;
-    InventoryItem pickupItem;
+    [SerializeField] InventoryItem selectedItem;
+    [SerializeField] InventoryItem pickupItem;
     InventoryItem overlapItem;
     RectTransform rectTransform;
     
@@ -60,6 +61,7 @@ public class InventoryController : MonoBehaviour
     float clickTime;
     bool isDoubleClick;
     bool isDrag;
+    public ItemData item;
 
     #endregion
 
@@ -101,20 +103,30 @@ public class InventoryController : MonoBehaviour
     #endregion
     
     #region 03.아이탬 생성관련(테스트용)
-    public void AddItem(ItemData item)
+    public void AddItem(ItemData item, int quantity)
     {
-        
+        this.item = item;
+        if(!item.canStack){
+            InstantiateItem(item);
+        }
+        else{
+            AddStackItem(item, quantity);
+        }
+    }
+
+    private void InstantiateItem(ItemData item, int quantity = 0)
+    {
         InventoryItem inventoryItem = Instantiate(loadedPrefab).GetComponent<InventoryItem>();
-        
         rectTransform = inventoryItem.GetComponent<RectTransform>();
         //rectTransform.SetParent(gridTransform);
+
         rectTransform.SetAsLastSibling();
+        inventoryItem.Set(item, quantity);
 
-        inventoryItem.Set(item);
-
-        if(!InsertListItem(inventoryItem)){
+        if (!InsertListItem(inventoryItem))
+        {
             DropItem(inventoryItem);
-        }    
+        }
     }
 
     private bool InsertListItem(InventoryItem itemToInsert)
@@ -129,6 +141,21 @@ public class InventoryController : MonoBehaviour
         }
         return false;
  
+    }
+    private void AddStackItem(ItemData itemData, int quantity){
+        ItemGrid[] grids = inventoryWindow.GetComponentsInChildren<ItemGrid>();
+        for(int i = 0; i < grids.Length; i++){
+            InventoryItem inventoryItem = grids[i].GetStackItem(itemData);
+            if(inventoryItem != null){;
+                int remainingQuantity = inventoryItem.StackObject(quantity);
+                if(remainingQuantity != 0){
+                    InstantiateItem(itemData, remainingQuantity);
+                    return;    
+                }
+                return;
+            }
+        }
+        InstantiateItem(itemData, quantity);
     }
 
     private void CreateRandomItem()
@@ -292,8 +319,9 @@ public class InventoryController : MonoBehaviour
                 return;
             }
 
-            if (clickTime - Time.time > -0.15f && !isDoubleClick)
+            if (clickTime - Time.time > -0.15f && !isDoubleClick )
             {
+                if(selectedItem == null){ return; }
                 isDoubleClick = true;
                 UseItem();
                 PlaceItem(new Vector2Int(selectedItem.onGridPositionX, selectedItem.onGridPositionY));
@@ -552,6 +580,7 @@ public class InventoryController : MonoBehaviour
     #region 09.아이탬사용
     private void UseItem()
     {
+        if(selectedItem == null){ return; }
         EquipSlot slot = charactorEquip.SearchCanEquip(selectedItem);
         slot.EquipItem(selectedItem);
         if(slot.temporaryItemData != null){

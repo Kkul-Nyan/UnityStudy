@@ -42,6 +42,8 @@ public class InventoryController : MonoBehaviour
     [SerializeField] GameObject itemPrefab;
     [SerializeField] Transform gridTransform;
     [SerializeField] Transform dropPosition;
+    [SerializeField] Transform disableGroup;
+    
 
     Vector2Int oldPosition;
     Vector2 oldPos;
@@ -199,7 +201,9 @@ public class InventoryController : MonoBehaviour
         oldPosition = positionOnGrid; 
 
         if(pickupItem == null){
-            itemToHighlight = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
+            if(selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y) != null){
+                itemToHighlight = selectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
+            }
 
             if(itemToHighlight != null){
                 inventoryHighLight.Show(true);
@@ -471,7 +475,6 @@ public class InventoryController : MonoBehaviour
             if(selectedEquipSlot != null){
                 if(pickupItem != null){
                     EquipItem(pickupItem, selectedEquipSlot);
-                    
                 }        
                 else{
                     UnEquipItem(selectedEquipSlot);
@@ -584,7 +587,7 @@ public class InventoryController : MonoBehaviour
         EquipSlot slot = charactorEquip.SearchCanEquip(selectedItem);
         slot.EquipItem(selectedItem);
         if(slot.temporaryItemData != null){
-            selectedItem.Set(slot.temporaryItemData);
+            selectedItem.Set(slot.temporaryItemData.itemData);
         }
         else{
             Destroy(selectedItem.gameObject);
@@ -626,18 +629,32 @@ public class InventoryController : MonoBehaviour
         if(CheckEquipSlot(item, slot)){
             slot.EquipItem(item);
             if(slot.temporaryItemData != null){
-                item.Set(slot.temporaryItemData);
+                item.Set(slot.temporaryItemData.itemData );
             }
             else{
-                Destroy(item.gameObject);
+                item.transform.SetParent(disableGroup);
+                item.gameObject.SetActive(false);
+                pickupItem = null;
+                selectedItem = null;
             }
         }
     }
 
     private void UnEquipItem(EquipSlot selectedEquipSlot)
-    {
+    {   
+        Debug.Log("UnEquip");
         if(selectedEquipSlot.curEquipItem == null){ return; }
-        CreateItem(selectedEquipSlot.curEquipItem);
+        Debug.Log("item name : " + selectedEquipSlot.curEquipItem.itemData.displayName);
+        InventoryItem inventoryItem = selectedEquipSlot.curEquipItem;
+        inventoryItem.transform.SetParent(gridTransform);
+        inventoryItem.gameObject.SetActive(true);
+        //RectTransform rectTransform = selectedEquipSlot.curEquipItem.GetComponent<RectTransform>();
+        inventoryItem.gameObject.transform.SetAsFirstSibling();
+        inventoryItem.gameObject.transform.SetAsLastSibling();
+
+        pickupItem = selectedEquipSlot.curEquipItem;
+        selectedItem = null;
+        //CreateItem(selectedEquipSlot.curEquipItem.itemData);
         selectedEquipSlot.UnEquipItem();
     }
 

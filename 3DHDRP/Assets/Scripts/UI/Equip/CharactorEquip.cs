@@ -38,13 +38,13 @@ public class CharactorEquip : MonoBehaviour
     {
         CleanData();
         foreach(EquipSlot equipItem in equipSlots){
-            if(equipItem.curEquipItem.equipType == EquipType.Weapon ){
-                maxDamage += equipItem.curEquipItem.maxValue;
-                minDamage += equipItem.curEquipItem.minValue;
+            if(equipItem.curEquipItem.itemData.equipType == EquipType.Weapon ){
+                maxDamage += equipItem.curEquipItem.itemData.maxValue;
+                minDamage += equipItem.curEquipItem.itemData.minValue;
             }
             else{
-                maxDefense += equipItem.curEquipItem.maxValue;
-                minDefense += equipItem.curEquipItem.minValue;
+                maxDefense += equipItem.curEquipItem.itemData.maxValue;
+                minDefense += equipItem.curEquipItem.itemData.minValue;
             }
         }
     }

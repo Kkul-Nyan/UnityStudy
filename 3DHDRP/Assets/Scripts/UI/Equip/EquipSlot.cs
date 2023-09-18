@@ -19,15 +19,15 @@ public class EquipSlot : MonoBehaviour
 {
     private EquipItemManager equipItemManager;
     public SlotType slotType;
-    public ItemData curEquipItem;
-    public ItemData curEquipItem2;
-    public ItemData saveItemData;
-    public ItemData temporaryItemData;
+    public InventoryItem curEquipItem;
+    public InventoryItem curEquipItem2;
+    public InventoryItem saveItemData;
+    public InventoryItem temporaryItemData;
     Image image;
     Sprite originalSprite;
     Image backgroundImage;
     Sprite bgOrginalSprite;
-
+    
 
     private void Awake() {
         equipItemManager = FindObjectOfType<EquipItemManager>();
@@ -41,13 +41,13 @@ public class EquipSlot : MonoBehaviour
         if(curEquipItem != null){
             temporaryItemData = curEquipItem;
         }
-        curEquipItem = item.itemData;
-        image.sprite = curEquipItem.itemIcon;
+        curEquipItem = item;
+        image.sprite = curEquipItem.itemData.itemIcon;
 
         CheckItemDataforEquipManager();
     }
     public void EquipItem(){
-        image.sprite = curEquipItem.itemIcon;
+        image.sprite = curEquipItem.itemData.itemIcon;
 
         CheckItemDataforEquipManager();
     }
@@ -67,9 +67,12 @@ public class EquipSlot : MonoBehaviour
         {
             equipItemManager.Weapon1 = curEquipItem;
         }
-        if (slotType == SlotType.Weapon2)
+        else if (slotType == SlotType.Weapon2)
         {
             equipItemManager.Weapon2 = curEquipItem;
+        }
+        else{
+            return;
         }
     }
 
@@ -102,4 +105,13 @@ public class EquipSlot : MonoBehaviour
         }
     }
 
+}
+
+public struct StructInventoryItem{
+    ItemData itemData;
+    int quantity;
+    public StructInventoryItem(ItemData item, int q){
+        itemData = item;
+        quantity = q;
+    }
 }

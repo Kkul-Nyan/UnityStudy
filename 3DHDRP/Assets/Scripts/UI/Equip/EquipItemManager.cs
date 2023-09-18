@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class EquipItemManager : MonoBehaviour
 {
-    private ItemData weapon1;
-    public ItemData Weapon1{
+    private InventoryItem weapon1;
+    public InventoryItem Weapon1{
         get{ return Weapon1; }
         set{
             if( weapon1 != value ){
@@ -16,8 +16,8 @@ public class EquipItemManager : MonoBehaviour
         }
     }
 
-    private ItemData weapon2;
-    public ItemData Weapon2{
+    private InventoryItem weapon2;
+    public InventoryItem Weapon2{
         get{ return Weapon2; }
         set{
             if( weapon2 != value ){
@@ -76,16 +76,16 @@ public class EquipItemManager : MonoBehaviour
     }
 
     
-    void OnChangeWeapon1(ItemData item = null ){
+    void OnChangeWeapon1(InventoryItem item = null ){
         if( curWeapon1 != null ){ Destroy(curWeapon1.gameObject); }
         if(item != null ){
-            curWeapon1 = Instantiate(item.equipPrefab, weapon1equipParent).GetComponent<EquipTool>();
+            curWeapon1 = Instantiate(item.itemData.equipPrefab, weapon1equipParent).GetComponent<EquipTool>();
         }
     }
-    void OnChangeWeapon2(ItemData item = null ){
+    void OnChangeWeapon2(InventoryItem item = null ){
         if( curWeapon2 != null ){ Destroy(curWeapon2.gameObject); }
         if(item != null ){
-            curWeapon2 = Instantiate(item.equipPrefab, weapon2equipParent).GetComponent<EquipTool>();
+            curWeapon2 = Instantiate(item.itemData.equipPrefab, weapon2equipParent).GetComponent<EquipTool>();
         }
     }
 

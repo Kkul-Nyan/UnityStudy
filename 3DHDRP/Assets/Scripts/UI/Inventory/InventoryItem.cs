@@ -58,7 +58,7 @@ public class InventoryItem : MonoBehaviour
     public void StackText()
     {
         TextMeshProUGUI text = GetComponentInChildren<TextMeshProUGUI>();
-        text.text = quantity > 0 ? quantity.ToString() : string.Empty;
+        text.text = quantity > 1 ? quantity.ToString() : string.Empty;
     }
 
     public int StackObject(int addInt){

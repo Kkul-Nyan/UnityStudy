@@ -20,6 +20,7 @@ public class InventoryController : MonoBehaviour
             inventoryHighLight.SetParent(value);
         }
     }
+    PlayerStatus playerStatus;
     private CharactorEquip charactorEquip;
     //캔버스 밖일경우에만 드래그 드랍이 되도록 변수설정
     public EquipSlot selectedEquipSlot;
@@ -75,6 +76,7 @@ public class InventoryController : MonoBehaviour
         loadedPrefab = Resources.Load<GameObject>("Prefabs/Item");
         itemGrids = FindObjectsOfType<ItemGrid>();;
         charactorEquip = FindObjectOfType<CharactorEquip>();
+        playerStatus = GetComponent<PlayerStatus>();
     }
 
     private void Start() {
@@ -584,15 +586,61 @@ public class InventoryController : MonoBehaviour
     private void UseItem()
     {
         if(selectedItem == null){ return; }
-        EquipSlot slot = charactorEquip.SearchCanEquip(selectedItem);
-        slot.EquipItem(selectedItem);
-        if(slot.temporaryItemData != null){
-            selectedItem.Set(slot.temporaryItemData.itemData);
+        if(selectedItem.itemData.consumable){
+            for(int i = 0; i < selectedItem.itemData.consumableType.Length; i++){
+                switch (selectedItem.itemData.consumableType[i].type){
+                    case ConsumableType.Health:
+                        playerStatus.health.Add(selectedItem.itemData.consumableType[i].value);
+                        ConsumableQuantitiy();
+                        break;
+                    case ConsumableType.Stamina :
+                        playerStatus.stamina.Add(selectedItem.itemData.consumableType[i].value);
+                        ConsumableQuantitiy();
+                    break;
+                    case ConsumableType.Mana :
+                        playerStatus.mana.Add(selectedItem.itemData.consumableType[i].value);
+                        ConsumableQuantitiy();
+                    break;
+                    case ConsumableType.Hunger :
+                        playerStatus.hunger.Add(selectedItem.itemData.consumableType[i].value);
+                        ConsumableQuantitiy();
+                    break;
+                    case ConsumableType.Thirst :
+                        playerStatus.thirst.Add(selectedItem.itemData.consumableType[i].value);
+                        ConsumableQuantitiy();
+                    break;
+                    case ConsumableType.Sleep :
+                        playerStatus.sleep.Add(selectedItem.itemData.consumableType[i].value);
+                        ConsumableQuantitiy();
+                    break;
+                }
+            }
         }
         else{
-            Destroy(selectedItem.gameObject);
+            EquipSlot slot = charactorEquip.SearchCanEquip(selectedItem);
+            slot.EquipItem(selectedItem);
+            if(slot.temporaryItemData != null){
+                selectedItem.Set(slot.temporaryItemData.itemData);
+            }
+            else{
+                Destroy(selectedItem.gameObject);
+            }
         }
         
+        
+    }
+
+    private void ConsumableQuantitiy()
+    {
+        if (selectedItem.quantity != 1)
+        {
+            selectedItem.quantity--;
+            selectedItem.StackText();
+        }
+        else
+        {
+            Destroy(selectedItem.gameObject);
+        }
     }
 
     private void DivideItem(){

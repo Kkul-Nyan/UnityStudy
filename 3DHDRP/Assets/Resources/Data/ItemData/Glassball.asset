@@ -17,7 +17,7 @@ MonoBehaviour:
     type: 3}
   displayName: Glassball
   description: Glassball
-  cunsumable: 0
+  consumable: 1
   itemIcon: {fileID: 21300000, guid: fc11d5ece7589ec40bf85256cba43336, type: 3}
   equipPrefab: {fileID: 8600422554669865809, guid: f751d15ef271fdc47b3990ab73560602,
     type: 3}
@@ -25,7 +25,9 @@ MonoBehaviour:
   height: 1
   canStack: 1
   maxStackAmount: 99
-  consumable: []
+  consumableType:
+  - type: 1
+    value: 50
   quality: 0
   equipType: 0
   weaponType: 1

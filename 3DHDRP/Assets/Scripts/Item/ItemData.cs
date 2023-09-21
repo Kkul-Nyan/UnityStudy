@@ -13,8 +13,7 @@ public enum ConsumableType {
     Mana,
     Hunger,
     Thirst,
-    Sleep,
-    Ammunition
+    Sleep
 }
 
 [EnumToggleButtons]
@@ -70,7 +69,7 @@ public class ItemData : ScriptableObject
     public string description;
 
     [Tooltip("물약 및 음식류일 경우")]
-    public bool cunsumable;
+    public bool consumable;
 
     [Title("Inventory Info")]
     [PreviewField(100, ObjectFieldAlignment.Center)]
@@ -96,9 +95,9 @@ public class ItemData : ScriptableObject
     
     [Title("ConsumableItem")]
     [Tooltip("ItemType에서 Consumable선택시 고르면 됩니다")]
-    [ShowIf("cunsumable")]
+    [ShowIf("consumable")]
     [HideReferenceObjectPicker]
-    public ConsumableItemSetting[] consumable;
+    public ConsumableItemSetting[] consumableType;
 
     [Title("Equip Setting")]
     [Tooltip("아이탬의 질입니다. Average기준으로 위는 가산, 밑으로 감가 포인트가 들어갑니다.")]

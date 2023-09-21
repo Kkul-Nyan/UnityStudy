@@ -25,6 +25,8 @@ public class PlayerStatus : MonoBehaviour, IDamagable
     public bool isHunger = false;
     public float keepStaminaMax;
 
+    
+
     void Start(){
         level.curValue = level.startValue;
         health.curValue = health.startValue;

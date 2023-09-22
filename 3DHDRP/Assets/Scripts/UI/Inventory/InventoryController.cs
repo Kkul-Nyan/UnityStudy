@@ -677,29 +677,37 @@ public class InventoryController : MonoBehaviour
         if(CheckEquipSlot(item, slot)){
             slot.EquipItem(item);
             if(slot.temporaryItemData != null){
-                item.Set(slot.temporaryItemData.itemData );
+                pickupItem = null;
+                selectedItem = null;
+                item.transform.SetParent(disableGroup);
+                item.gameObject.SetActive(false);
+
+                InventoryItem inventoryItem = slot.temporaryItemData;
+                inventoryItem.gameObject.SetActive(true);
+                pickupItem = inventoryItem;
+                //item.Set(slot.temporaryItemData.itemData );
             }
             else{
                 item.transform.SetParent(disableGroup);
-                item.gameObject.SetActive(false);
                 pickupItem = null;
                 selectedItem = null;
+                item.gameObject.SetActive(false);
             }
         }
     }
 
     private void UnEquipItem(EquipSlot selectedEquipSlot)
     {   
-        Debug.Log("UnEquip");
+        
         if(selectedEquipSlot.curEquipItem == null){ return; }
-        Debug.Log("item name : " + selectedEquipSlot.curEquipItem.itemData.displayName);
         InventoryItem inventoryItem = selectedEquipSlot.curEquipItem;
-        inventoryItem.transform.SetParent(gridTransform);
         inventoryItem.gameObject.SetActive(true);
+        /*
+        inventoryItem.transform.SetParent(gridTransform);
         //RectTransform rectTransform = selectedEquipSlot.curEquipItem.GetComponent<RectTransform>();
         inventoryItem.gameObject.transform.SetAsFirstSibling();
         inventoryItem.gameObject.transform.SetAsLastSibling();
-
+*/
         pickupItem = selectedEquipSlot.curEquipItem;
         selectedItem = null;
         //CreateItem(selectedEquipSlot.curEquipItem.itemData);

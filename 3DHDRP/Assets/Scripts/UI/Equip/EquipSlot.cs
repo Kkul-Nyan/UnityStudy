@@ -38,6 +38,7 @@ public class EquipSlot : MonoBehaviour
     }
 
     public void EquipItem(InventoryItem item){
+        if(temporaryItemData != null){ temporaryItemData = null;}
         if(curEquipItem != null){
             temporaryItemData = curEquipItem;
         }

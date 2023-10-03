@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.1177, g: 324.74368, b: 429.81012, a: 1}
+  m_IndirectSpecularColor: {r: 262.30203, g: 324.99054, b: 430.14313, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -520,21 +520,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 618f8a575b510aa47bcf75c476bcd036, type: 3}
---- !u!114 &325372136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8909962766942606398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 650546ef8ccbb2d42b94e19bc89dde25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  treeLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!1001 &340670570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2800,6 +2785,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1499e513-9ff3-4e5c-af67-8889cd4879e1
     m_ActionName: Player/Inventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f90f7694-f166-4ac0-bc5c-7f916286d195
+    m_ActionName: Player/LeftClickHold[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9b7daeb6-5c79-4afd-80ad-4df66ae1a138
+    m_ActionName: Player/SetBattleMode[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -6067,6 +6060,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048fb1411c4bfde48935b751ef851211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level:
+    maxValue: 0
+    curValue: 0
+    startValue: 0
+    regenRate: 0
+    decayRate: 0
+    uiBar: {fileID: 0}
+  xp:
+    maxValue: 0
+    curValue: 0
+    startValue: 0
+    regenRate: 0
+    decayRate: 0
+    uiBar: {fileID: 0}
   health:
     maxValue: 100
     curValue: 100
@@ -7413,18 +7420,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 965c00f6a78786647b58864d2c212e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraContainer: {fileID: 6392453746902701120}
   decoyStamina: 10
   playerSpeed: 3
   jumpPower: 4.5
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  player: {fileID: 4840526866347778022}
-  cameraContainer: {fileID: 6392453746902701120}
+  immobilizeDuration: 3
+  isGround: 0
+  clickTime: 0
+  lookSensitivity: 0.3
   minXLook: -60
   maxXLook: 60
-  lookSensitivity: 0.3
-  immobilizeDuration: 3
   cam: {fileID: 3452649246947085276}
 --- !u!1 &8863464925363785355
 GameObject:
@@ -7488,7 +7493,7 @@ GameObject:
   - component: {fileID: 183363241128383243}
   - component: {fileID: 8856886884185300573}
   - component: {fileID: 5625315988013541864}
-  - component: {fileID: 325372136}
+  - component: {fileID: 9073904377442931325}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -7582,6 +7587,18 @@ CapsuleCollider:
   m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.81, z: 0}
+--- !u!114 &9073904377442931325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8909962766942606398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60886e85959f84005bfa5dfe21fa42c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9078096740950263900
 GameObject:
   m_ObjectHideFlags: 0

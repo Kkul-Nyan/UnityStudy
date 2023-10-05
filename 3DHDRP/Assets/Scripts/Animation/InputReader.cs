@@ -9,6 +9,8 @@ public class InputReader : MonoBehaviour, Controller.IPlayerActions
     public event Action JumpEvent;
     public event Action DodgeEvent;
     public Vector2 MovementValue{get; private set;}
+    public bool FastRun{get; private set;}
+
 
 
     Controller controller;
@@ -43,5 +45,20 @@ public class InputReader : MonoBehaviour, Controller.IPlayerActions
     public void OnMove(InputAction.CallbackContext context)
     {
         MovementValue = context.ReadValue<Vector2>();
+    }
+
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        
+    }
+
+    public void OnFastRun(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Performed){
+            FastRun = true;
+        }
+        else{
+            FastRun = false;
+        }
     }
 }

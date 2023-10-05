@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,23 +13,43 @@ public class PlayerTestState : PlayerBaseState
     {
         
     }
+
     public override void Tick(float deltaTime)
     {
-        Vector3 movement = new Vector3();
+        Vector3 movement = CalculateMovement();
 
-        movement.x = stateMachine.InputReader.MovementValue.x;
-        movement.y = 0;
-        movement.z = stateMachine.InputReader.MovementValue.y;
+        if(stateMachine.InputReader.FastRun){
+            stateMachine.CharacterController.Move(movement * stateMachine.FreeLookMovementSpeed * deltaTime * 2f);
+        }
+        else{
+            stateMachine.CharacterController.Move(movement * stateMachine.FreeLookMovementSpeed * deltaTime);
+        }
 
-        stateMachine.CharacterController.Move(movement * stateMachine.FreeLookMovementSpeed * deltaTime);
+        if(stateMachine.InputReader.MovementValue == Vector2.zero) {
+            stateMachine.Animator.SetFloat("FreeLookSpeed", 0, 0.1f, deltaTime); 
+            return; 
+        }
 
-        if(stateMachine.InputReader.MovementValue == Vector2.zero) { return; }
+        stateMachine.Animator.SetFloat("FreeLookSpeed", 1, 0.1f, deltaTime); 
         stateMachine.transform.rotation = Quaternion.LookRotation(movement);
     }
+
     public override void Exit()
     {
         
     }
 
+    private Vector3 CalculateMovement(){
+       Vector3 forward = stateMachine.MainCameraTransform.forward;
+       Vector3 right = stateMachine.MainCameraTransform.right;
+
+       forward.y = 0f;
+       right.y = 0f;
+
+       forward.Normalize();
+       right.Normalize();
+
+       return forward * stateMachine.InputReader.MovementValue.y + right * stateMachine.InputReader.MovementValue.x;
+    }
 
 }

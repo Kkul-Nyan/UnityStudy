@@ -6,6 +6,9 @@ using UnityEngine;
 public class PlayerTargetingState : PlayerBaseState
 {
     private readonly int TargetingBlendTree = Animator.StringToHash("TargetingBlendTree");
+    private readonly int TargetingForwardTree = Animator.StringToHash("TargetingForward");
+    private readonly int TargetingRightTree = Animator.StringToHash("TargetingRight");
+
 
     public PlayerTargetingState(PlayerStateMachine stateMachine) : base(stateMachine){}
 
@@ -23,10 +26,14 @@ public class PlayerTargetingState : PlayerBaseState
         }
 
         Vector3 movement = CalculateMovement();
+        
         Move(movement * stateMachine.TargetingMovementSpeed, deltaTime);
+
+        UpdateAnimator(deltaTime);
 
         FaceTarget();
     }
+
 
     public override void Exit()
     {
@@ -47,6 +54,25 @@ public class PlayerTargetingState : PlayerBaseState
         movement += stateMachine.transform.forward * stateMachine.InputReader.MovementValue.y;
 
         return movement;
+    }
+    private void UpdateAnimator(float deltaTime)
+    {
+        if(stateMachine.InputReader.MovementValue.y == 0){
+            stateMachine.Animator.SetFloat(TargetingForwardTree, 0, 0.1f, deltaTime);
+        }
+        else{
+            float value = stateMachine.InputReader.MovementValue.y > 0 ? 1f : -1f;
+            stateMachine.Animator.SetFloat(TargetingForwardTree, value, 0.1f, deltaTime);
+        }
+
+        if(stateMachine.InputReader.MovementValue.x == 0){
+            stateMachine.Animator.SetFloat(TargetingRightTree, 0, 0.1f, deltaTime);
+        }
+        else{
+            float value = stateMachine.InputReader.MovementValue.x > 0 ? 1f : -1f;
+            stateMachine.Animator.SetFloat(TargetingRightTree, value, 0.1f, deltaTime);
+        }
+        
     }
 }
 

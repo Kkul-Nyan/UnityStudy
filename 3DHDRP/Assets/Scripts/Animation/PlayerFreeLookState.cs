@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerFreeLookState : PlayerBaseState
 {
     //단순히 String으로 처리하는것보다 Hash를 통해 int를 사용하는것이 조금더 빠름
+    private readonly int FreeLookBlendTreeHash = Animator.StringToHash("FreeLookBlendTree");
     private readonly int FreeLookSpeedHash = Animator.StringToHash("FreeLookSpeed");
     private const float AnimatorDampTime = 0.1f;
     public PlayerFreeLookState(PlayerStateMachine stateMachine) : base(stateMachine) {}
@@ -14,19 +15,22 @@ public class PlayerFreeLookState : PlayerBaseState
     {
         //타켓이벤트 구독
         stateMachine.InputReader.TargetEvent += OnTarget;
+
+        stateMachine.Animator.Play(FreeLookBlendTreeHash);
     }
 
     public override void Tick(float deltaTime)
     {
         Vector3 movement = CalculateMovement();
 
+        
         if (stateMachine.InputReader.FastRun)
         {
-            stateMachine.CharacterController.Move(movement * stateMachine.FreeLookMovementSpeed * deltaTime * 2f);
+            Move(movement * stateMachine.FreeLookMovementSpeed * 2f, deltaTime);
         }
         else
         {
-            stateMachine.CharacterController.Move(movement * stateMachine.FreeLookMovementSpeed * deltaTime);
+            Move(movement * stateMachine.FreeLookMovementSpeed, deltaTime);
         }
 
         if (stateMachine.InputReader.MovementValue == Vector2.zero)
@@ -46,6 +50,7 @@ public class PlayerFreeLookState : PlayerBaseState
     }
 
     private void OnTarget(){
+        if(!stateMachine.Targeter.SelectTarget()) { return; }
         stateMachine.SwitchState(new PlayerTargetingState(stateMachine));
     }
 

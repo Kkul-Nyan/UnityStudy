@@ -71,6 +71,24 @@ public partial class @Controller: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Target"",
+                    ""type"": ""Button"",
+                    ""id"": ""085579ce-f11f-4b4b-9ffb-9c5fef5a8af4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancer"",
+                    ""type"": ""Button"",
+                    ""id"": ""e14219c3-1095-40e9-87b5-2c66561b728e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -135,7 +153,7 @@ public partial class @Controller: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse & KeyBoard"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -146,7 +164,7 @@ public partial class @Controller: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse & KeyBoard"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -168,7 +186,7 @@ public partial class @Controller: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Mouse & KeyBoard"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -271,6 +289,50 @@ public partial class @Controller: IInputActionCollection2, IDisposable
                     ""action"": ""FastRun"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5c7f2bb-950e-4324-a266-75cbe3e602e0"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse & KeyBoard"",
+                    ""action"": ""Target"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2efe5b34-bfd7-4967-85ed-97fd07aa9a70"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Target"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf05f4ce-e49f-493d-963f-3895ca2ea590"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse & KeyBoard"",
+                    ""action"": ""Cancer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""821c7ed8-3083-40da-821e-dd1af3cac09e"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Cancer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -312,6 +374,8 @@ public partial class @Controller: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_FastRun = m_Player.FindAction("FastRun", throwIfNotFound: true);
+        m_Player_Target = m_Player.FindAction("Target", throwIfNotFound: true);
+        m_Player_Cancer = m_Player.FindAction("Cancer", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -378,6 +442,8 @@ public partial class @Controller: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_FastRun;
+    private readonly InputAction m_Player_Target;
+    private readonly InputAction m_Player_Cancer;
     public struct PlayerActions
     {
         private @Controller m_Wrapper;
@@ -387,6 +453,8 @@ public partial class @Controller: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @FastRun => m_Wrapper.m_Player_FastRun;
+        public InputAction @Target => m_Wrapper.m_Player_Target;
+        public InputAction @Cancer => m_Wrapper.m_Player_Cancer;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -411,6 +479,12 @@ public partial class @Controller: IInputActionCollection2, IDisposable
             @FastRun.started += instance.OnFastRun;
             @FastRun.performed += instance.OnFastRun;
             @FastRun.canceled += instance.OnFastRun;
+            @Target.started += instance.OnTarget;
+            @Target.performed += instance.OnTarget;
+            @Target.canceled += instance.OnTarget;
+            @Cancer.started += instance.OnCancer;
+            @Cancer.performed += instance.OnCancer;
+            @Cancer.canceled += instance.OnCancer;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -430,6 +504,12 @@ public partial class @Controller: IInputActionCollection2, IDisposable
             @FastRun.started -= instance.OnFastRun;
             @FastRun.performed -= instance.OnFastRun;
             @FastRun.canceled -= instance.OnFastRun;
+            @Target.started -= instance.OnTarget;
+            @Target.performed -= instance.OnTarget;
+            @Target.canceled -= instance.OnTarget;
+            @Cancer.started -= instance.OnCancer;
+            @Cancer.performed -= instance.OnCancer;
+            @Cancer.canceled -= instance.OnCancer;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -472,5 +552,7 @@ public partial class @Controller: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFastRun(InputAction.CallbackContext context);
+        void OnTarget(InputAction.CallbackContext context);
+        void OnCancer(InputAction.CallbackContext context);
     }
 }

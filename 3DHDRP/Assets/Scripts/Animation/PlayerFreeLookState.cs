@@ -12,7 +12,8 @@ public class PlayerFreeLookState : PlayerBaseState
 
     public override void Enter()
     {
-        
+        //타켓이벤트 구독
+        stateMachine.InputReader.TargetEvent += OnTarget;
     }
 
     public override void Tick(float deltaTime)
@@ -41,9 +42,12 @@ public class PlayerFreeLookState : PlayerBaseState
 
     public override void Exit()
     {
-        
+        stateMachine.InputReader.TargetEvent -= OnTarget;
     }
 
+    private void OnTarget(){
+        stateMachine.SwitchState(new PlayerTargetingState(stateMachine));
+    }
 
     private Vector3 CalculateMovement(){
        Vector3 forward = stateMachine.MainCameraTransform.forward;

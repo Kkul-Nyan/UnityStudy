@@ -8,6 +8,8 @@ public class InputReader : MonoBehaviour, Controller.IPlayerActions
 {
     public event Action JumpEvent;
     public event Action DodgeEvent;
+    public event Action TargetEvent;
+    public event Action CancerEvent;
     public Vector2 MovementValue{get; private set;}
     public bool FastRun{get; private set;}
 
@@ -54,11 +56,18 @@ public class InputReader : MonoBehaviour, Controller.IPlayerActions
 
     public void OnFastRun(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed){
-            FastRun = true;
-        }
-        else{
-            FastRun = false;
-        }
+        FastRun = context.performed ? true : false;
+    }
+
+    public void OnTarget(InputAction.CallbackContext context)
+    {
+        if(!context.performed){ return; }
+        TargetEvent?.Invoke();
+    }
+
+    public void OnCancer(InputAction.CallbackContext context)
+    {
+        if(!context.performed){ return; }
+        CancerEvent?.Invoke();
     }
 }

@@ -7,9 +7,9 @@ public abstract class PlayerBaseState : State
 {
     protected PlayerStateMachine stateMachine;
 
+    //생성자
     public PlayerBaseState(PlayerStateMachine stateMachine){
-        this.stateMachine = stateMachine;
-        
+        this.stateMachine = stateMachine; 
     }
 
     protected void Move(Vector3 motion, float deltaTime){

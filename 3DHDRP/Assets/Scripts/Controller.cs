@@ -89,6 +89,15 @@ public partial class @Controller: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""d6a72657-5010-4099-ab10-363a89f42a1b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -333,6 +342,28 @@ public partial class @Controller: IInputActionCollection2, IDisposable
                     ""action"": ""Cancer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81199528-e0bd-4fd8-859b-f46d4d683068"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse & KeyBoard"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""79eb2ab6-2f69-4da6-872c-4ea6af9b0195"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse & KeyBoard"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -376,6 +407,7 @@ public partial class @Controller: IInputActionCollection2, IDisposable
         m_Player_FastRun = m_Player.FindAction("FastRun", throwIfNotFound: true);
         m_Player_Target = m_Player.FindAction("Target", throwIfNotFound: true);
         m_Player_Cancer = m_Player.FindAction("Cancer", throwIfNotFound: true);
+        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -444,6 +476,7 @@ public partial class @Controller: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_FastRun;
     private readonly InputAction m_Player_Target;
     private readonly InputAction m_Player_Cancer;
+    private readonly InputAction m_Player_Attack;
     public struct PlayerActions
     {
         private @Controller m_Wrapper;
@@ -455,6 +488,7 @@ public partial class @Controller: IInputActionCollection2, IDisposable
         public InputAction @FastRun => m_Wrapper.m_Player_FastRun;
         public InputAction @Target => m_Wrapper.m_Player_Target;
         public InputAction @Cancer => m_Wrapper.m_Player_Cancer;
+        public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -485,6 +519,9 @@ public partial class @Controller: IInputActionCollection2, IDisposable
             @Cancer.started += instance.OnCancer;
             @Cancer.performed += instance.OnCancer;
             @Cancer.canceled += instance.OnCancer;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -510,6 +547,9 @@ public partial class @Controller: IInputActionCollection2, IDisposable
             @Cancer.started -= instance.OnCancer;
             @Cancer.performed -= instance.OnCancer;
             @Cancer.canceled -= instance.OnCancer;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -554,5 +594,6 @@ public partial class @Controller: IInputActionCollection2, IDisposable
         void OnFastRun(InputAction.CallbackContext context);
         void OnTarget(InputAction.CallbackContext context);
         void OnCancer(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
 }

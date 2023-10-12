@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class InputReader : MonoBehaviour, Controller.IPlayerActions
 {
+    public bool IsAttacking{get; private set;}
     public event Action JumpEvent;
     public event Action DodgeEvent;
     public event Action TargetEvent;
@@ -69,5 +70,10 @@ public class InputReader : MonoBehaviour, Controller.IPlayerActions
     {
         if(!context.performed){ return; }
         CancerEvent?.Invoke();
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        IsAttacking = context.performed ? true : false;
     }
 }

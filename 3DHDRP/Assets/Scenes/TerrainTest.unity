@@ -1260,7 +1260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 409304524}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1784246, y: 0.0000000084651415, z: -0.0000000015350209, w: 0.9839536}
+  m_LocalRotation: {x: 0.17842458, y: -0.000000008465139, z: 0.0000000015350206, w: 0.9839536}
   m_LocalPosition: {x: 3.0322418, y: 4.002447, z: -27.522995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1625,7 +1625,7 @@ Transform:
   m_GameObject: {fileID: 505375448}
   serializedVersion: 2
   m_LocalRotation: {x: 0.10283744, y: -0.58339804, z: 0.074785285, w: -0.8021711}
-  m_LocalPosition: {x: -0.000000068825535, y: -0.0000019073486, z: 4.2720017}
+  m_LocalPosition: {x: 0.000000068825514, y: -0.000002026558, z: 4.2720017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3836,7 +3836,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837935690}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.31448877, y: 0.33384386, z: 0.1192277, w: 0.880585}
+  m_LocalRotation: {x: -0.3144887, y: 0.33384383, z: 0.11922769, w: 0.880585}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6486,7 +6486,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7138923576385684723}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.31448877, y: 0.33384383, z: 0.119227715, w: 0.88058496}
+  m_LocalRotation: {x: -0.31448874, y: 0.33384386, z: 0.119227715, w: 0.88058496}
   m_LocalPosition: {x: 146.29611, y: 0.100604236, z: 149.96405}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9237,9 +9237,24 @@ MonoBehaviour:
   <TargetingMovementSpeed>k__BackingField: 3
   <RotationDamping>k__BackingField: 10
   <Attacks>k__BackingField:
-  - <animationName>k__BackingField: Attack1
-  - <animationName>k__BackingField: Attack2
-  - <animationName>k__BackingField: Attack3
+  - <AnimationName>k__BackingField: Attack1
+    <TransitionDuration>k__BackingField: 0.1
+    <ComboStateIndex>k__BackingField: 1
+    <ComboAttackTime>k__BackingField: 0.6
+    <ForceTime>k__BackingField: 0.35
+    <Force>k__BackingField: 15
+  - <AnimationName>k__BackingField: Attack2
+    <TransitionDuration>k__BackingField: 0.1
+    <ComboStateIndex>k__BackingField: 2
+    <ComboAttackTime>k__BackingField: 0.5
+    <ForceTime>k__BackingField: 0.35
+    <Force>k__BackingField: 15
+  - <AnimationName>k__BackingField: Attack3
+    <TransitionDuration>k__BackingField: 0.2
+    <ComboStateIndex>k__BackingField: -1
+    <ComboAttackTime>k__BackingField: 0
+    <ForceTime>k__BackingField: 0.35
+    <Force>k__BackingField: 20
 --- !u!114 &9073904377442931326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9291,6 +9306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 9073904377442931327}
+  drag: 0.1
 --- !u!1 &9078096740950263900
 GameObject:
   m_ObjectHideFlags: 0

@@ -2678,7 +2678,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1198773992}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.29846188, y: 0.33595186, z: 0.1131517, w: 0.88614535}
+  m_LocalRotation: {x: -0.29846185, y: 0.33595183, z: 0.11315167, w: 0.88614535}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5996,6 +5996,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7930778636860667980}
   - component: {fileID: 218196971114513314}
+  - component: {fileID: 7930778636860667981}
   m_Layer: 0
   m_Name: Yui Handa
   m_TagString: Untagged
@@ -6674,6 +6675,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3026071908130625006}
+  - component: {fileID: 3943330138533638266}
   m_Layer: 0
   m_Name: J_Bip_R_Hand
   m_TagString: Untagged
@@ -6681,6 +6683,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!135 &3943330138533638266
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3943330138533638265}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.09
+  m_Center: {x: 0.06, y: 0, z: 0}
 --- !u!4 &3951044150387520280
 Transform:
   m_ObjectHideFlags: 0
@@ -7182,6 +7205,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 371318065858471005}
+  - component: {fileID: 4695355130438445444}
   m_Layer: 0
   m_Name: J_Bip_L_Hand
   m_TagString: Untagged
@@ -7189,6 +7213,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!135 &4695355130438445444
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4695355130438445443}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.09
+  m_Center: {x: -0.06, y: 0, z: 0}
 --- !u!4 &4753322616229467362
 Transform:
   m_ObjectHideFlags: 0
@@ -8765,6 +8810,19 @@ Transform:
   - {fileID: 350447983}
   m_Father: {fileID: 4840526866347778022}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7930778636860667981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075691687175107228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 431c6bff09f18470680af4f75dcf964b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponLogic: {fileID: 4695355130438445443}
 --- !u!1 &7961608393254226196
 GameObject:
   m_ObjectHideFlags: 0

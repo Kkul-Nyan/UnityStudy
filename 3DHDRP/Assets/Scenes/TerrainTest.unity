@@ -1260,7 +1260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 409304524}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17842458, y: -0.000000008465139, z: 0.0000000015350206, w: 0.9839536}
+  m_LocalRotation: {x: 0.1784246, y: 0.0000000084651415, z: -0.0000000015350209, w: 0.9839536}
   m_LocalPosition: {x: 3.0322418, y: 4.002447, z: -27.522995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2137,6 +2137,7 @@ GameObject:
   - component: {fileID: 896625680}
   - component: {fileID: 896625679}
   - component: {fileID: 896625683}
+  - component: {fileID: 896625684}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -2242,6 +2243,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c5db0db61b2e43f5bf3659a7369e60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &896625684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896625678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1d1f527fecb436fa2a60c8d0b806f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!4 &908735987 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7786443865839917807, guid: f6faefcdcb86f914785c8b74fe2db963,
@@ -3061,6 +3075,7 @@ GameObject:
   - component: {fileID: 1370210285}
   - component: {fileID: 1370210284}
   - component: {fileID: 1370210288}
+  - component: {fileID: 1370210289}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -3166,6 +3181,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c5db0db61b2e43f5bf3659a7369e60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1370210289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370210283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1d1f527fecb436fa2a60c8d0b806f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1001 &1411634623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6676,6 +6704,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3026071908130625006}
   - component: {fileID: 3943330138533638266}
+  - component: {fileID: 3943330138533638267}
+  - component: {fileID: 3943330138533638268}
   m_Layer: 0
   m_Name: J_Bip_R_Hand
   m_TagString: Untagged
@@ -6704,6 +6734,46 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.09
   m_Center: {x: 0.06, y: 0, z: 0}
+--- !u!114 &3943330138533638267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3943330138533638265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf276ac370ed6489d834c556a9aeb6c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myCollider: {fileID: 9073904377442931327}
+--- !u!54 &3943330138533638268
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3943330138533638265}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &3951044150387520280
 Transform:
   m_ObjectHideFlags: 0
@@ -7206,6 +7276,8 @@ GameObject:
   m_Component:
   - component: {fileID: 371318065858471005}
   - component: {fileID: 4695355130438445444}
+  - component: {fileID: 4695355130438445445}
+  - component: {fileID: 4695355130438445446}
   m_Layer: 0
   m_Name: J_Bip_L_Hand
   m_TagString: Untagged
@@ -7234,6 +7306,46 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.09
   m_Center: {x: -0.06, y: 0, z: 0}
+--- !u!114 &4695355130438445445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4695355130438445443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf276ac370ed6489d834c556a9aeb6c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myCollider: {fileID: 9073904377442931327}
+--- !u!54 &4695355130438445446
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4695355130438445443}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &4753322616229467362
 Transform:
   m_ObjectHideFlags: 0
@@ -9204,6 +9316,7 @@ GameObject:
   - component: {fileID: 9073904377442931326}
   - component: {fileID: 9073904377442931327}
   - component: {fileID: 9073904377442931328}
+  - component: {fileID: 9073904377442931329}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -9365,6 +9478,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 9073904377442931327}
   drag: 0.1
+--- !u!114 &9073904377442931329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8909962766942606398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1d1f527fecb436fa2a60c8d0b806f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1 &9078096740950263900
 GameObject:
   m_ObjectHideFlags: 0

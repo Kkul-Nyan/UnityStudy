@@ -7,7 +7,7 @@ public class PlayerAttackingState : PlayerBaseState
 {
     float previousFrameTime;
     bool alreadyApplyForce;
-    Attack attack;
+    private Attack attack;
 
     public PlayerAttackingState(PlayerStateMachine stateMachine, int attackIndex) : base(stateMachine){
         attack = stateMachine.Attacks[attackIndex];
@@ -15,6 +15,7 @@ public class PlayerAttackingState : PlayerBaseState
 
     public override void Enter()
     {
+        stateMachine.Weapon.SetAttack(attack.Damage);
         stateMachine.Animator.CrossFadeInFixedTime(attack.AnimationName, attack.TransitionDuration);
     }
 

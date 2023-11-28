@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 769.63995, g: 1218.6641, b: 1638.096, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2692,7 +2692,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1198773992}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.29846188, y: 0.33595186, z: 0.1131517, w: 0.88614535}
+  m_LocalRotation: {x: -0.29846185, y: 0.33595183, z: 0.11315167, w: 0.88614535}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3896,7 +3896,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837935690}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.31448877, y: 0.33384386, z: 0.1192277, w: 0.880585}
+  m_LocalRotation: {x: -0.31448874, y: 0.33384386, z: 0.119227715, w: 0.88058496}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7490,7 +7490,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7138923576385684723}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.31448877, y: 0.33384383, z: 0.119227715, w: 0.88058496}
+  m_LocalRotation: {x: -0.31448874, y: 0.3338439, z: 0.11922772, w: 0.88058496}
   m_LocalPosition: {x: 146.29611, y: 0.100604236, z: 149.96405}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7655,7 +7655,7 @@ Animator:
   m_GameObject: {fileID: 3645695659977920894}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 6f6eba35b8edc7d46be2a84fcc3eb248, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 487d9b879673d724fa7ca509551c7f5f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -7729,6 +7729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db65e294c2a1c47f983030dcc2e66dbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Animator>k__BackingField: {fileID: 3645695659987411722}
 --- !u!1 &3648860412026895631
 GameObject:
   m_ObjectHideFlags: 0

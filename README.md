@@ -91,4 +91,5 @@
 ## clicker
 
 ## Personal study
-      
+
+## Puzzle
